@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 17:23:24 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 19:23:45 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ int		main(int argv, char **argc)
 		write(1, "Needed only one input file.\n", 28);
 		exit (0);
 	}
-	set_model(argc[1], &setting.model);
-	// shift_to_origin(&setting.model);
-
-
+	set_model(argc[1], &setting.model, &setting.coords);
+	shift_to_origin(&setting.model);
 
 
 	// set_params(&setting.model);
@@ -57,15 +55,33 @@ int		main(int argv, char **argc)
 	return (0);
 }
 
-void	set_model(char *filename, t_model *model)
+void	set_model(char *filename, t_model *model, t_coords *coords)
 {
 	parse(filename, model);
 	model->area = model->width * model->height;
 	model->rot[0] = ROT_X;
 	model->rot[1] = ROT_Y;
 	model->rot[2] = ROT_Z;
-	model->overall = 0;
+	set_overall(model);
+	// model->overall = 0;
+	set_scalepos(model, coords);
 }
+
+void	set_overall(t_model *model)
+{
+	int		i;
+
+	if (!(model->o_vertex = (int **)malloc(sizeof(int *) * model->area)))
+		exit(0);
+	i = 0;
+	while (i < model->area)
+	{
+		if (!(model->o_vertex[i] = (int *)malloc(sizeof(int) * 2)))
+			exit(0);
+		i += 1;
+	}
+}
+
 
 void	shift_to_origin(t_model *model)
 {

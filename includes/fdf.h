@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 17:13:41 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 19:24:23 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct	s_model
 	short		pos[2];
 	short		rot[3];
 	float		scale;
-	char		overall;
+	// char		overall;
 	int			**o_vertex;
 	float		first_scale;
 	short		first_pos[2];
@@ -118,7 +118,8 @@ typedef struct		s_backset
 // void	sort_triangle_y(int **triangle);
 // int		close_fdf(void *param);
 // int		light_color(int color, float lightpower);
-void	set_model(char *filename, t_model *model);
+void	set_model(char *filename, t_model *model, t_coords *coords);
+void	set_overall(t_model *model);
 void	shift_to_origin(t_model *model);
 void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
@@ -152,6 +153,17 @@ int			ft_atoi_base(const char *str, int base);
 void	set_buffers(t_system *system);
 t_back	*set_backset();
 int		backcolor(float cursor, t_back *backset);
+
+
+/*
+** set_scale.c
+*/
+void	set_scalepos(t_model *model, t_coords *coords);
+void	set_minmaxvert(t_model *model, int *vert_min, int *vert_max);
+void	fill_overtex(t_model *model, t_coords *coords);
+void	setup_quad(t_model *model, t_coords *coords, int *k);
+void	shift_quadvert(t_coords *coords);
+void	rotate_quad(t_model *model, t_coords *coords, int k);
 
 
 

@@ -9,7 +9,8 @@ SRC_DIR = ./src/
 SRC_LIST = fdf.c\
 			parser.c\
 			utils.c\
-			set_background.c
+			set_background.c\
+			set_scale.c
 			# controls.c\
 			# transform.c\
 			# drawing.c\
@@ -32,8 +33,8 @@ $(NAME): $(OBJ)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
 	mkdir -p $(OBJ_DIR)
-	gcc -c $(HEADER) $< -o $@ $(FLAG)
-	# gcc -c $(HEADER) $< -o $@
+	# gcc -c $(HEADER) $< -o $@ $(FLAG)
+	gcc -c $(HEADER) $< -o $@
 
 clean:
 	@rm -rf $(OBJ_DIR)
