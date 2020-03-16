@@ -10,7 +10,8 @@ SRC_LIST = fdf.c\
 			parser.c\
 			utils.c\
 			set_background.c\
-			set_scale.c
+			set_scale.c\
+			transform.c
 			# controls.c\
 			# transform.c\
 			# drawing.c\

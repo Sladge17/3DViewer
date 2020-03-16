@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 18:05:43 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 19:23:22 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 20:02:47 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,27 +117,4 @@ void	set_minmaxvert(t_model *model, int *vert_min, int *vert_max)
 							model->o_vertex[i][1] : vert_max[1];
 		i += 1;
 	}
-}
-
-void	rotate_quad(t_model *model, t_coords *coords, int k)
-{
-	coords->tmp[0] = model->vertex[coords->index[k]][0];
-	coords->tmp[1] = model->vertex[coords->index[k]][1];
-	coords->tmp[2] = model->vertex[coords->index[k]][2];
-	coords->f_quad[k][1] = coords->tmp[1] * cos((model->rot[0] * M_PI) / 180)
-						+ coords->tmp[2] * sin((model->rot[0] * M_PI) / 180);
-	coords->f_quad[k][2] = -coords->tmp[1] * sin((model->rot[0] * M_PI) / 180)
-						+ coords->tmp[2] * cos((model->rot[0] * M_PI) / 180);
-	coords->tmp[1] = coords->f_quad[k][1];
-	coords->tmp[2] = coords->f_quad[k][2];
-	coords->f_quad[k][0] = coords->tmp[0] * cos((model->rot[1] * M_PI) / 180)
-						+ coords->tmp[2] * sin((model->rot[1] * M_PI) / 180);
-	coords->f_quad[k][2] = -coords->tmp[0] * sin((model->rot[1] * M_PI) / 180)
-						+ coords->tmp[2] * cos((model->rot[1] * M_PI) / 180);
-	coords->tmp[0] = coords->f_quad[k][0];
-	coords->tmp[2] = coords->f_quad[k][2];
-	coords->f_quad[k][0] = coords->tmp[0] * cos((model->rot[2] * M_PI) / 180)
-						- coords->tmp[1] * sin((model->rot[2] * M_PI) / 180);
-	coords->f_quad[k][1] = coords->tmp[0] * sin((model->rot[2] * M_PI) / 180)
-						+ coords->tmp[1] * cos((model->rot[2] * M_PI) / 180);
 }

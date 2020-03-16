@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 19:24:23 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 20:06:06 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ void	set_overall(t_model *model);
 void	shift_to_origin(t_model *model);
 void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
-void	drawing(t_system *system, t_model *model);
+void	drawing_background(t_system *system, t_model *model);
+void	draw_qvertex(t_system *system, t_coords *coords);
 
 /*
 ** parser.c
@@ -165,6 +166,15 @@ void	setup_quad(t_model *model, t_coords *coords, int *k);
 void	shift_quadvert(t_coords *coords);
 void	rotate_quad(t_model *model, t_coords *coords, int k);
 
+/*
+** transform.c
+*/
+void	transform_model(t_system *system, t_model *model, t_coords *coords);
+void	rotate_quad(t_model *model, t_coords *coords, int k);
+void	persp_distortion(t_model *model, t_coords *coords, int k);
+void	scale_quad(t_model *model, t_coords *coords, int k);
+void	move_quad(t_model *model, t_coords *coords, int k);
+void	round_quad(t_coords *coords, int k);
 
 
 // /*

@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 19:23:45 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 20:05:00 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,14 @@ int		main(int argv, char **argc)
 		exit (0);
 	}
 	set_model(argc[1], &setting.model, &setting.coords);
-	shift_to_origin(&setting.model);
-
-
-	// set_params(&setting.model);
-	// // set_model(&setting.model);
-	// set_overall(&setting.model);
-	// set_diagonal(&setting.model);
 	// shift_to_origin(&setting.model);
-
-	// set_maxcoord(&setting.model);
 
 	set_system(&setting.system);
 
-	// transform_model(&setting.system, &setting.model, &setting.coords);
+	drawing_background(&setting.system, &setting.model);
 
-	drawing(&setting.system, &setting.model);
+	transform_model(&setting.system, &setting.model, &setting.coords);
 
-	
 	
 	mlx_put_image_to_window(setting.system.mlx, setting.system.win, setting.system.img, 0, 0);
 	// mlx_string_put(setting.system.mlx, setting.system.win, 30, 30, 0xff, "ROTATION:");
@@ -59,6 +49,7 @@ void	set_model(char *filename, t_model *model, t_coords *coords)
 {
 	parse(filename, model);
 	model->area = model->width * model->height;
+	shift_to_origin(model);
 	model->rot[0] = ROT_X;
 	model->rot[1] = ROT_Y;
 	model->rot[2] = ROT_Z;
@@ -123,7 +114,7 @@ void	set_buffers(t_system *system)
 }
 
 
-void	drawing(t_system *system, t_model *model)
+void	drawing_background(t_system *system, t_model *model)
 {
 	int		i;
 
@@ -133,12 +124,37 @@ void	drawing(t_system *system, t_model *model)
 		system->output[i] = system->back_buf[i];
 		i += 1;
 	}
+	// i = 0;
+	// while (i < model->area)
+	// {
+	// 	system->output[model->vertex[i][0] + model->vertex[i][1] * WIDTH] = model->vertex[i][2];
+	// 	i += 1;
+	// }
+	
+}
+
+void	draw_qvertex(t_system *system, t_coords *coords)
+{
+	int		i;
+	int		j;
 	
 	i = 0;
-	while (i < model->area)
+	while (i < 4)
 	{
-		system->output[model->vertex[i][0] + model->vertex[i][1] * WIDTH] = model->vertex[i][2];
+		if (((0 >= coords->d_quad[i][0]) || (coords->d_quad[i][0] >= WIDTH - 1))
+			|| ((0 >= coords->d_quad[i][1]) || (coords->d_quad[i][1] >= HEIGHT)))
+		{
+			i += 1;
+			continue ;
+		}
+		j = 0;
+		while (j < 3)
+		{
+			system->output[coords->d_quad[i][0] - 1 + j + (coords->d_quad[i][1] - 1) * WIDTH] = COLOR_V;
+			system->output[coords->d_quad[i][0] - 1 + j + coords->d_quad[i][1] * WIDTH] = COLOR_V;
+			system->output[coords->d_quad[i][0] - 1 + j + (coords->d_quad[i][1] + 1) * WIDTH] = COLOR_V;
+			j += 1;
+		}
 		i += 1;
 	}
-	
 }
