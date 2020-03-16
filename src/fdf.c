@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 20:05:00 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 20:41:17 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ void	draw_qvertex(t_system *system, t_coords *coords)
 		j = 0;
 		while (j < 3)
 		{
-			system->output[coords->d_quad[i][0] - 1 + j + (coords->d_quad[i][1] - 1) * WIDTH] = COLOR_V;
-			system->output[coords->d_quad[i][0] - 1 + j + coords->d_quad[i][1] * WIDTH] = COLOR_V;
-			system->output[coords->d_quad[i][0] - 1 + j + (coords->d_quad[i][1] + 1) * WIDTH] = COLOR_V;
+			system->output[coords->d_quad[i][0] - 1 + j + (coords->d_quad[i][1] - 1) * WIDTH] = coords->d_quad[i][2];
+			system->output[coords->d_quad[i][0] - 1 + j + coords->d_quad[i][1] * WIDTH] = coords->d_quad[i][2];
+			system->output[coords->d_quad[i][0] - 1 + j + (coords->d_quad[i][1] + 1) * WIDTH] = coords->d_quad[i][2];
 			j += 1;
 		}
 		i += 1;

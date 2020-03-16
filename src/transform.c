@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 19:26:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 19:37:33 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 20:39:06 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	transform_model(t_system *system, t_model *model, t_coords *coords)
 				// 	persp_distortion(model, coords, k);
 				scale_quad(model, coords, k);
 				move_quad(model, coords, k);
-				round_quad(coords, k);
+				round_quad(model, coords, k);
 				k += 1;
 			}
 			// draw_model(system, model, coords);
@@ -96,8 +96,9 @@ void	move_quad(t_model *model, t_coords *coords, int k)
 	coords->f_quad[k][1] += model->pos[1];
 }
 
-void	round_quad(t_coords *coords, int k)
+void	round_quad(t_model *model, t_coords *coords, int k)
 {
 	coords->d_quad[k][0] = lround(coords->f_quad[k][0]);
 	coords->d_quad[k][1] = lround(coords->f_quad[k][1]);
+	coords->d_quad[k][2] = model->vertex[coords->index[k]][3];
 }

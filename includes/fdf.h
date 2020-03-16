@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 20:06:06 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 20:39:36 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct	s_coords
 	int			index[4];
 	float		tmp[3];
 	float		f_quad[4][3];
-	int			d_quad[4][2];
+	int			d_quad[4][3];
 	float		lightpower;
 	int			tris_xy[3][2];
 	float		tris_z[3];
@@ -174,7 +174,7 @@ void	rotate_quad(t_model *model, t_coords *coords, int k);
 void	persp_distortion(t_model *model, t_coords *coords, int k);
 void	scale_quad(t_model *model, t_coords *coords, int k);
 void	move_quad(t_model *model, t_coords *coords, int k);
-void	round_quad(t_coords *coords, int k);
+void	round_quad(t_model *model, t_coords *coords, int k);
 
 
 // /*
