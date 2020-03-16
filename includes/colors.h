@@ -6,12 +6,15 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:02:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/04 19:59:05 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 15:13:54 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_H
 # define COLORS_H
+
+#define COLOR_UP 0x121212
+#define COLOR_DOWN 0x4A4A4A
 
 #define COLOR_V 0xFF0000
 #define COLOR_W 0x0000FF

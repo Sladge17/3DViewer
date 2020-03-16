@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 13:06:03 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 15:13:04 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ int		main(int argv, char **argc)
 
 	set_system(&setting.system);
 
+	drawing(&setting.system);
+
 	
 	// transform_model(&setting.system, &setting.model, &setting.coords);
-	// mlx_put_image_to_window(setting.system.mlx, setting.system.win, setting.system.img, 0, 0);
+	mlx_put_image_to_window(setting.system.mlx, setting.system.win, setting.system.img, 0, 0);
 	// mlx_string_put(setting.system.mlx, setting.system.win, 30, 30, 0xff, "ROTATION:");
 
 	// mlx_hook(setting.system.win, 2, 0, key_press, &setting);
@@ -61,6 +63,7 @@ void	set_system(t_system *system)
 	system->output = (int *)mlx_get_data_addr(system->img, &system->img_s[0], &system->img_s[1], &system->img_s[2]);
 	system->field = WIDTH * HEIGHT;
 	set_buffers(system);
+	set_backbuf(system->back_buf);
 	// system->render = 2;
 	// system->control = 0;
 }
@@ -76,4 +79,18 @@ void	set_buffers(t_system *system)
 	// system->light_buf = (int *)malloc(sizeof(int) * area);
 	// if (!(system->light_buf))
 	// 	exit (0);
+}
+
+
+void	drawing(t_system *system)
+{
+	int		i;
+
+	i = 0;
+	while (i < system->field)
+	{
+		system->output[i] = system->back_buf[i];
+		i += 1;
+	}
+	
 }

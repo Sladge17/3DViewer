@@ -7,6 +7,7 @@ HEADER = -I$(HEADER_DIR)
 # HEADER = fdf.h
 SRC_DIR = ./src/
 SRC_LIST = fdf.c\
+			set_background.c
 			# controls.c\
 			# transform.c\
 			# drawing.c\

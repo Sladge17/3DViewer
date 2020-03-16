@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 13:03:53 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 15:12:17 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,13 @@ typedef struct	s_setting
 }				t_setting;
 
 
+typedef struct		s_backset
+{
+	unsigned char	color_rgb[2][3];
+	char			d[3];
+	unsigned char	len[3];
+}					t_back;
+
 
 /*
 ** fdf.c
@@ -110,9 +117,19 @@ typedef struct	s_setting
 // int		close_fdf(void *param);
 // int		light_color(int color, float lightpower);
 void	set_system(t_system *system);
-void	set_buffers(t_system *system);
+void	set_backbuf(int *back_buf);
+void	drawing(t_system *system);
+
+
 // void	set_overall(t_model *model);
 // void	set_maxcoord(t_model *model);
+
+/*
+** set_background.c
+*/
+void	set_buffers(t_system *system);
+t_back	*set_backset();
+int		backcolor(float cursor, t_back *backset);
 
 
 
