@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 15:12:17 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 17:13:41 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct	s_model
 	float		first_scale;
 	short		first_pos[2];
 	int			max_coord;
+	char		color_f;
+	char		*modelname;
 }				t_model;
 
 typedef struct	s_coords
@@ -116,9 +118,29 @@ typedef struct		s_backset
 // void	sort_triangle_y(int **triangle);
 // int		close_fdf(void *param);
 // int		light_color(int color, float lightpower);
+void	set_model(char *filename, t_model *model);
+void	shift_to_origin(t_model *model);
 void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
-void	drawing(t_system *system);
+void	drawing(t_system *system, t_model *model);
+
+/*
+** parser.c
+*/
+int		ft_wordscounter(char const *str, char c);
+void	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y);
+int		allocate_mem(char *filename, t_model *model);
+int		parse_color(char *word);
+int		parse(char *filename, t_model *model);
+
+/*
+** utils.c
+*/
+int			ft_isspace(int c);
+// static int	ft_isdigit_base(char c, int base);
+// static int	ft_has_prefix(const char *str, int base);
+int			ft_isnumber(char *str, int base);
+int			ft_atoi_base(const char *str, int base);
 
 
 // void	set_overall(t_model *model);

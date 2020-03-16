@@ -6,7 +6,7 @@
 /*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 15:13:04 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/16 17:23:24 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int		main(int argv, char **argc)
 {
 	t_setting	setting;
 
-	// if (argv != 2)
-	// {
-	// 	write(1, "Needed only one input file.\n", 28);
-	// 	exit (0);
-	// }
-	
-	// parse(argc[1], &setting.model);
+	if (argv != 2)
+	{
+		write(1, "Needed only one input file.\n", 28);
+		exit (0);
+	}
+	set_model(argc[1], &setting.model);
+	// shift_to_origin(&setting.model);
 
 
 
@@ -37,10 +37,12 @@ int		main(int argv, char **argc)
 
 	set_system(&setting.system);
 
-	drawing(&setting.system);
+	// transform_model(&setting.system, &setting.model, &setting.coords);
+
+	drawing(&setting.system, &setting.model);
 
 	
-	// transform_model(&setting.system, &setting.model, &setting.coords);
+	
 	mlx_put_image_to_window(setting.system.mlx, setting.system.win, setting.system.img, 0, 0);
 	// mlx_string_put(setting.system.mlx, setting.system.win, 30, 30, 0xff, "ROTATION:");
 
@@ -53,6 +55,29 @@ int		main(int argv, char **argc)
 	mlx_loop (setting.system.mlx);
 	
 	return (0);
+}
+
+void	set_model(char *filename, t_model *model)
+{
+	parse(filename, model);
+	model->area = model->width * model->height;
+	model->rot[0] = ROT_X;
+	model->rot[1] = ROT_Y;
+	model->rot[2] = ROT_Z;
+	model->overall = 0;
+}
+
+void	shift_to_origin(t_model *model)
+{
+	int		i;
+
+	i = 0;
+	while (i < model->area)
+	{
+		model->vertex[i][0] -= model->vertex[model->area - 1][0] / 2;
+		model->vertex[i][1] -= model->vertex[model->area - 1][1] / 2;
+		i += 1;
+	}
 }
 
 void	set_system(t_system *system)
@@ -82,7 +107,7 @@ void	set_buffers(t_system *system)
 }
 
 
-void	drawing(t_system *system)
+void	drawing(t_system *system, t_model *model)
 {
 	int		i;
 
@@ -90,6 +115,13 @@ void	drawing(t_system *system)
 	while (i < system->field)
 	{
 		system->output[i] = system->back_buf[i];
+		i += 1;
+	}
+	
+	i = 0;
+	while (i < model->area)
+	{
+		system->output[model->vertex[i][0] + model->vertex[i][1] * WIDTH] = model->vertex[i][2];
 		i += 1;
 	}
 	

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsance <nsance@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 16:56:08 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/14 16:47:36 by nsance           ###   ########.fr       */
+/*   Updated: 2020/03/16 16:49:38 by jthuy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int parse_color(char *word)
 	char **splitted_word;
 	int output;
 
-	output = COLOR_DEFAULT;
+	output = COLOR_DEF;
 	splitted_word = 0;
 	splitted_word = ft_strsplit(word, ',');
 	if(splitted_word[1])
