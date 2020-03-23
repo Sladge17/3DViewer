@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 15:24:46 by student           #+#    #+#             */
-/*   Updated: 2020/03/23 17:44:07 by student          ###   ########.fr       */
+/*   Updated: 2020/03/23 20:15:31 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ int		key_press(int keycode, void *param)
 		set_scalepos(&setting->model, &setting->coords);
 	}
 
+
+	if (keycode == 12)
+	{
+		if (setting->system.render & 128)
+			setting->system.render ^= 128;
+		setting->model.rot[0] = 0;
+		setting->model.rot[1] = 0;
+		setting->model.rot[2] = 0;
+		setting->model.scale = 100;
+		setting->model.pos[0] = setting->model.vertex[setting->model.area - 1][0] * 100;
+		setting->model.pos[1] = setting->model.vertex[setting->model.area - 1][1] * 100;
+	}
+
 		
 	if (keycode == 35)
 		setting->system.render ^= 128;
@@ -84,6 +97,10 @@ int		key_press(int keycode, void *param)
 	clean_frame(&setting->system);
 	transform_model(&setting->system, &setting->model, &setting->coords);
 	mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+
+	 mlx_string_put(setting->system.mlx, setting->system.win, 30, 30, 0xff, ft_itoa(setting->model.pos[0]));
+	 mlx_string_put(setting->system.mlx, setting->system.win, 30, 60, 0xff, ft_itoa(setting->model.pos[1]));
+
 	return (0);
 }
 

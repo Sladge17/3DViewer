@@ -36,7 +36,7 @@
 #define HEIGHT 720
 #define SPEED_R 6
 #define SPEED_M 4
-#define SPEED_S1 0.5
+#define SPEED_S1 10
 #define SPEED_S2 0.1
 #define ROT_X -60
 #define ROT_Y -30

@@ -72,7 +72,7 @@ void	rotate_quad(t_model *model, t_coords *coords, int k)
 
 void	persp_distortion(t_model *model, t_coords *coords, int k)
 {
-	int	z_offset = 100;
+	int		z_offset = 100;
 	int		fov = 90;
 	z_offset = 1000 * tan(fov * 0.5 * M_PI / 180);
 	

@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/23 17:32:39 by student          ###   ########.fr       */
+/*   Updated: 2020/03/23 19:26:41 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,29 @@ int		main(int argv, char **argc)
 		exit (0);
 	}
 	set_model(argc[1], &setting.model, &setting.coords);
-	// shift_to_origin(&setting.model);
+
+	
 
 	set_system(&setting.system);
 
 	drawing_background(&setting.system);
 
 	transform_model(&setting.system, &setting.model, &setting.coords);
+
+	// printf("%d %d\n", setting.model.vertex[0][0], setting.model.vertex[0][1]);
+
+	// printf("%d %d\n", setting.model.vertex[setting.model.area - 1][0], setting.model.vertex[setting.model.area - 1][1]);
+
+
+	// int	i = 0;
+
+	// while (i < setting.model.area)
+	// {
+	// 	setting.system.output[(setting.model.vertex[i][0] + setting.model.vertex[setting.model.area - 1][0]) * 100 + 
+	// 	(setting.model.vertex[i][1] + setting.model.vertex[setting.model.area - 1][1]) * WIDTH * 100] = 
+	// 	setting.model.vertex[i][3];
+	// 	i += 1;
+	// }
 
 	
 	mlx_put_image_to_window(setting.system.mlx, setting.system.win, setting.system.img, 0, 0);
@@ -41,7 +57,6 @@ int		main(int argv, char **argc)
 	mlx_hook(setting.system.win, 17, 0, close_fdf, &setting);
 
 	mlx_loop (setting.system.mlx);
-	
 	return (0);
 }
 
@@ -49,12 +64,21 @@ void	set_model(char *filename, t_model *model, t_coords *coords)
 {
 	parse(filename, model);
 	model->area = model->width * model->height;
+
+	// func prescale -> shift to origin
+	int		i = 0;
+	while (i < model->area)
+	{
+		model->vertex[i][0] *= 2;
+		model->vertex[i][1] *= 2;
+		i += 1;
+	}
+
 	shift_to_origin(model);
 	model->rot[0] = ROT_X;
 	model->rot[1] = ROT_Y;
 	model->rot[2] = ROT_Z;
 	set_overall(model);
-	// model->overall = 0;
 	set_scalepos(model, coords);
 }
 
@@ -143,18 +167,19 @@ void	draw_qvertex(t_system *system, t_coords *coords)
 	i = 0;
 	while (i < 4)
 	{
-		if (((0 >= coords->d_quad[i][0]) || (coords->d_quad[i][0] >= WIDTH - 1))
-			|| ((0 >= coords->d_quad[i][1]) || (coords->d_quad[i][1] >= HEIGHT - 1)))
+		if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
+			|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 1)))
 		{
 			i += 1;
 			continue ;
 		}
-		j = 0;
-		while (j < 3)
+		j = -1;
+		while (j < 2)
 		{
-			system->output[coords->d_quad[i][0] - 1 + j + (coords->d_quad[i][1] - 1) * WIDTH] = coords->d_quad[i][2];
-			system->output[coords->d_quad[i][0] - 1 + j + coords->d_quad[i][1] * WIDTH] = coords->d_quad[i][2];
-			system->output[coords->d_quad[i][0] - 1 + j + (coords->d_quad[i][1] + 1) * WIDTH] = coords->d_quad[i][2];
+			if (coords->d_quad[i][0])
+				system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+			system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+			system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
 			j += 1;
 		}
 		i += 1;
