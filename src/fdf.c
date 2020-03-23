@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/23 16:43:47 by student          ###   ########.fr       */
+/*   Updated: 2020/03/23 17:32:39 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	set_system(t_system *system)
 	system->field = WIDTH * HEIGHT;
 	set_buffers(system);
 	set_backbuf(system->back_buf);
-	// system->render = 2;
+	system->render = 2;
 	system->control = 0;
 }
 

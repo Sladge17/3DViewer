@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 19:26:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/23 16:54:15 by student          ###   ########.fr       */
+/*   Updated: 2020/03/23 17:32:17 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	transform_model(t_system *system, t_model *model, t_coords *coords)
 			while (k < 4)
 			{
 				rotate_quad(model, coords, k);
-				// if (system->render & 128)
-				// 	persp_distortion(model, coords, k);
+				if (system->render & 128)
+					persp_distortion(model, coords, k);
 				scale_quad(model, coords, k);
 				move_quad(model, coords, k);
 				round_quad(model, coords, k);

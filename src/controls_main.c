@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 15:24:46 by student           #+#    #+#             */
-/*   Updated: 2020/03/23 16:27:48 by student          ###   ########.fr       */
+/*   Updated: 2020/03/23 17:44:07 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,25 @@ int		key_press(int keycode, void *param)
 	if (setting->model.rot[2] == -360 || setting->model.rot[2] == 360)
 			setting->model.rot[2] = 0;
 	
-	// if (keycode == 15)
-	// {
-		
-	// 	if (setting->system.render & 128)
-	// 		setting->system.render ^= 128;
-	// 	setting->model.rot[0] = ROT_X;
-	// 	setting->model.rot[1] = ROT_Y;
-	// 	setting->model.rot[2] = ROT_Z;
-	// 	setting->model.scale = setting->model.first_scale;
-	// 	setting->model.pos[0] = setting->model.first_pos[0];
-	// 	setting->model.pos[1] = setting->model.first_pos[1];
-	// 	// setting->model.overall = 0;
-	// }
-		// set_params(&setting->model);
-
-	// if (keycode == 3 && !(setting->system.render & 128))
-	// {
-	// 	setting->model.overall = 0;
-	// }
+	if (keycode == 15)
+	{
+		if (setting->system.render & 128)
+			setting->system.render ^= 128;
+		setting->model.rot[0] = ROT_X;
+		setting->model.rot[1] = ROT_Y;
+		setting->model.rot[2] = ROT_Z;
+		setting->model.scale = setting->model.first_scale;
+		setting->model.pos[0] = setting->model.first_pos[0];
+		setting->model.pos[1] = setting->model.first_pos[1];
+	}
+	if (keycode == 3 && !(setting->system.render & 128))
+	{
+		set_scalepos(&setting->model, &setting->coords);
+	}
 
 		
-	// if (keycode == 35)
-	// 	setting->system.render ^= 128;
+	if (keycode == 35)
+		setting->system.render ^= 128;
 	// if (keycode == 18)
 	// {
 	// 	setting->system.render &= 128;

@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/23 16:31:20 by student          ###   ########.fr       */
+/*   Updated: 2020/03/23 17:30:37 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct	s_system
 	int			*back_buf;
 	// int			*z_buf;
 	// int			*light_buf;
-	// char		render;
+	char		render;
 	char		control;
 	int			mouse_pos[2];
 }				t_system;
