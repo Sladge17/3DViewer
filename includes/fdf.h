@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 20:39:36 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/23 16:03:11 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 
 #include "colors.h"
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 1280
+#define HEIGHT 720
 #define SPEED_R 6
 #define SPEED_M 4
 #define SPEED_S1 0.5
@@ -123,8 +123,10 @@ void	set_overall(t_model *model);
 void	shift_to_origin(t_model *model);
 void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
-void	drawing_background(t_system *system, t_model *model);
+void	drawing_background(t_system *system);
 void	draw_qvertex(t_system *system, t_coords *coords);
+int		close_fdf(void *param);
+void	clean_frame(t_system *system);
 
 /*
 ** parser.c
@@ -176,6 +178,11 @@ void	scale_quad(t_model *model, t_coords *coords, int k);
 void	move_quad(t_model *model, t_coords *coords, int k);
 void	round_quad(t_model *model, t_coords *coords, int k);
 
+
+/*
+** transform.c
+*/
+int		key_press(int keycode, void *param);
 
 // /*
 // ** controls.c

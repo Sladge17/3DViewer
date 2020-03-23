@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 20:41:17 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/23 16:22:15 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(int argv, char **argc)
 
 	set_system(&setting.system);
 
-	drawing_background(&setting.system, &setting.model);
+	drawing_background(&setting.system);
 
 	transform_model(&setting.system, &setting.model, &setting.coords);
 
@@ -34,11 +34,11 @@ int		main(int argv, char **argc)
 	mlx_put_image_to_window(setting.system.mlx, setting.system.win, setting.system.img, 0, 0);
 	// mlx_string_put(setting.system.mlx, setting.system.win, 30, 30, 0xff, "ROTATION:");
 
-	// mlx_hook(setting.system.win, 2, 0, key_press, &setting);
+	mlx_hook(setting.system.win, 2, 0, key_press, &setting);
 	// mlx_hook(setting.system.win, 4, 0, mouse_press, &setting);
 	// mlx_hook(setting.system.win, 5, 0, mouse_release, &setting);
 	// mlx_hook(setting.system.win, 6, 0, mouse_move, &setting);
-	// mlx_hook(setting.system.win, 17, 0, close_fdf, &setting);
+	mlx_hook(setting.system.win, 17, 0, close_fdf, &setting);
 
 	mlx_loop (setting.system.mlx);
 	
@@ -114,7 +114,7 @@ void	set_buffers(t_system *system)
 }
 
 
-void	drawing_background(t_system *system, t_model *model)
+void	drawing_background(t_system *system)
 {
 	int		i;
 
@@ -142,7 +142,7 @@ void	draw_qvertex(t_system *system, t_coords *coords)
 	while (i < 4)
 	{
 		if (((0 >= coords->d_quad[i][0]) || (coords->d_quad[i][0] >= WIDTH - 1))
-			|| ((0 >= coords->d_quad[i][1]) || (coords->d_quad[i][1] >= HEIGHT)))
+			|| ((0 >= coords->d_quad[i][1]) || (coords->d_quad[i][1] >= HEIGHT - 1)))
 		{
 			i += 1;
 			continue ;
@@ -157,4 +157,25 @@ void	draw_qvertex(t_system *system, t_coords *coords)
 		}
 		i += 1;
 	}
+}
+
+int		close_fdf(void *param)
+{
+	(void)param;
+	exit(0);
+}
+
+void	clean_frame(t_system *system)
+{
+	int		i;
+
+	i = 0;
+	while (i < system->field)
+	{
+		system->output[i] = system->back_buf[i];
+		// system->z_buf[i] = 1 << 31;
+		// system->light_buf[i] = 0;
+		i += 1;
+	}
+	// drawing_background(system);
 }

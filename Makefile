@@ -11,7 +11,8 @@ SRC_LIST = fdf.c\
 			utils.c\
 			set_background.c\
 			set_scale.c\
-			transform.c
+			transform.c\
+			controls_main.c
 			# controls.c\
 			# transform.c\
 			# drawing.c\
