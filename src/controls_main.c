@@ -63,9 +63,9 @@ int		key_press(int keycode, void *param)
 		setting->model.rot[0] = 0;
 		setting->model.rot[1] = 0;
 		setting->model.rot[2] = 0;
-		setting->model.scale = 100;
-		setting->model.pos[0] = setting->model.vertex[setting->model.area - 1][0] * 100;
-		setting->model.pos[1] = setting->model.vertex[setting->model.area - 1][1] * 100;
+		setting->model.scale = 20;
+		setting->model.pos[0] = setting->model.vertex[setting->model.area - 1][0] * 20;
+		setting->model.pos[1] = setting->model.vertex[setting->model.area - 1][1] * 20;
 	}
 
 		

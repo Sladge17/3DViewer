@@ -92,8 +92,10 @@ void	shift_quadvert(t_coords *coords)
 	coords->f_quad[1][2] = coords->f_quad[3][2];
 	coords->d_quad[0][0] = coords->d_quad[2][0];
 	coords->d_quad[0][1] = coords->d_quad[2][1];
+	coords->d_quad[0][2] = coords->d_quad[2][2];
 	coords->d_quad[1][0] = coords->d_quad[3][0];
 	coords->d_quad[1][1] = coords->d_quad[3][1];
+	coords->d_quad[1][2] = coords->d_quad[3][2];
 }
 
 void	set_minmaxvert(t_model *model, int *vert_min, int *vert_max)
