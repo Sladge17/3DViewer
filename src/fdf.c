@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/23 16:22:15 by student          ###   ########.fr       */
+/*   Updated: 2020/03/23 16:43:47 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int		main(int argv, char **argc)
 	// mlx_string_put(setting.system.mlx, setting.system.win, 30, 30, 0xff, "ROTATION:");
 
 	mlx_hook(setting.system.win, 2, 0, key_press, &setting);
-	// mlx_hook(setting.system.win, 4, 0, mouse_press, &setting);
-	// mlx_hook(setting.system.win, 5, 0, mouse_release, &setting);
-	// mlx_hook(setting.system.win, 6, 0, mouse_move, &setting);
+	mlx_hook(setting.system.win, 4, 0, mouse_press, &setting);
+	mlx_hook(setting.system.win, 5, 0, mouse_release, &setting);
+	mlx_hook(setting.system.win, 6, 0, mouse_move, &setting);
 	mlx_hook(setting.system.win, 17, 0, close_fdf, &setting);
 
 	mlx_loop (setting.system.mlx);
@@ -97,7 +97,7 @@ void	set_system(t_system *system)
 	set_buffers(system);
 	set_backbuf(system->back_buf);
 	// system->render = 2;
-	// system->control = 0;
+	system->control = 0;
 }
 
 void	set_buffers(t_system *system)
@@ -137,6 +137,8 @@ void	draw_qvertex(t_system *system, t_coords *coords)
 {
 	int		i;
 	int		j;
+	
+
 	
 	i = 0;
 	while (i < 4)

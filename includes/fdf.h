@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/23 16:03:11 by student          ###   ########.fr       */
+/*   Updated: 2020/03/23 16:31:20 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct	s_system
 	// int			*z_buf;
 	// int			*light_buf;
 	// char		render;
-	// char		control;
-	// int			mouse_pos[2];
+	char		control;
+	int			mouse_pos[2];
 }				t_system;
 
 typedef struct	s_model
@@ -180,9 +180,12 @@ void	round_quad(t_model *model, t_coords *coords, int k);
 
 
 /*
-** transform.c
+** controls_main.c
 */
 int		key_press(int keycode, void *param);
+int		mouse_press(int button, int x, int y, void *param);
+int		mouse_release(int button, int x, int y, void *param);
+int		mouse_move(int x, int y, void *param);
 
 // /*
 // ** controls.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 19:26:21 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 20:39:06 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/03/23 16:54:15 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 void	transform_model(t_system *system, t_model *model, t_coords *coords)
 {
 	int		k;
+
+	if (model->scale == 0)
+	{
+		system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_DEF;
+		return ;
+	}
 
 	coords->counter[1] = 0;
 	while (coords->counter[1] < model->height - 1)
