@@ -168,7 +168,7 @@ void	draw_qvertex(t_system *system, t_coords *coords)
 	while (i < 4)
 	{
 		if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
-			|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 1)))
+			|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
 		{
 			i += 1;
 			continue ;
@@ -179,7 +179,8 @@ void	draw_qvertex(t_system *system, t_coords *coords)
 			if (coords->d_quad[i][0])
 				system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
 			system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
-			system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+			if (coords->d_quad[i][0] != WIDTH - 1)
+				system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
 			j += 1;
 		}
 		i += 1;

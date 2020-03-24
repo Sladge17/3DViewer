@@ -32,6 +32,21 @@ int		key_press(int keycode, void *param)
 	// // 	setting->model.rot[1] += 1;
 	// // if (setting->model.rot[1] == -360 || setting->model.rot[1] == 360)
 	// // 		setting->model.rot[1] = 0;
+
+	if (keycode == 2)
+	{
+		setting->model.pos[0] += 1;
+	}
+	if (keycode == 0)
+	{
+		setting->model.pos[0] -= 1;
+	}
+	if (keycode == 1)
+	{
+		setting->model.pos[1] += 1;
+	}
+
+
 	if (keycode == 6)
 		setting->model.rot[2] -= 1;
 	if (keycode == 7)
