@@ -23,8 +23,6 @@ int		main(int argv, char **argc)
 	}
 	set_model(argc[1], &setting.model, &setting.coords);
 
-	
-
 	set_system(&setting.system);
 
 	drawing_background(&setting.system);
@@ -66,15 +64,16 @@ void	set_model(char *filename, t_model *model, t_coords *coords)
 	model->area = model->width * model->height;
 
 	// func prescale -> shift to origin
-	int		i = 0;
-	while (i < model->area)
-	{
-		model->vertex[i][0] *= 2;
-		model->vertex[i][1] *= 2;
-		i += 1;
-	}
+	// int		i = 0;
+	// while (i < model->area)
+	// {
+	// 	model->vertex[i][0] *= 2;
+	// 	model->vertex[i][1] *= 2;
+	// 	i += 1;
+	// }
 
-	shift_to_origin(model);
+	pre_transform(model);
+	// shift_to_origin(model);
 	model->rot[0] = ROT_X;
 	model->rot[1] = ROT_Y;
 	model->rot[2] = ROT_Z;
@@ -98,18 +97,41 @@ void	set_overall(t_model *model)
 }
 
 
-void	shift_to_origin(t_model *model)
+void	pre_transform(t_model *model)
 {
 	int		i;
+	int		shift[2];
 
+	shift[0] = model->vertex[model->area - 1][0];
+	shift[1] = model->vertex[model->area - 1][1];
 	i = 0;
 	while (i < model->area)
 	{
-		model->vertex[i][0] -= model->vertex[model->area - 1][0] / 2;
-		model->vertex[i][1] -= model->vertex[model->area - 1][1] / 2;
+		model->vertex[i][0] *= 2;
+		model->vertex[i][0] -= shift[0];
+		model->vertex[i][1] *= 2;
+		model->vertex[i][1] -= shift[1];
+		model->vertex[i][2] *= 2;
 		i += 1;
 	}
 }
+
+
+
+
+
+// void	shift_to_origin(t_model *model)
+// {
+// 	int		i;
+
+// 	i = 0;
+// 	while (i < model->area)
+// 	{
+// 		model->vertex[i][0] -= model->vertex[model->area - 1][0] / 2;
+// 		model->vertex[i][1] -= model->vertex[model->area - 1][1] / 2;
+// 		i += 1;
+// 	}
+// }
 
 void	set_system(t_system *system)
 {

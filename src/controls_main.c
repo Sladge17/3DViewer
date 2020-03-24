@@ -20,31 +20,30 @@ int		key_press(int keycode, void *param)
 	
 	if (keycode == 53)
 		exit (0);
-	// // if (keycode == 126)
-	// // 	setting->model.rot[0] -= 1;
-	// // if (keycode == 125)
-	// // 	setting->model.rot[0] += 1;
-	// // if (setting->model.rot[0] == -360 || setting->model.rot[0] == 360)
-	// // 		setting->model.rot[0] = 0;
-	// // if (keycode == 123)
-	// // 	setting->model.rot[1] -= 1;
-	// // if (keycode == 124)
-	// // 	setting->model.rot[1] += 1;
-	// // if (setting->model.rot[1] == -360 || setting->model.rot[1] == 360)
-	// // 		setting->model.rot[1] = 0;
+	if (keycode == 126)
+		setting->model.rot[0] -= 1;
+	
+	controls_test(setting, keycode);
 
-	if (keycode == 2)
-	{
-		setting->model.pos[0] += 1;
-	}
-	if (keycode == 0)
-	{
-		setting->model.pos[0] -= 1;
-	}
-	if (keycode == 1)
-	{
-		setting->model.pos[1] += 1;
-	}
+
+	// if (keycode == 125)
+	// 	setting->model.rot[0] += 1;
+	// if (setting->model.rot[0] == -360 || setting->model.rot[0] == 360)
+	// 		setting->model.rot[0] = 0;
+	// if (keycode == 123)
+	// 	setting->model.rot[1] -= 1;
+	// if (keycode == 124)
+	// 	setting->model.rot[1] += 1;
+	// if (setting->model.rot[1] == -360 || setting->model.rot[1] == 360)
+	// 		setting->model.rot[1] = 0;
+	// if (keycode == 2)
+	// 	setting->model.pos[0] += 1;
+	// if (keycode == 0)
+	// 	setting->model.pos[0] -= 1;
+	// if (keycode == 1)
+	// 	setting->model.pos[1] += 1;
+	// if (keycode == 13)
+	// 	setting->model.pos[1] -= 1;
 
 
 	if (keycode == 6)
@@ -239,3 +238,41 @@ int		mouse_move(int x, int y, void *param)
 	
 	return (0);
 }
+
+
+void	controls_test(t_setting *setting, int keycode)
+{
+	if (keycode == 125)
+		setting->model.rot[0] += 1;
+	if (setting->model.rot[0] == -360 || setting->model.rot[0] == 360)
+			setting->model.rot[0] = 0;
+	if (keycode == 123)
+		setting->model.rot[1] -= 1;
+	if (keycode == 124)
+		setting->model.rot[1] += 1;
+	if (setting->model.rot[1] == -360 || setting->model.rot[1] == 360)
+			setting->model.rot[1] = 0;
+	if (keycode == 2)
+		setting->model.pos[0] += 1;
+	if (keycode == 0)
+		setting->model.pos[0] -= 1;
+	if (keycode == 1)
+		setting->model.pos[1] += 1;
+	if (keycode == 13)
+		setting->model.pos[1] -= 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

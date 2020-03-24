@@ -120,7 +120,8 @@ typedef struct		s_backset
 // int		light_color(int color, float lightpower);
 void	set_model(char *filename, t_model *model, t_coords *coords);
 void	set_overall(t_model *model);
-void	shift_to_origin(t_model *model);
+// void	shift_to_origin(t_model *model);
+void	pre_transform(t_model *model);
 void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
 void	drawing_background(t_system *system);
@@ -186,6 +187,7 @@ int		key_press(int keycode, void *param);
 int		mouse_press(int button, int x, int y, void *param);
 int		mouse_release(int button, int x, int y, void *param);
 int		mouse_move(int x, int y, void *param);
+void	controls_test(t_setting *setting, int keycode);
 
 // /*
 // ** controls.c
