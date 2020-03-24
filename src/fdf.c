@@ -117,9 +117,6 @@ void	pre_transform(t_model *model)
 }
 
 
-
-
-
 // void	shift_to_origin(t_model *model)
 // {
 // 	int		i;

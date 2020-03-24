@@ -70,17 +70,6 @@ int		key_press(int keycode, void *param)
 	}
 
 
-	if (keycode == 12)
-	{
-		if (setting->system.render & 128)
-			setting->system.render ^= 128;
-		setting->model.rot[0] = 0;
-		setting->model.rot[1] = 0;
-		setting->model.rot[2] = 0;
-		setting->model.scale = 20;
-		setting->model.pos[0] = setting->model.vertex[setting->model.area - 1][0] * 20;
-		setting->model.pos[1] = setting->model.vertex[setting->model.area - 1][1] * 20;
-	}
 
 		
 	if (keycode == 35)
@@ -260,6 +249,17 @@ void	controls_test(t_setting *setting, int keycode)
 		setting->model.pos[1] += 1;
 	if (keycode == 13)
 		setting->model.pos[1] -= 1;
+	if (keycode == 12)
+	{
+		if (setting->system.render & 128)
+			setting->system.render ^= 128;
+		setting->model.rot[0] = 0;
+		setting->model.rot[1] = 0;
+		setting->model.rot[2] = 0;
+		set_scalepos(&setting->model, &setting->coords);
+		setting->model.pos[0] = lround(setting->model.vertex[setting->model.area - 1][0] * setting->model.scale);
+		setting->model.pos[1] = lround(setting->model.vertex[setting->model.area - 1][1] * setting->model.scale);
+	}
 }
 
 
