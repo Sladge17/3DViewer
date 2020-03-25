@@ -187,71 +187,71 @@ void	set_buffers(t_system *system)
 	
 // }
 
-void	draw_qvertex(t_system *system, t_model *model, t_coords *coords)
-{
-	int		i;
-	int		j;
+// void	draw_qvertex(t_system *system, t_model *model, t_coords *coords)
+// {
+// 	int		i;
+// 	int		j;
 	
-	if (model->color_f)
-	{
+// 	if (model->color_f)
+// 	{
 
-		i = 0;
-		while (i < 4)
-		{
-			if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
-				|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
-			{
-				i += 1;
-				continue ;
-			}
-			j = -1;
-			while (j < 2)
-			{
-				if (coords->d_quad[i][0] && coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH])
-				{
-					system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
-					system->z_buf[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
-				}
-				if (coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH])
-				{
-					system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
-					system->z_buf[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
-				}
-				if (coords->d_quad[i][0] != WIDTH - 1 && coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH])
-				{
-					system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
-					system->z_buf[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
-				}
-				j += 1;
-			}
-			i += 1;
-		}
-	}
-	else
-	{
-		i = 0;
-		while (i < 4)
-		{
-			if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
-				|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
-			{
-				i += 1;
-				continue ;
-			}
-			j = -1;
-			while (j < 2)
-			{
-				if (coords->d_quad[i][0])
-					system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
-				system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
-				if (coords->d_quad[i][0] != WIDTH - 1)
-					system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
-				j += 1;
-			}
-			i += 1;
-		}
-	}
-}
+// 		i = 0;
+// 		while (i < 4)
+// 		{
+// 			if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
+// 				|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
+// 			{
+// 				i += 1;
+// 				continue ;
+// 			}
+// 			j = -1;
+// 			while (j < 2)
+// 			{
+// 				if (coords->d_quad[i][0] && coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH])
+// 				{
+// 					system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+// 					system->z_buf[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
+// 				}
+// 				if (coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH])
+// 				{
+// 					system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+// 					system->z_buf[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
+// 				}
+// 				if (coords->d_quad[i][0] != WIDTH - 1 && coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH])
+// 				{
+// 					system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+// 					system->z_buf[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
+// 				}
+// 				j += 1;
+// 			}
+// 			i += 1;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		i = 0;
+// 		while (i < 4)
+// 		{
+// 			if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
+// 				|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
+// 			{
+// 				i += 1;
+// 				continue ;
+// 			}
+// 			j = -1;
+// 			while (j < 2)
+// 			{
+// 				if (coords->d_quad[i][0])
+// 					system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
+// 				system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
+// 				if (coords->d_quad[i][0] != WIDTH - 1)
+// 					system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
+// 				j += 1;
+// 			}
+// 			i += 1;
+// 		}
+// 	}
+// }
 
 // void	draw_qvertex(t_system *system, t_model *model, t_coords *coords)
 // {

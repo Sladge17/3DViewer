@@ -125,7 +125,7 @@ void	pre_transform(t_model *model);
 void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
 // void	drawing_background(t_system *system);
-void	draw_qvertex(t_system *system, t_model *model, t_coords *coords);
+
 int		close_fdf(void *param);
 void	clean_frame(t_system *system, t_model *model);
 
@@ -188,6 +188,15 @@ int		mouse_press(int button, int x, int y, void *param);
 int		mouse_release(int button, int x, int y, void *param);
 int		mouse_move(int x, int y, void *param);
 void	controls_test(t_setting *setting, int keycode);
+
+/*
+** r_vertex.c
+*/
+void	draw_qvertex(t_system *system, t_model *model, t_coords *coords);
+void	vert_zbuf(t_system *system, t_coords *coords);
+void	vert_updownlines(t_system *system, t_coords *coords, int *i, int *j);
+void	vert_nozbuf(t_system *system, t_coords *coords);
+char	vert_onscreen(int *i, t_coords *coords);
 
 // /*
 // ** controls.c
