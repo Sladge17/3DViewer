@@ -133,9 +133,10 @@ void	clean_frame(t_system *system);
 ** parser.c
 */
 int		ft_wordscounter(char const *str, char c);
-void	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y);
+int check_point(char *str);
+int		fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y);
 int		allocate_mem(char *filename, t_model *model);
-int		parse_color(char *word);
+int		parse_color(char *word, t_model *model, int default_color);
 int		parse(char *filename, t_model *model);
 
 /*

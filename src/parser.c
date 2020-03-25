@@ -34,10 +34,31 @@ int		ft_wordscounter(char const *str, char c)
 	return (words);
 }
 
+int check_point(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i] != 0)
+	{
+		if (ft_isdigit(str[i]) || str[i] == '-' || str[i] == '+')
+			i++;
+		else if (str[i] == ',' && i > 0)
+		{
+			i++;
+			while(ft_isalnum(str[i]))
+				i++;
+		}
+		else
+			return(0);
+	}
+	return(1);
+}
+
 /*
 **Writes a line from the file in the array of ints
 */
-void	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y)
+int	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y)
 {
 	int k = i_starts_from;
 	while(k < (i_starts_from + model->width))
@@ -45,20 +66,23 @@ void	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y)
 		if (!(model->vertex[k] = (int *)malloc(sizeof(int) * AMOUNT_OF_PARAMETERS_PER_DOT)))
 			{
 				write(1, "malloc error\n", 13);
-				return;
+				return(0);
 			}
-		else
+		else if (check_point(line_of_z[k - i_starts_from]))
 			{
 				model->vertex[k][0] = (k - i_starts_from);
 				model->vertex[k][1] = y;
 				model->vertex[k][2] = ft_atoi(line_of_z[k - i_starts_from]);
-				model->vertex[k][3] = parse_color(line_of_z[k - i_starts_from]);
-				if (model->vertex[k][3] >= 0)
-					model->color_f = 1;
+				model->vertex[k][3] = parse_color(line_of_z[k - i_starts_from], model, COLOR_DEF);
+				//if (model->vertex[k][3] >= 0)
+					//model->color_f = 1;
 				//free(line_of_z[k - i_starts_from]);
 				k++;
 			}
+		else
+			return(0);
 	}
+	return(1);
 }
 
 int		allocate_mem(char *filename, t_model *model)
@@ -93,16 +117,19 @@ int		allocate_mem(char *filename, t_model *model)
 	return(1);
 }
 
-int parse_color(char *word)
+int parse_color(char *word, t_model *model, int default_color)
 {
 	char **splitted_word;
 	int output;
 
-	output = COLOR_DEF;
+	output = default_color;
 	splitted_word = 0;
 	splitted_word = ft_strsplit(word, ',');
 	if(splitted_word[1])
+	{
 		output = ft_atoi_base(splitted_word[1], 16);
+		model->color_f = 1;
+	}
 	ft_arrayfree(splitted_word);
 	return(output);
 }
