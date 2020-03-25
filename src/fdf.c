@@ -85,12 +85,12 @@ void	set_overall(t_model *model)
 {
 	int		i;
 
-	if (!(model->o_vertex = (int **)malloc(sizeof(int *) * model->area)))
+	if (!(model->o_vertex = (float **)malloc(sizeof(float *) * model->area)))
 		exit(0);
 	i = 0;
 	while (i < model->area)
 	{
-		if (!(model->o_vertex[i] = (int *)malloc(sizeof(int) * 2)))
+		if (!(model->o_vertex[i] = (float *)malloc(sizeof(float) * 2)))
 			exit(0);
 		i += 1;
 	}

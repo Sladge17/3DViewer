@@ -15,17 +15,17 @@
 void	set_scalepos(t_model *model, t_coords *coords)
 {
 	static char	first = 0;
-	int			vert_min[2];
-	int			vert_max[2];
-	int			o_len[2];
+	float		vert_min[2];
+	float		vert_max[2];
+	float		o_len[2];
 
 	fill_overtex(model, coords);
 	set_minmaxvert(model, vert_min, vert_max);
 	o_len[0] = vert_max[0] - vert_min[0];
 	o_len[1] = vert_max[1] - vert_min[1];
 	model->scale = WIDTH / o_len[0] < HEIGHT / o_len[1] ?
-					(float)(WIDTH - 100) / (float)o_len[0] :
-					(float)(HEIGHT - 100) / (float)o_len[1];
+					(WIDTH - 100) / o_len[0] :
+					(HEIGHT - 100) / o_len[1];
 	model->pos[0] = WIDTH / 2 - model->scale * (vert_min[0] + o_len[0] / 2);
 	model->pos[1] = HEIGHT / 2 - model->scale * (vert_min[1] + o_len[1] / 2);
 	if (!first)
@@ -51,8 +51,8 @@ void	fill_overtex(t_model *model, t_coords *coords)
 			while (k < 4)
 			{
 				rotate_quad(model, coords, k);
-				model->o_vertex[coords->index[k]][0] = lround(coords->f_quad[k][0]);
-				model->o_vertex[coords->index[k]][1] = lround(coords->f_quad[k][1]);
+				model->o_vertex[coords->index[k]][0] = coords->f_quad[k][0];
+				model->o_vertex[coords->index[k]][1] = coords->f_quad[k][1];
 				k += 1;
 			}
 			coords->counter[0] += 1;
@@ -98,7 +98,7 @@ void	shift_quadvert(t_coords *coords)
 	coords->d_quad[1][2] = coords->d_quad[3][2];
 }
 
-void	set_minmaxvert(t_model *model, int *vert_min, int *vert_max)
+void	set_minmaxvert(t_model *model, float *vert_min, float *vert_max)
 {
 	int		i;
 

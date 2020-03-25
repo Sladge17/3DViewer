@@ -73,7 +73,7 @@ typedef struct	s_model
 	short		rot[3];
 	float		scale;
 	// char		overall;
-	int			**o_vertex;
+	float		**o_vertex;
 	float		first_scale;
 	short		first_pos[2];
 	int			max_coord;
@@ -163,11 +163,10 @@ int		backcolor(float cursor, t_back *backset);
 ** set_scale.c
 */
 void	set_scalepos(t_model *model, t_coords *coords);
-void	set_minmaxvert(t_model *model, int *vert_min, int *vert_max);
+void	set_minmaxvert(t_model *model, float *vert_min, float *vert_max);
 void	fill_overtex(t_model *model, t_coords *coords);
 void	setup_quad(t_model *model, t_coords *coords, int *k);
 void	shift_quadvert(t_coords *coords);
-void	rotate_quad(t_model *model, t_coords *coords, int k);
 
 /*
 ** transform.c
