@@ -76,7 +76,7 @@ typedef struct	s_model
 	float		**o_vertex;
 	float		first_scale;
 	short		first_pos[2];
-	int			max_coord;
+	// int			max_coord;
 	char		color_f;
 	char		*modelname;
 }				t_model;
@@ -113,19 +113,14 @@ typedef struct		s_backset
 ** fdf.c
 */
 // void	draw_line(t_system *system, int *vertex_1, int *vertex_2, int color);
-// void	test(float *vertex);
 // void	fill_triangle(t_system *system, int *vertex_0, int *vertex_1, int *vertex_2);
 // void	sort_triangle_y(int **triangle);
-// int		close_fdf(void *param);
 // int		light_color(int color, float lightpower);
 void	set_model(char *filename, t_model *model, t_coords *coords);
 void	set_overall(t_model *model);
-// void	shift_to_origin(t_model *model);
 void	pre_transform(t_model *model);
 void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
-// void	drawing_background(t_system *system);
-
 int		close_fdf(void *param);
 void	clean_frame(t_system *system, t_model *model);
 
@@ -133,7 +128,7 @@ void	clean_frame(t_system *system, t_model *model);
 ** parser.c
 */
 int		ft_wordscounter(char const *str, char c);
-int check_point(char *str);
+int		check_point(char *str);
 int		fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y);
 int		allocate_mem(char *filename, t_model *model);
 int		parse_color(char *word, t_model *model, int default_color);
