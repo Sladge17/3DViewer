@@ -25,7 +25,8 @@ int		main(int argv, char **argc)
 
 	set_system(&setting.system);
 
-	drawing_background(&setting.system);
+	// drawing_background(&setting.system);
+	clean_frame(&setting.system, &setting.model);
 
 	transform_model(&setting.system, &setting.model, &setting.coords);
 
@@ -139,6 +140,14 @@ void	set_system(t_system *system)
 	system->field = WIDTH * HEIGHT;
 	set_buffers(system);
 	set_backbuf(system->back_buf);
+
+	// int	i = 0;
+	// while (i < system->field)
+	// {
+	// 	system->z_buf[i] = 1 << 31;
+	// 	i += 1;
+	// }
+
 	system->render = 2;
 	system->control = 0;
 }
@@ -146,6 +155,8 @@ void	set_system(t_system *system)
 void	set_buffers(t_system *system)
 {
 	if (!(system->back_buf = (int *)malloc(sizeof(int) * system->field)))
+		exit (0);
+	if (!(system->z_buf = (int *)malloc(sizeof(int) * system->field)))
 		exit (0);
 	
 	// system->z_buf = (int *)malloc(sizeof(int) * system->field);
@@ -157,54 +168,122 @@ void	set_buffers(t_system *system)
 }
 
 
-void	drawing_background(t_system *system)
-{
-	int		i;
+// void	drawing_background(t_system *system)
+// {
+// 	int		i;
 
-	i = 0;
-	while (i < system->field)
-	{
-		system->output[i] = system->back_buf[i];
-		i += 1;
-	}
-	// i = 0;
-	// while (i < model->area)
-	// {
-	// 	system->output[model->vertex[i][0] + model->vertex[i][1] * WIDTH] = model->vertex[i][2];
-	// 	i += 1;
-	// }
+// 	i = 0;
+// 	while (i < system->field)
+// 	{
+// 		system->output[i] = system->back_buf[i];
+// 		i += 1;
+// 	}
+// 	// i = 0;
+// 	// while (i < model->area)
+// 	// {
+// 	// 	system->output[model->vertex[i][0] + model->vertex[i][1] * WIDTH] = model->vertex[i][2];
+// 	// 	i += 1;
+// 	// }
 	
-}
+// }
 
-void	draw_qvertex(t_system *system, t_coords *coords)
+void	draw_qvertex(t_system *system, t_model *model, t_coords *coords)
 {
 	int		i;
 	int		j;
 	
-
-	
-	i = 0;
-	while (i < 4)
+	if (model->color_f)
 	{
-		if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
-			|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
+
+		i = 0;
+		while (i < 4)
 		{
+			if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
+				|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
+			{
+				i += 1;
+				continue ;
+			}
+			j = -1;
+			while (j < 2)
+			{
+				if (coords->d_quad[i][0] && coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH])
+				{
+					system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+					system->z_buf[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
+				}
+				if (coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH])
+				{
+					system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+					system->z_buf[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
+				}
+				if (coords->d_quad[i][0] != WIDTH - 1 && coords->f_quad[i][2] > system->z_buf[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH])
+				{
+					system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+					system->z_buf[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = lround(coords->f_quad[i][2]);
+				}
+				j += 1;
+			}
 			i += 1;
-			continue ;
 		}
-		j = -1;
-		while (j < 2)
+	}
+	else
+	{
+		i = 0;
+		while (i < 4)
 		{
-			if (coords->d_quad[i][0])
-				system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
-			system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
-			if (coords->d_quad[i][0] != WIDTH - 1)
-				system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
-			j += 1;
+			if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
+				|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
+			{
+				i += 1;
+				continue ;
+			}
+			j = -1;
+			while (j < 2)
+			{
+				if (coords->d_quad[i][0])
+					system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
+				system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
+				if (coords->d_quad[i][0] != WIDTH - 1)
+					system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = COLOR_V;
+				j += 1;
+			}
+			i += 1;
 		}
-		i += 1;
 	}
 }
+
+// void	draw_qvertex(t_system *system, t_model *model, t_coords *coords)
+// {
+// 	int		i;
+// 	int		j;
+	
+// 	if (model->color_f)
+// 	{
+
+// 		i = 0;
+// 		while (i < 4)
+// 		{
+// 			if (((0 > coords->d_quad[i][0]) || (coords->d_quad[i][0] > WIDTH - 1))
+// 				|| ((0 > coords->d_quad[i][1]) || (coords->d_quad[i][1] > HEIGHT - 2)))
+// 			{
+// 				i += 1;
+// 				continue ;
+// 			}
+// 			j = -1;
+// 			while (j < 2)
+// 			{
+// 				if (coords->d_quad[i][0])
+// 					system->output[(coords->d_quad[i][0] - 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+// 				system->output[(coords->d_quad[i][0]) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+// 				if (coords->d_quad[i][0] != WIDTH - 1)
+// 					system->output[(coords->d_quad[i][0] + 1) + (coords->d_quad[i][1] - j) * WIDTH] = coords->d_quad[i][2];
+// 				j += 1;
+// 			}
+// 			i += 1;
+// 		}
+// 	}
+// }
 
 int		close_fdf(void *param)
 {
@@ -212,17 +291,39 @@ int		close_fdf(void *param)
 	exit(0);
 }
 
-void	clean_frame(t_system *system)
+void	clean_frame(t_system *system, t_model *model)
 {
 	int		i;
 
 	i = 0;
-	while (i < system->field)
+	if (model->color_f)
 	{
-		system->output[i] = system->back_buf[i];
-		// system->z_buf[i] = 1 << 31;
-		// system->light_buf[i] = 0;
-		i += 1;
+		while (i < system->field)
+		{
+			system->output[i] = system->back_buf[i];
+			system->z_buf[i] = 1 << 31;
+			// system->light_buf[i] = 0;
+			i += 1;
+		}
 	}
+	else
+	{
+		while (i < system->field)
+		{
+			system->output[i] = system->back_buf[i];
+			// system->z_buf[i] = 1 << 31;
+			// system->light_buf[i] = 0;
+			i += 1;
+		}
+	}
+
+
+
+
+
+
+
+
+
 	// drawing_background(system);
 }

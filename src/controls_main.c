@@ -97,7 +97,7 @@ int		key_press(int keycode, void *param)
 	// if (keycode == 2)
 	// 	setting->system.control ^= 8;
 
-	clean_frame(&setting->system);
+	clean_frame(&setting->system, &setting->model);
 	transform_model(&setting->system, &setting->model, &setting->coords);
 	mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 
@@ -119,7 +119,7 @@ int		mouse_press(int button, int x, int y, void *param)
 			setting->model.scale = 0;
 		// mlx_clear_window(setting->system.mlx, setting->system.win);
 		// transform_model(&setting->system, &setting->model, &setting->coords);
-		clean_frame(&setting->system);	
+		clean_frame(&setting->system, &setting->model);
 		transform_model(&setting->system, &setting->model, &setting->coords);
 		mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 		return (0);
@@ -129,7 +129,7 @@ int		mouse_press(int button, int x, int y, void *param)
 		setting->model.scale += SPEED_S1;
 		// mlx_clear_window(setting->system.mlx, setting->system.win);
 		// transform_model(&setting->system, &setting->model, &setting->coords);
-		clean_frame(&setting->system);	
+		clean_frame(&setting->system, &setting->model);
 		transform_model(&setting->system, &setting->model, &setting->coords);
 		mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 		return (0);
@@ -221,7 +221,7 @@ int		mouse_move(int x, int y, void *param)
 	setting->system.mouse_pos[0] = x;
 	setting->system.mouse_pos[1] = y;
 
-	clean_frame(&setting->system);	
+	clean_frame(&setting->system, &setting->model);
 	transform_model(&setting->system, &setting->model, &setting->coords);
 	mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 	

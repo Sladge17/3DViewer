@@ -40,7 +40,7 @@ void	transform_model(t_system *system, t_model *model, t_coords *coords)
 				k += 1;
 			}
 			// draw_model(system, model, coords);
-			draw_qvertex(system, coords);
+			draw_qvertex(system, model, coords);
 			coords->counter[0] += 1;
 		}
 		coords->counter[1] += 1;

@@ -55,7 +55,7 @@ typedef struct	s_system
 	int			field;
 	int			*output;
 	int			*back_buf;
-	// int			*z_buf;
+	int			*z_buf;
 	// int			*light_buf;
 	char		render;
 	char		control;
@@ -124,10 +124,10 @@ void	set_overall(t_model *model);
 void	pre_transform(t_model *model);
 void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
-void	drawing_background(t_system *system);
-void	draw_qvertex(t_system *system, t_coords *coords);
+// void	drawing_background(t_system *system);
+void	draw_qvertex(t_system *system, t_model *model, t_coords *coords);
 int		close_fdf(void *param);
-void	clean_frame(t_system *system);
+void	clean_frame(t_system *system, t_model *model);
 
 /*
 ** parser.c
