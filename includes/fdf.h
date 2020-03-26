@@ -117,6 +117,8 @@ typedef struct		s_backset
 // void	sort_triangle_y(int **triangle);
 // int		light_color(int color, float lightpower);
 void	set_model(char *filename, t_model *model, t_coords *coords);
+void	set_diagonal(t_model *model);
+float	len_diag(int *vertex_0, int *vertex_1);
 void	set_overall(t_model *model);
 void	pre_transform(t_model *model);
 void	set_system(t_system *system);
@@ -189,7 +191,9 @@ void	controls_test(t_setting *setting, int keycode);
 */
 char	draw_zeroscale(t_system *system, t_model *model);
 void	draw_model(t_system *system, t_model *model, t_coords *coords);
-// void	draw_quad(t_system *system, t_model *model, t_coords *coords);
+void	draw_quad(t_system *system, t_model *model, t_coords *coords);
+
+
 // void	fill_quad(t_system *system, t_coords *coords);
 // void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
 // void	draw_qvertex(t_system *system, t_coords *coords);

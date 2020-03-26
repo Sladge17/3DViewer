@@ -58,6 +58,7 @@ void	set_model(char *filename, t_model *model, t_coords *coords)
 {
 	parse(filename, model);
 	model->area = model->width * model->height;
+	set_diagonal(model);
 	pre_transform(model);
 	model->rot[0] = ROT_X;
 	model->rot[1] = ROT_Y;
@@ -65,6 +66,47 @@ void	set_model(char *filename, t_model *model, t_coords *coords)
 	set_overall(model);
 	set_scalepos(model, coords);
 }
+
+void	set_diagonal(t_model *model)
+{
+	float	diag03;
+	float	diag12;
+	int		i;
+	int		j;
+	
+	model->diagonal = (char *)malloc(sizeof(char) *
+					((model->width - 1) * (model->height - 1)));
+	if (!model->diagonal)
+		exit (0);		
+	j = 0;
+	while (j < model->height - 1)
+	{
+		i = 0;
+		while (i < model->width - 1)
+		{
+			diag03 = len_diag(model->vertex[i + j * model->width],
+					model->vertex[i + model->width + 1 + j * model->width]);
+			diag12 = len_diag(model->vertex[i + 1 + j * model->width],
+					model->vertex[i + model->width + j * model->width]);
+			model->diagonal[i + j * (model->width - 1)] = diag12 > diag03 ? 0 : 1;
+			i += 1;
+		}
+		j += 1;
+	}
+}
+
+float	len_diag(int *vertex_0, int *vertex_1)
+{
+	float	lenght;
+	int		len[3];
+
+	len[0] = abs(vertex_1[0] - vertex_0[0]);
+	len[1] = abs(vertex_1[1] - vertex_0[1]);
+	len[2] = abs(vertex_1[2] - vertex_0[2]);
+	lenght = sqrt(len[0] * len[0] + len[1] * len[1] + len[2] * len[2]);
+	return (lenght);
+}
+
 
 void	set_overall(t_model *model)
 {
@@ -111,7 +153,7 @@ void	set_system(t_system *system)
 	system->field = WIDTH * HEIGHT;
 	set_buffers(system);
 	set_backbuf(system->back_buf);
-	system->render = 1;
+	system->render = 65;
 	system->control = 0;
 }
 
@@ -139,6 +181,8 @@ int		close_fdf(void *param)
 void	clean_frame(t_system *system, t_model *model)
 {
 	int		i;
+
+	// mlx_clear_window(system->mlx, system->win);
 
 	i = 0;
 	if (model->color_f)

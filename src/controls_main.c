@@ -74,16 +74,24 @@ int		key_press(int keycode, void *param)
 		
 	if (keycode == 35)
 		setting->system.render ^= 128;
-	// if (keycode == 18)
-	// {
-	// 	setting->system.render &= 128;
-	// 	setting->system.render |= 1;
-	// }
-	// if (keycode == 19)
-	// {
-	// 	setting->system.render &= 128;
-	// 	setting->system.render |= 2;
-	// }
+	if (keycode == 50)
+		setting->system.render ^= 64;
+
+	if (keycode == 18)
+	{
+		setting->system.render &= 192;
+		setting->system.render |= 1;
+	}
+	if (keycode == 19)
+	{
+		setting->system.render &= 192;
+		setting->system.render |= 2;
+	}
+	if (keycode == 20)
+	{
+		setting->system.render &= 192;
+		setting->system.render |= 4;
+	}
 	// if (keycode == 20)
 	// {
 	// 	setting->system.render &= 128;

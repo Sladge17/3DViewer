@@ -14,7 +14,7 @@
 
 void	draw_qvertex(t_system *system, t_model *model, t_coords *coords)
 {
-	if (model->color_f)
+	if (model->color_f && system->render & 64)
 	{
 		vert_zbuf(system, coords);
 		return ;
