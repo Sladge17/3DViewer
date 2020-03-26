@@ -123,6 +123,7 @@ void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
 int		close_fdf(void *param);
 void	clean_frame(t_system *system, t_model *model);
+char	draw_zeroscale(t_system *system, t_model *model);
 
 /*
 ** parser.c

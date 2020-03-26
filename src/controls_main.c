@@ -134,7 +134,7 @@ int		mouse_press(int button, int x, int y, void *param)
 		mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 		return (0);
 	}
-	if (button == 1)
+	if (button == 1 && setting->model.scale)
 		setting->system.control ^= 1;
 	if (button == 2)
 		setting->system.control ^= 2;
@@ -152,7 +152,7 @@ int		mouse_release(int button, int x, int y, void *param)
 	x = 0;
 	y = 0;
 	setting = (t_setting *)param;
-	if (button == 1)
+	if (button == 1 && setting->model.scale)
 		setting->system.control ^= 1;
 	if (button == 2)
 		setting->system.control ^= 2;

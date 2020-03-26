@@ -16,11 +16,8 @@ void	transform_model(t_system *system, t_model *model, t_coords *coords)
 {
 	int		k;
 
-	if (model->scale == 0)
-	{
-		system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_DEF;
+	if (draw_zeroscale(system, model))
 		return ;
-	}
 
 	coords->counter[1] = 0;
 	while (coords->counter[1] < model->height - 1)
@@ -108,3 +105,4 @@ void	round_quad(t_model *model, t_coords *coords, int k)
 	coords->d_quad[k][1] = lround(coords->f_quad[k][1]);
 	coords->d_quad[k][2] = model->vertex[coords->index[k]][3];
 }
+

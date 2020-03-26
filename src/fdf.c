@@ -163,3 +163,20 @@ void	clean_frame(t_system *system, t_model *model)
 		}
 	}
 }
+
+char	draw_zeroscale(t_system *system, t_model *model)
+{
+	if (model->scale != 0)
+		return (0);
+	if (model->color_f)
+	{
+		system->output[model->pos[0] + model->pos[1] * WIDTH] =
+			model->vertex[model->area / 2][3];
+		return (1);
+	}
+	system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_V;
+	return (1);
+}
+
+
+
