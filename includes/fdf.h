@@ -123,7 +123,6 @@ void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
 int		close_fdf(void *param);
 void	clean_frame(t_system *system, t_model *model);
-char	draw_zeroscale(t_system *system, t_model *model);
 
 /*
 ** parser.c
@@ -186,6 +185,17 @@ int		mouse_move(int x, int y, void *param);
 void	controls_test(t_setting *setting, int keycode);
 
 /*
+** drawing.c
+*/
+char	draw_zeroscale(t_system *system, t_model *model);
+void	draw_model(t_system *system, t_model *model, t_coords *coords);
+// void	draw_quad(t_system *system, t_model *model, t_coords *coords);
+// void	fill_quad(t_system *system, t_coords *coords);
+// void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
+// void	draw_qvertex(t_system *system, t_coords *coords);
+
+
+/*
 ** r_vertex.c
 */
 void	draw_qvertex(t_system *system, t_model *model, t_coords *coords);
@@ -193,6 +203,16 @@ void	vert_zbuf(t_system *system, t_coords *coords);
 void	vert_updownlines(t_system *system, t_coords *coords, int *i, int *j);
 void	vert_nozbuf(t_system *system, t_coords *coords);
 char	vert_onscreen(int *i, t_coords *coords);
+
+/*
+** draw_line.c
+*/
+void	draw_line(t_system *system, int *vertex_1, int *vertex_2, int color);
+void	x_more_y(t_system *system, int *vertex_0, int *vertex_1, int color);
+void	y_more_x(t_system *system, int *vertex_0, int *vertex_1, int color);
+int		set_diffuse(int *vertex_0, int *vertex_1, int *coord);
+
+
 
 // /*
 // ** controls.c
