@@ -185,7 +185,7 @@ void	clean_frame(t_system *system, t_model *model)
 	// mlx_clear_window(system->mlx, system->win);
 
 	i = 0;
-	if (model->color_f)
+	if (model->color_f && system->render & 64)
 	{
 		while (i < system->field)
 		{
