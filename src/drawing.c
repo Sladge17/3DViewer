@@ -33,16 +33,25 @@ char	draw_zeroscale(t_system *system, t_model *model)
 
 void	draw_model(t_system *system, t_model *model, t_coords *coords)
 {
-	if (system->render & 1)
-		draw_qvertex(system, model, coords);
+	if (system->render & 8)
+	{
+		return ;
+	}
+	if (system->render & 4)
+	{
+		return ;
+	}
 	if (system->render & 2)
+	{
 		draw_quad(system, model, coords);
-
-	
-	// // if (system->render & 4)
-	// // 	fill_quad(system, coords);
-	// if (system->render & 12)
-	// 	fill_qmesh(system, model, coords);
+		return ;
+	}
+	draw_qvertex(system, model, coords);
+	// if (system->render & 1)
+	// {
+	// 	draw_qvertex(system, model, coords);
+	// 	return ;
+	// }
 }
 
 // void	draw_quad(t_system *system, t_model *model, t_coords *coords)

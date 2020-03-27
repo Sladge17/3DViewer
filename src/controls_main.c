@@ -75,7 +75,11 @@ int		key_press(int keycode, void *param)
 	if (keycode == 35)
 		setting->system.render ^= 128;
 	if (keycode == 50)
+	{
+		if (!setting->model.color_f)
+			return (0);
 		setting->system.render ^= 64;
+	}
 
 	if (keycode == 18)
 	{
