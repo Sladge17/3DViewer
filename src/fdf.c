@@ -153,7 +153,7 @@ void	set_system(t_system *system)
 	system->field = WIDTH * HEIGHT;
 	set_buffers(system);
 	set_backbuf(system->back_buf);
-	system->render = 65;
+	system->render = 66;
 	system->control = 0;
 }
 

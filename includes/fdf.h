@@ -196,8 +196,12 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords);
 void	draw_quad(t_system *system, t_model *model, t_coords *coords);
 void	line_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
 // void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1);
-int		set_colorhor(int *vertex_0, int *vertex_1, int cursor);
+// void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1);
+int		set_colorrgb(int *vertex_0, int *vertex_1, int cursor, char dir);
+
+void	line_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
+void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
+
 
 
 // void	fill_quad(t_system *system, t_coords *coords);
