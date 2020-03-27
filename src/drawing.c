@@ -67,59 +67,181 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords)
 // LINE UNCOMMENT
 
 
+
+
+// void	draw_qvertex(t_system *system, t_model *model, t_coords *coords)
+// {
+// 	if (model->color_f && system->render & 64)
+// 	{
+// 		vert_zbuf(system, coords, 0);
+// 		if (coords->counter[0] == model->width - 2)
+// 			vert_zbuf(system, coords, 2);
+// 		if (coords->counter[1] == model->height - 2)
+// 			vert_zbuf(system, coords, 1);
+// 		if (coords->index[3] == model->area - 1)
+// 			vert_zbuf(system, coords, 3);
+// 		return ;
+// 	}
+// 	vert_nozbuf(system, coords, 0);
+// 	if (coords->counter[0] == model->width - 2)
+// 		vert_nozbuf(system, coords, 2);
+// 	if (coords->counter[1] == model->height - 2)
+// 		vert_nozbuf(system, coords, 1);
+// 	if (coords->index[3] == model->area - 1)
+// 		vert_nozbuf(system, coords, 3);
+// }
+
+
+
+
+
 void	draw_quad(t_system *system, t_model *model, t_coords *coords)
 {
-	// coords->tris_xy[0][0] = coords->d_quad[0][0];
-	// coords->tris_xy[0][1] = coords->d_quad[0][1];
-	// coords->tris_z[0] = coords->f_quad[0][2]
-	// coords->tris_xy[1][0] = coords->d_quad[1][0];
-	// coords->tris_xy[1][1] = coords->d_quad[1][1];
-	// coords->tris_z[1] = coords->f_quad[1][2]
-	draw_line(system, coords->d_quad[0], coords->d_quad[1], model->color_f);
+	// // coords->tris_xy[0][0] = coords->d_quad[0][0];
+	// // coords->tris_xy[0][1] = coords->d_quad[0][1];
+	// // coords->tris_z[0] = coords->f_quad[0][2]
+	// // coords->tris_xy[1][0] = coords->d_quad[1][0];
+	// // coords->tris_xy[1][1] = coords->d_quad[1][1];
+	// // coords->tris_z[1] = coords->f_quad[1][2]
+	// draw_line(system, coords->d_quad[0], coords->d_quad[1], model->color_f);
 
-	// coords->tris_xy[0][0] = coords->d_quad[0][0];
-	// coords->tris_xy[0][1] = coords->d_quad[0][1];
-	// coords->tris_z[0] = coords->f_quad[0][2]
-	// coords->tris_xy[1][0] = coords->d_quad[1][0];
-	// coords->tris_xy[1][1] = coords->d_quad[1][1];
-	// coords->tris_z[1] = coords->f_quad[1][2]
-	draw_line(system, coords->d_quad[0], coords->d_quad[2], model->color_f);
+	// // coords->tris_xy[0][0] = coords->d_quad[0][0];
+	// // coords->tris_xy[0][1] = coords->d_quad[0][1];
+	// // coords->tris_z[0] = coords->f_quad[0][2]
+	// // coords->tris_xy[1][0] = coords->d_quad[1][0];
+	// // coords->tris_xy[1][1] = coords->d_quad[1][1];
+	// // coords->tris_z[1] = coords->f_quad[1][2]
+	// draw_line(system, coords->d_quad[0], coords->d_quad[2], model->color_f);
 
-	// if (model->diagonal[coords->counter[0] + coords->counter[1] * (model->width - 1)])
-	// 	draw_line(system, coords->d_quad[1], coords->d_quad[2], COLOR_W);
-	// else
-	// 	draw_line(system, coords->d_quad[0], coords->d_quad[3], COLOR_W);
+	// // if (model->diagonal[coords->counter[0] + coords->counter[1] * (model->width - 1)])
+	// // 	draw_line(system, coords->d_quad[1], coords->d_quad[2], COLOR_W);
+	// // else
+	// // 	draw_line(system, coords->d_quad[0], coords->d_quad[3], COLOR_W);
 
+	// if (coords->counter[0] == model->width - 2)
+	// 	draw_line(system, coords->d_quad[2], coords->d_quad[3], model->color_f);
+	// if (coords->counter[1] == model->height - 2)
+	// 	draw_line(system, coords->d_quad[1], coords->d_quad[3], model->color_f);
+	if (model->color_f && system->render & 64)
+	{
+// 		vert_zbuf(system, coords, 0);
+// 		if (coords->counter[0] == model->width - 2)
+// 			vert_zbuf(system, coords, 2);
+// 		if (coords->counter[1] == model->height - 2)
+// 			vert_zbuf(system, coords, 1);
+// 		if (coords->index[3] == model->area - 1)
+// 			vert_zbuf(system, coords, 3);
+		return ;
+	}
+	line_nozbuf(system, coords->d_quad[0], coords->d_quad[1]);
+	line_nozbuf(system, coords->d_quad[0], coords->d_quad[2]);
 	if (coords->counter[0] == model->width - 2)
-		draw_line(system, coords->d_quad[2], coords->d_quad[3], model->color_f);
+		line_nozbuf(system, coords->d_quad[2], coords->d_quad[3]);
 	if (coords->counter[1] == model->height - 2)
-		draw_line(system, coords->d_quad[1], coords->d_quad[3], model->color_f);
+		line_nozbuf(system, coords->d_quad[1], coords->d_quad[3]);
+	if ((coords->index[3] == model->area - 1) &&
+		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT))
+		system->output[coords->d_quad[3][0] +
+			coords->d_quad[3][1] * WIDTH] = COLOR_W;
+
+// 	vert_nozbuf(system, coords, 0);
+// 	if (coords->counter[0] == model->width - 2)
+// 		vert_nozbuf(system, coords, 2);
+// 	if (coords->counter[1] == model->height - 2)
+// 		vert_nozbuf(system, coords, 1);
+// 	if (coords->index[3] == model->area - 1)
+// 		vert_nozbuf(system, coords, 3);
 }
 
 
-void	draw_line(t_system *system, int *vertex_0, int *vertex_1, char color_f)
+void	line_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
 {
 	char	d[2];
 	int		len[2];
 	int		overflow;
 	int		coord[2];
 
+	// if (vertex_0[1] == vertex_1[1])
+	// {
+	// 	linex_nozbuf(system, vertex_0, vertex_1);
+	// 	return ;
+	// }
+
 	d[0] = vertex_1[0] < vertex_0[0] ? -1 : 1;
 	d[1] = vertex_1[1] < vertex_0[1] ? -1 : 1;
 	len[0] = (vertex_1[0] - vertex_0[0]) * d[0];
 	len[1] = (vertex_1[1] - vertex_0[1]) * d[1];
+	coord[0] = vertex_0[0];
+	coord[1] = vertex_0[1];
+	overflow = 0;
 
-
-	if (vertex_0[1] == vertex_1[1])
+	if (len[0] > len[1])
 	{
-		draw_horizontal(system, vertex_0, vertex_1, color_f);
-		return ;
+
+		while (coord[0] != vertex_1[0])
+		{
+			if ((0 <= coord[0] && coord[0] < WIDTH)
+				&& (0 <= coord[1] && coord[1] < HEIGHT))
+
+				system->output[coord[0] + coord[1] * WIDTH] = COLOR_W;
+			overflow += len[1] + 1;
+			if (overflow >= len[0] + 1)
+			{
+				coord[1] += d[1];
+				overflow -= len[0] + 1;
+			}
+			coord[0] += d[0];
+		}
+	}
+
+	else
+	{
+		while (coord[1] != vertex_1[1])
+		{
+			if ((0 <= coord[0] && coord[0] < WIDTH)
+				&& (0 <= coord[1] && coord[1] < HEIGHT))
+				system->output[coord[0] + coord[1] * WIDTH] = COLOR_W;
+			overflow += len[0] + 1;
+			if (overflow >= len[1] + 1)
+			{
+				coord[0] += d[0];
+				overflow -= len[1] + 1;
+			}
+			coord[1] += d[1];
+		}
 	}
 
 }
 
+// void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
+// {
+// 	char	dx;
+// 	int		cursor;
 
-void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1, char color_f)
+// 	if (vertex_0[1] < 0 || vertex_0[1] > HEIGHT - 1)
+// 		return ;
+// 	dx = vertex_1[0] < vertex_0[0] ? -1 : 1;
+// 	cursor = vertex_0[0];
+// 	while (cursor != vertex_1[0])
+// 	{
+// 		if (cursor >= 0 && cursor < WIDTH)
+// 			system->output[cursor + vertex_0[1] * WIDTH] = COLOR_W;
+// 		cursor += dx;
+// 	}
+// 	// if (cursor >= 0 && cursor < WIDTH)
+// 	// 	system->output[cursor + vertex_0[1] * WIDTH] = COLOR_W;
+// }
+
+
+
+
+
+
+
+
+
+void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1)
 {
 	char	dx;
 	int		cursor;
@@ -132,7 +254,7 @@ void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1, char color_
 	dx = vertex_1[0] < vertex_0[0] ? -1 : 1;
 	cursor = vertex_0[0];
 
-	if (color_f && system->render & 64)
+	if (system->render & 64)
 	{
 		while (cursor != vertex_1[0])
 		{

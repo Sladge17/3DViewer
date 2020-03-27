@@ -194,8 +194,9 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords);
 
 // UNCOMENT
 void	draw_quad(t_system *system, t_model *model, t_coords *coords);
-void	draw_line(t_system *system, int *vertex_0, int *vertex_1, char color_f);
-void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1, char color_f);
+void	line_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
+// void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
+void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1);
 int		set_colorhor(int *vertex_0, int *vertex_1, int cursor);
 
 
@@ -208,7 +209,7 @@ int		set_colorhor(int *vertex_0, int *vertex_1, int cursor);
 ** r_vertex.c
 */
 void	draw_qvertex(t_system *system, t_model *model, t_coords *coords);
-void	vert_zbuf(t_system *system, t_coords *coords, int i);
+void	vert_zbuf(t_system *system, t_coords *coords, int);
 void	vert_updownlines(t_system *system, t_coords *coords, int *i, int *j);
 void	vert_nozbuf(t_system *system, t_coords *coords, int i);
 char	vert_onscreen(int *i, t_coords *coords);
