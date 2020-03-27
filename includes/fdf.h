@@ -208,9 +208,9 @@ int		set_colorhor(int *vertex_0, int *vertex_1, int cursor);
 ** r_vertex.c
 */
 void	draw_qvertex(t_system *system, t_model *model, t_coords *coords);
-void	vert_zbuf(t_system *system, t_coords *coords);
+void	vert_zbuf(t_system *system, t_coords *coords, int i);
 void	vert_updownlines(t_system *system, t_coords *coords, int *i, int *j);
-void	vert_nozbuf(t_system *system, t_coords *coords);
+void	vert_nozbuf(t_system *system, t_coords *coords, int i);
 char	vert_onscreen(int *i, t_coords *coords);
 
 // /*
