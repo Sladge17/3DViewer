@@ -1,15 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_wirez.c                                          :+:      :+:    :+:   */
+/*   r_wireframe_z.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/28 10:52:26 by student           #+#    #+#             */
-/*   Updated: 2020/03/28 10:52:30 by student          ###   ########.fr       */
+/*   Created: 2020/03/28 17:38:15 by student           #+#    #+#             */
+/*   Updated: 2020/03/28 17:38:18 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "fdf.h"
 
@@ -64,7 +63,6 @@ void	line_zbuf(t_system *system, t_coords *coords)
 	d[1] = coords->d_tris[1][1] < coords->d_tris[0][1] ? -1 : 1;
 	len[0] = (coords->d_tris[1][0] - coords->d_tris[0][0]) * d[0];
 	len[1] = (coords->d_tris[1][1] - coords->d_tris[0][1]) * d[1];
-
 	if (len[0] > len[1])
 	{
 		xmore_zbuf(system, coords, d, len);

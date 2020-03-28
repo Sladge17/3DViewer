@@ -223,7 +223,7 @@ void	vert_nozbuf(t_system *system, t_coords *coords, int i);
 char	vert_onscreen(int *i, t_coords *coords);
 
 /*
-** r_wirez.c
+** r_wireframe_z.c
 */
 char	quad_zbuf(t_system *system, t_model *model, t_coords *coords);
 void	defline_zbuf(t_coords *coords, char v1, char v2);

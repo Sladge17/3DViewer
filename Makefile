@@ -15,7 +15,7 @@ SRC_LIST = fdf.c\
 			controls_main.c\
 			drawing.c\
 			r_vertex.c\
-			r_wirez.c
+			r_wireframe_z.c
 			# controls.c\
 			# transform.c\
 			# drawing.c\
