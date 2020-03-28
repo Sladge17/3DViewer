@@ -16,7 +16,6 @@ void	quad_zbuf(t_system *system, t_model *model, t_coords *coords)
 {
 	defline_zbuf(coords, 0, 1);
 	line_zbuf(system, coords);
-	// defline_zbuf(coords, 0, 2);
 	coords->d_tris[1][0] = coords->d_quad[2][0];
 	coords->d_tris[1][1] = coords->d_quad[2][1];
 	coords->d_tris[1][2] = coords->d_quad[2][2];
@@ -43,16 +42,6 @@ void	quad_zbuf(t_system *system, t_model *model, t_coords *coords)
 
 void	defline_zbuf(t_coords *coords, char v1, char v2)
 {
-	// coords->d_tris[1][0] = coords->d_quad[v2][0];
-	// coords->d_tris[1][1] = coords->d_quad[v2][1];
-	// coords->d_tris[1][2] = coords->d_quad[v2][2];
-	// coords->f_tris[1] = coords->f_quad[v2][2];
-	// if (v2 == 2)
-	// 	return ;
-	// coords->d_tris[0][0] = coords->d_quad[v1][0];
-	// coords->d_tris[0][1] = coords->d_quad[v1][1];
-	// coords->d_tris[0][2] = coords->d_quad[v1][2];
-	// coords->f_tris[0] = coords->f_quad[v1][2];
 	coords->d_tris[0][0] = coords->d_quad[v1][0];
 	coords->d_tris[0][1] = coords->d_quad[v1][1];
 	coords->d_tris[0][2] = coords->d_quad[v1][2];

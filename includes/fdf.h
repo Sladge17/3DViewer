@@ -191,27 +191,11 @@ void	controls_test(t_setting *setting, int keycode);
 */
 char	draw_zeroscale(t_system *system, t_model *model);
 void	draw_model(t_system *system, t_model *model, t_coords *coords);
-
-// UNCOMENT
 void	draw_quad(t_system *system, t_model *model, t_coords *coords);
-// void	line_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-// void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-// void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1);
 char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
 int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
-
-// void	line_zbuf(t_system *system, t_coords *coords, int *vertex_0, int *vertex_1);
-
-
 void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
-
-
-
-// void	fill_quad(t_system *system, t_coords *coords);
-// void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
-// void	draw_qvertex(t_system *system, t_coords *coords);
-
 
 /*
 ** r_vertex.c
@@ -225,15 +209,11 @@ char	vert_onscreen(int *i, t_coords *coords);
 /*
 ** r_wireframe_noz.c
 */
-// void	line_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-// void	xmore_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-// void	ymore_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-char	quad_nozbuf(t_system *system, t_model *model, t_coords *coords);
+void	quad_nozbuf(t_system *system, t_model *model, t_coords *coords);
 void	defline_nozbuf(t_coords *coords, char v1, char v2);
 void	line_nozbuf(t_system *system, t_coords *coords);
 void	xmore_nozbuf(t_system *system, t_coords *coords, char *d, int *len);
 void	ymore_nozbuf(t_system *system, t_coords *coords, char *d, int *len);
-
 
 /*
 ** r_wireframe_z.c
@@ -243,16 +223,6 @@ void	defline_zbuf(t_coords *coords, char v1, char v2);
 void	line_zbuf(t_system *system, t_coords *coords);
 void	xmore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
 void	ymore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
-
-// void	corner_zbuf(t_system *system, t_coords *coords);
-
-// /*
-// ** draw_line.c
-// */
-// void	draw_line(t_system *system, int *vertex_1, int *vertex_2, int color);
-// void	x_more_y(t_system *system, int *vertex_0, int *vertex_1, int color);
-// void	y_more_x(t_system *system, int *vertex_0, int *vertex_1, int color);
-// int		set_diffuse(int *vertex_0, int *vertex_1, int *coord);
 
 
 

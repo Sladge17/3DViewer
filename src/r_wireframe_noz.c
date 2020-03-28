@@ -12,13 +12,10 @@
 
 #include "fdf.h"
 
-char	quad_nozbuf(t_system *system, t_model *model, t_coords *coords)
+void	quad_nozbuf(t_system *system, t_model *model, t_coords *coords)
 {
-	if (model->color_f && system->render & 64)
-		return (0);
 	defline_nozbuf(coords, 0, 1);
 	line_nozbuf(system, coords);
-	// defline_nozbuf(coords, 0, 2);
 	coords->d_tris[1][0] = coords->d_quad[2][0];
 	coords->d_tris[1][1] = coords->d_quad[2][1];
 	line_nozbuf(system, coords);
@@ -37,17 +34,10 @@ char	quad_nozbuf(t_system *system, t_model *model, t_coords *coords)
 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT))
 		system->output[coords->d_quad[3][0] +
 			coords->d_quad[3][1] * WIDTH] = COLOR_W;
-	return (1);
 }
 
 void	defline_nozbuf(t_coords *coords, char v1, char v2)
 {
-	// coords->d_tris[1][0] = coords->d_quad[v2][0];
-	// coords->d_tris[1][1] = coords->d_quad[v2][1];
-	// if (v2 == 2)
-	// 	return ;
-	// coords->d_tris[0][0] = coords->d_quad[v1][0];
-	// coords->d_tris[0][1] = coords->d_quad[v1][1];
 	coords->d_tris[0][0] = coords->d_quad[v1][0];
 	coords->d_tris[0][1] = coords->d_quad[v1][1];
 	coords->d_tris[1][0] = coords->d_quad[v2][0];
@@ -66,13 +56,9 @@ void	line_nozbuf(t_system *system, t_coords *coords)
 	if (len[0] > len[1])
 	{
 		xmore_nozbuf(system, coords, d, len);
+		return ;
 	}
-
-	else
-	{
-		ymore_nozbuf(system, coords, d, len);
-	}
-
+	ymore_nozbuf(system, coords, d, len);
 }
 
 void	xmore_nozbuf(t_system *system, t_coords *coords, char *d, int *len)
