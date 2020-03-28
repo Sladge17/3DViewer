@@ -114,19 +114,27 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords)
 
 void	draw_quad(t_system *system, t_model *model, t_coords *coords)
 {
-	if (quad_zbuf(system, model, coords))
+	
+	if (quad_nozbuf(system, model, coords))
 		return ;
-	line_nozbuf(system, coords->d_quad[0], coords->d_quad[1]);
-	line_nozbuf(system, coords->d_quad[0], coords->d_quad[2]);
-	if (coords->counter[0] == model->width - 2)
-		line_nozbuf(system, coords->d_quad[2], coords->d_quad[3]);
-	if (coords->counter[1] == model->height - 2)
-		line_nozbuf(system, coords->d_quad[1], coords->d_quad[3]);
-	if ((coords->index[3] == model->area - 1) &&
-		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
-		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT))
-		system->output[coords->d_quad[3][0] +
-			coords->d_quad[3][1] * WIDTH] = COLOR_W;
+	
+	// line_nozbuf(system, coords->d_quad[0], coords->d_quad[1]);
+	// line_nozbuf(system, coords->d_quad[0], coords->d_quad[2]);
+	// if (coords->counter[0] == model->width - 2)
+	// 	line_nozbuf(system, coords->d_quad[2], coords->d_quad[3]);
+	// if (coords->counter[1] == model->height - 2)
+	// 	line_nozbuf(system, coords->d_quad[1], coords->d_quad[3]);
+	// if ((coords->index[3] == model->area - 1) &&
+	// 	(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+	// 	(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT))
+	// 	system->output[coords->d_quad[3][0] +
+	// 		coords->d_quad[3][1] * WIDTH] = COLOR_W;
+
+
+
+
+	quad_zbuf(system, model, coords);
+
 }
 
 
@@ -242,64 +250,64 @@ void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
 
 
 
-void	line_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
-{
-	char	d[2];
-	int		len[2];
-	int		overflow;
-	int		coord[2];
+// void	line_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
+// {
+// 	char	d[2];
+// 	int		len[2];
+// 	int		overflow;
+// 	int		coord[2];
 
-	// if (vertex_0[1] == vertex_1[1])
-	// {
-	// 	linex_nozbuf(system, vertex_0, vertex_1);
-	// 	return ;
-	// }
+// 	// if (vertex_0[1] == vertex_1[1])
+// 	// {
+// 	// 	linex_nozbuf(system, vertex_0, vertex_1);
+// 	// 	return ;
+// 	// }
 
-	d[0] = vertex_1[0] < vertex_0[0] ? -1 : 1;
-	d[1] = vertex_1[1] < vertex_0[1] ? -1 : 1;
-	len[0] = (vertex_1[0] - vertex_0[0]) * d[0];
-	len[1] = (vertex_1[1] - vertex_0[1]) * d[1];
-	coord[0] = vertex_0[0];
-	coord[1] = vertex_0[1];
-	overflow = 0;
+// 	d[0] = vertex_1[0] < vertex_0[0] ? -1 : 1;
+// 	d[1] = vertex_1[1] < vertex_0[1] ? -1 : 1;
+// 	len[0] = (vertex_1[0] - vertex_0[0]) * d[0];
+// 	len[1] = (vertex_1[1] - vertex_0[1]) * d[1];
+// 	coord[0] = vertex_0[0];
+// 	coord[1] = vertex_0[1];
+// 	overflow = 0;
 
-	if (len[0] > len[1])
-	{
+// 	if (len[0] > len[1])
+// 	{
 
-		while (coord[0] != vertex_1[0])
-		{
-			if ((0 <= coord[0] && coord[0] < WIDTH)
-				&& (0 <= coord[1] && coord[1] < HEIGHT))
+// 		while (coord[0] != vertex_1[0])
+// 		{
+// 			if ((0 <= coord[0] && coord[0] < WIDTH)
+// 				&& (0 <= coord[1] && coord[1] < HEIGHT))
 
-				system->output[coord[0] + coord[1] * WIDTH] = COLOR_W;
-			overflow += len[1] + 1;
-			if (overflow >= len[0] + 1)
-			{
-				coord[1] += d[1];
-				overflow -= len[0] + 1;
-			}
-			coord[0] += d[0];
-		}
-	}
+// 				system->output[coord[0] + coord[1] * WIDTH] = COLOR_W;
+// 			overflow += len[1] + 1;
+// 			if (overflow >= len[0] + 1)
+// 			{
+// 				coord[1] += d[1];
+// 				overflow -= len[0] + 1;
+// 			}
+// 			coord[0] += d[0];
+// 		}
+// 	}
 
-	else
-	{
-		while (coord[1] != vertex_1[1])
-		{
-			if ((0 <= coord[0] && coord[0] < WIDTH)
-				&& (0 <= coord[1] && coord[1] < HEIGHT))
-				system->output[coord[0] + coord[1] * WIDTH] = COLOR_W;
-			overflow += len[0] + 1;
-			if (overflow >= len[1] + 1)
-			{
-				coord[0] += d[0];
-				overflow -= len[1] + 1;
-			}
-			coord[1] += d[1];
-		}
-	}
+// 	else
+// 	{
+// 		while (coord[1] != vertex_1[1])
+// 		{
+// 			if ((0 <= coord[0] && coord[0] < WIDTH)
+// 				&& (0 <= coord[1] && coord[1] < HEIGHT))
+// 				system->output[coord[0] + coord[1] * WIDTH] = COLOR_W;
+// 			overflow += len[0] + 1;
+// 			if (overflow >= len[1] + 1)
+// 			{
+// 				coord[0] += d[0];
+// 				overflow -= len[1] + 1;
+// 			}
+// 			coord[1] += d[1];
+// 		}
+// 	}
 
-}
+// }
 
 void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
 {
