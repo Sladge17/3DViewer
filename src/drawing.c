@@ -16,16 +16,23 @@ char	draw_zeroscale(t_system *system, t_model *model)
 {
 	if (model->scale)
 		return (0);
-	if (model->color_f)
+	if (model->color_f && system->render & 64)
 	{
 		system->output[model->pos[0] + model->pos[1] * WIDTH] =
 			model->vertex[model->area / 2][3];
 		return (1);
 	}
-	if (system->render == 1)
-		system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_V;
-	if (system->render == 2)
+	if (system->render & 12)
+	{
+		system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_S;
+		return (1);
+	}
+		if (system->render & 2)
+	{
 		system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_W;
+		return (1);
+	}
+	system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_V;
 	return (1);
 }
 
@@ -54,51 +61,6 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords)
 	// }
 }
 
-// void	draw_quad(t_system *system, t_model *model, t_coords *coords)
-// {
-// 	draw_line(system, coords->d_quad[0], coords->d_quad[1], COLOR_W);
-// 	draw_line(system, coords->d_quad[0], coords->d_quad[2], COLOR_W);
-
-// 	// if (model->diagonal[coords->counter[0] + coords->counter[1] * (model->width - 1)])
-// 	// 	draw_line(system, coords->d_quad[1], coords->d_quad[2], COLOR_W);
-// 	// else
-// 	// 	draw_line(system, coords->d_quad[0], coords->d_quad[3], COLOR_W);
-
-
-// 	if (coords->counter[0] == model->width - 2)
-// 		draw_line(system, coords->d_quad[2], coords->d_quad[3], COLOR_W);
-// 	if (coords->counter[1] == model->height - 2)
-// 		draw_line(system, coords->d_quad[1], coords->d_quad[3], COLOR_W);
-// }
-
-
-
-// LINE UNCOMMENT
-
-
-
-
-// void	draw_qvertex(t_system *system, t_model *model, t_coords *coords)
-// {
-// 	if (model->color_f && system->render & 64)
-// 	{
-// 		vert_zbuf(system, coords, 0);
-// 		if (coords->counter[0] == model->width - 2)
-// 			vert_zbuf(system, coords, 2);
-// 		if (coords->counter[1] == model->height - 2)
-// 			vert_zbuf(system, coords, 1);
-// 		if (coords->index[3] == model->area - 1)
-// 			vert_zbuf(system, coords, 3);
-// 		return ;
-// 	}
-// 	vert_nozbuf(system, coords, 0);
-// 	if (coords->counter[0] == model->width - 2)
-// 		vert_nozbuf(system, coords, 2);
-// 	if (coords->counter[1] == model->height - 2)
-// 		vert_nozbuf(system, coords, 1);
-// 	if (coords->index[3] == model->area - 1)
-// 		vert_nozbuf(system, coords, 3);
-// }
 
 
 
