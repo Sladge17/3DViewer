@@ -17,18 +17,19 @@ char	quad_zbuf(t_system *system, t_model *model, t_coords *coords)
 {
 	if (!model->color_f || !(system->render & 64))
 		return (0);
-	corner_zbuf(system, coords);
+	defline_zbuf(coords, 0, 1);
+	line_zbuf(system, coords);
+	defline_zbuf(coords, 0, 2);
+	line_zbuf(system, coords);
 	if (coords->counter[0] == model->width - 2)
 	{
-		coords->tris_z[0] = coords->f_quad[2][2];
-		coords->tris_z[1] = coords->f_quad[3][2];
-		line_zbuf(system, coords->d_quad[2], coords->d_quad[3], coords->tris_z);
+		defline_zbuf(coords, 2, 3);
+		line_zbuf(system, coords);
 	}
 	if (coords->counter[1] == model->height - 2)
 	{
-		coords->tris_z[0] = coords->f_quad[1][2];
-		coords->tris_z[1] = coords->f_quad[3][2];
-		line_zbuf(system, coords->d_quad[1], coords->d_quad[3], coords->tris_z);
+		defline_zbuf(coords, 1, 3);
+		line_zbuf(system, coords);
 	}
 	if ((coords->index[3] == model->area - 1) &&
 		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
@@ -40,117 +41,88 @@ char	quad_zbuf(t_system *system, t_model *model, t_coords *coords)
 	return (1);
 }
 
-void	corner_zbuf(t_system *system, t_coords *coords)
+void	defline_zbuf(t_coords *coords, char v1, char v2)
 {
-	coords->tris_z[0] = coords->f_quad[0][2];
-	coords->tris_z[1] = coords->f_quad[1][2];
-	line_zbuf(system, coords->d_quad[0], coords->d_quad[1], coords->tris_z);
-	// coords->tris_z[0] = coords->f_quad[0][2]; //MAYBE DELL
-	coords->tris_z[1] = coords->f_quad[2][2];
-	line_zbuf(system, coords->d_quad[0], coords->d_quad[2], coords->tris_z);
+	coords->d_tris[1][0] = coords->d_quad[v2][0];
+	coords->d_tris[1][1] = coords->d_quad[v2][1];
+	coords->d_tris[1][2] = coords->d_quad[v2][2];
+	coords->f_tris[1] = coords->f_quad[v2][2];
+	if (v2 == 2)
+		return ;
+	coords->d_tris[0][0] = coords->d_quad[v1][0];
+	coords->d_tris[0][1] = coords->d_quad[v1][1];
+	coords->d_tris[0][2] = coords->d_quad[v1][2];
+	coords->f_tris[0] = coords->f_quad[v1][2];
 }
 
-
-void	line_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
+void	line_zbuf(t_system *system, t_coords *coords)
 {
 	char	d[2];
 	int		len[2];
-	int		overflow;
-	int		cursor[2];
 
-	float	int_z;
-	float	cur_z;
-
-	d[0] = vertex_1[0] < vertex_0[0] ? -1 : 1;
-	d[1] = vertex_1[1] < vertex_0[1] ? -1 : 1;
-	len[0] = (vertex_1[0] - vertex_0[0]) * d[0];
-	len[1] = (vertex_1[1] - vertex_0[1]) * d[1];
-	cursor[0] = vertex_0[0];
-	cursor[1] = vertex_0[1];
-	overflow = 0;
-
-	// if (vertex_0[1] == vertex_1[1])
-	// {
-	// 	linex_zbuf(system, vertex_0, vertex_1, tris_z);
-	// 	return ;
-	// }
+	d[0] = coords->d_tris[1][0] < coords->d_tris[0][0] ? -1 : 1;
+	d[1] = coords->d_tris[1][1] < coords->d_tris[0][1] ? -1 : 1;
+	len[0] = (coords->d_tris[1][0] - coords->d_tris[0][0]) * d[0];
+	len[1] = (coords->d_tris[1][1] - coords->d_tris[0][1]) * d[1];
 
 	if (len[0] > len[1])
 	{
-
-		while (cursor[0] != vertex_1[0])
-		{
-			if ((0 <= cursor[0] && cursor[0] < WIDTH)
-				&& (0 <= cursor[1] && cursor[1] < HEIGHT))
-			{
-				int_z = (float)(abs(cursor[0] - vertex_0[0])) / (float)(abs(vertex_1[0] - vertex_0[0]));
-				cur_z = tris_z[0] + (tris_z[1] - tris_z[0]) * int_z;
-				if (cur_z > system->z_buf[cursor[0] + cursor[1] * WIDTH])
-				{
-					system->output[cursor[0] + cursor[1] * WIDTH] = set_xrgb(vertex_0, vertex_1, cursor[0]);
-					system->z_buf[cursor[0] + cursor[1] * WIDTH] = cur_z;
-				}
-			}
-			overflow += len[1] + 1;
-			if (overflow >= len[0] + 1)
-			{
-				cursor[1] += d[1];
-				overflow -= len[0] + 1;
-			}
-			cursor[0] += d[0];
-		}
-	}
-
-	else
-	{
-		while (cursor[1] != vertex_1[1])
-		{
-			if ((0 <= cursor[0] && cursor[0] < WIDTH)
-				&& (0 <= cursor[1] && cursor[1] < HEIGHT))
-			{
-				int_z = (float)(abs(cursor[1] - vertex_0[1])) / (float)(abs(vertex_1[1] - vertex_0[1]));
-				cur_z = tris_z[0] + (tris_z[1] - tris_z[0]) * int_z;
-				if (cur_z > system->z_buf[cursor[0] + cursor[1] * WIDTH])
-				{
-					system->output[cursor[0] + cursor[1] * WIDTH] = set_yrgb(vertex_0, vertex_1, cursor[1]);
-					system->z_buf[cursor[0] + cursor[1] * WIDTH] = cur_z;
-				}
-			}
-			overflow += len[0] + 1;
-			if (overflow >= len[1] + 1)
-			{
-				cursor[0] += d[0];
-				overflow -= len[1] + 1;
-			}
-			cursor[1] += d[1];
-		}
+		xmore_zbuf(system, coords, d, len);
 		return ;
 	}
-
+	ymore_zbuf(system, coords, d, len);
 }
 
+void	xmore_zbuf(t_system *system, t_coords *coords, char *d, int *len)
+{
+	int		cursor[2];
+	int		overflow;
 
+	cursor[0] = coords->d_tris[0][0];
+	cursor[1] = coords->d_tris[0][1];
+	overflow = 0;
+	while (cursor[0] != coords->d_tris[1][0])
+	{
+		if ((0 <= cursor[0] && cursor[0] < WIDTH)
+			&& (0 <= cursor[1] && cursor[1] < HEIGHT))
+			if (check_zbuf(system, coords, cursor, 0))
+			{
+				system->output[cursor[0] + cursor[1] * WIDTH] =
+				set_xrgb(coords->d_tris[0], coords->d_tris[1], cursor[0]);
+			}
+		overflow += len[1] + 1;
+		if (overflow >= len[0] + 1)
+		{
+			cursor[1] += d[1];
+			overflow -= len[0] + 1;
+		}
+		cursor[0] += d[0];
+	}
+}
 
+void	ymore_zbuf(t_system *system, t_coords *coords, char *d, int *len)
+{
+	int		cursor[2];
+	int		overflow;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	cursor[0] = coords->d_tris[0][0];
+	cursor[1] = coords->d_tris[0][1];
+	overflow = 0;
+	while (cursor[1] != coords->d_tris[1][1])
+	{
+		if ((0 <= cursor[0] && cursor[0] < WIDTH)
+			&& (0 <= cursor[1] && cursor[1] < HEIGHT))
+			if (check_zbuf(system, coords, cursor, 1))
+			{
+				system->output[cursor[0] + cursor[1] * WIDTH] =
+				set_yrgb(coords->d_tris[0], coords->d_tris[1], cursor[1]);
+			}
+		overflow += len[0] + 1;
+		if (overflow >= len[1] + 1)
+		{
+			cursor[0] += d[0];
+			overflow -= len[1] + 1;
+		}
+		cursor[1] += d[1];
+	}
+}

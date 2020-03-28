@@ -320,6 +320,23 @@ void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
 	// 	system->output[cursor + vertex_0[1] * WIDTH] = COLOR_W;
 }
 
+char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir)
+{
+
+	float	int_z;
+	float	cursor_z;
+
+	int_z = (float)(abs(cursor[dir] - coords->d_tris[0][dir])) /
+		(float)(abs(coords->d_tris[1][dir] - coords->d_tris[0][dir]));	
+	cursor_z = coords->f_tris[0] +
+		(coords->f_tris[1] - coords->f_tris[0]) * int_z;
+	if (cursor_z > system->z_buf[cursor[0] + cursor[1] * WIDTH])
+	{
+		system->z_buf[cursor[0] + cursor[1] * WIDTH] = cursor_z;
+		return (1);
+	}
+	return (0);
+}
 
 int		set_xrgb(int *vertex_0, int *vertex_1, int cursor)
 {

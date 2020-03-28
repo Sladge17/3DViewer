@@ -89,8 +89,8 @@ typedef struct	s_coords
 	float		f_quad[4][3];
 	int			d_quad[4][3];
 	float		lightpower;
-	int			tris_xy[3][2];
-	float		tris_z[3];
+	int			d_tris[3][3];
+	float		f_tris[3];
 }				t_coords;
 
 typedef struct	s_setting
@@ -197,10 +197,13 @@ void	draw_quad(t_system *system, t_model *model, t_coords *coords);
 void	line_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
 // void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
 // void	draw_horizontal(t_system *system, int *vertex_0, int *vertex_1);
+char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
 int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
 
-void	line_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
+// void	line_zbuf(t_system *system, t_coords *coords, int *vertex_0, int *vertex_1);
+
+
 void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
 
 
@@ -223,7 +226,12 @@ char	vert_onscreen(int *i, t_coords *coords);
 ** r_wirez.c
 */
 char	quad_zbuf(t_system *system, t_model *model, t_coords *coords);
-void	corner_zbuf(t_system *system, t_coords *coords);
+void	defline_zbuf(t_coords *coords, char v1, char v2);
+void	line_zbuf(t_system *system, t_coords *coords);
+void	xmore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
+void	ymore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
+
+// void	corner_zbuf(t_system *system, t_coords *coords);
 
 // /*
 // ** draw_line.c
