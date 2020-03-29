@@ -195,7 +195,6 @@ void	draw_quad(t_system *system, t_model *model, t_coords *coords);
 char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
 int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
-void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
 
 /*
 ** r_vertex.c
@@ -205,6 +204,14 @@ void	vert_zbuf(t_system *system, t_coords *coords, int);
 void	vert_updownlines(t_system *system, t_coords *coords, int *i, int *j);
 void	vert_nozbuf(t_system *system, t_coords *coords, int i);
 char	vert_onscreen(int *i, t_coords *coords);
+
+/*
+** ortholines.c
+*/
+void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
+void	liney_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
+void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
+void	liney_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
 
 /*
 ** r_wireframe_noz.c
@@ -223,7 +230,6 @@ void	defline_zbuf(t_coords *coords, char v1, char v2);
 void	line_zbuf(t_system *system, t_coords *coords);
 void	xmore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
 void	ymore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
-
 
 
 // /*

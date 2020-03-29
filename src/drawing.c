@@ -72,58 +72,6 @@ void	draw_quad(t_system *system, t_model *model, t_coords *coords)
 	quad_nozbuf(system, model, coords);
 }
 
-
-void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
-{
-	char	dx;
-	int		cursor;
-	float	int_z;
-	float	cur_z;
-
-	if (vertex_0[1] < 0 || vertex_0[1] > HEIGHT - 1)
-		return ;
-	dx = vertex_1[0] < vertex_0[0] ? -1 : 1;
-	cursor = vertex_0[0];
-
-	
-
-	while (cursor != vertex_1[0])
-	{
-		if (cursor >= 0 && cursor < WIDTH)
-		{
-			int_z = (float)(abs(cursor - vertex_0[0])) / (float)(abs(vertex_1[0] - vertex_0[0]));
-
-			cur_z = tris_z[0] + (tris_z[1] - tris_z[0]) * int_z;
-			if (cur_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
-			{
-				system->output[cursor + vertex_0[1] * WIDTH] = set_xrgb(vertex_0, vertex_1, cursor);
-				system->z_buf[cursor + vertex_0[1] * WIDTH] = cur_z;
-			}
-		}
-		cursor += dx;
-	}
-	return ;
-}
-
-void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
-{
-	char	dx;
-	int		cursor;
-
-	if (vertex_0[1] < 0 || vertex_0[1] > HEIGHT - 1)
-		return ;
-	dx = vertex_1[0] < vertex_0[0] ? -1 : 1;
-	cursor = vertex_0[0];
-	while (cursor != vertex_1[0])
-	{
-		if (cursor >= 0 && cursor < WIDTH)
-			system->output[cursor + vertex_0[1] * WIDTH] = COLOR_W;
-		cursor += dx;
-	}
-	// if (cursor >= 0 && cursor < WIDTH)
-	// 	system->output[cursor + vertex_0[1] * WIDTH] = COLOR_W;
-}
-
 char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir)
 {
 

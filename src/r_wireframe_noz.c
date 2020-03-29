@@ -49,6 +49,16 @@ void	line_nozbuf(t_system *system, t_coords *coords)
 	char	d[2];
 	int		len[2];
 
+	if (coords->d_tris[0][1] == coords->d_tris[1][1])
+	{
+		linex_nozbuf(system, coords->d_tris[0], coords->d_tris[1]);
+		return ;
+	}
+	if (coords->d_tris[0][0] == coords->d_tris[1][0])
+	{
+		liney_nozbuf(system, coords->d_tris[0], coords->d_tris[1]);
+		return ;
+	}
 	d[0] = coords->d_tris[1][0] < coords->d_tris[0][0] ? -1 : 1;
 	d[1] = coords->d_tris[1][1] < coords->d_tris[0][1] ? -1 : 1;
 	len[0] = (coords->d_tris[1][0] - coords->d_tris[0][0]) * d[0];
@@ -106,11 +116,3 @@ void	ymore_nozbuf(t_system *system, t_coords *coords, char *d, int *len)
 		cursor[1] += d[1];
 	}
 }
-
-
-
-
-
-
-
-
