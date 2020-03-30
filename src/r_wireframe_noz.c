@@ -49,6 +49,11 @@ void	line_nozbuf(t_system *system, t_coords *coords)
 	char	d[2];
 	int		len[2];
 
+	// func pointz_nozbuf
+	if (coords->d_tris[0][0] == coords->d_tris[1][0] &&
+		coords->d_tris[0][1] == coords->d_tris[1][1])
+		return ;
+	//
 	if (coords->d_tris[0][1] == coords->d_tris[1][1])
 	{
 		linex_nozbuf(system, coords->d_tris[0], coords->d_tris[1]);
