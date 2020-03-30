@@ -152,4 +152,3 @@ void	ymore_zbuf(t_system *system, t_coords *coords, char *d, int *len)
 		cursor[1] += d[1];
 	}
 }
-
