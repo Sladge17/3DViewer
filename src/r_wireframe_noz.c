@@ -33,7 +33,8 @@ void	quad_nozbuf(t_system *system, t_model *model, t_coords *coords)
 		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT))
 		system->output[coords->d_quad[3][0] +
-			coords->d_quad[3][1] * WIDTH] = COLOR_W;
+			// coords->d_quad[3][1] * WIDTH] = COLOR_W;
+			coords->d_quad[3][1] * WIDTH] = 0xFF00;
 }
 
 void	defline_nozbuf(t_coords *coords, char v1, char v2)

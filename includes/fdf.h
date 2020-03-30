@@ -181,6 +181,7 @@ void	round_quad(t_model *model, t_coords *coords, int k);
 ** controls_main.c
 */
 int		key_press(int keycode, void *param);
+int		key_release(int keycode, void *param);
 int		mouse_press(int button, int x, int y, void *param);
 int		mouse_release(int button, int x, int y, void *param);
 int		mouse_move(int x, int y, void *param);

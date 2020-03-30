@@ -37,7 +37,7 @@ void	quad_zbuf(t_system *system, t_model *model, t_coords *coords)
 		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
 		coords->d_quad[3][1] * WIDTH]))
 		system->output[coords->d_quad[3][0] +
-		coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
+			coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
 }
 
 void	defline_zbuf(t_coords *coords, char v1, char v2)

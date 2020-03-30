@@ -45,6 +45,7 @@ int		main(int argv, char **argc)
 							setting.system.img, 0, 0);
 
 	mlx_hook(setting.system.win, 2, 0, key_press, &setting);
+	mlx_hook(setting.system.win, 3, 0, key_release, &setting);
 	mlx_hook(setting.system.win, 4, 0, mouse_press, &setting);
 	mlx_hook(setting.system.win, 5, 0, mouse_release, &setting);
 	mlx_hook(setting.system.win, 6, 0, mouse_move, &setting);

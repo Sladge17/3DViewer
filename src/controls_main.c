@@ -12,6 +12,10 @@
 
 #include "fdf.h"
 
+
+char	shift = 0;
+
+
 int		key_press(int keycode, void *param)
 {	
 	t_setting		*setting;
@@ -20,8 +24,6 @@ int		key_press(int keycode, void *param)
 	
 	if (keycode == 53)
 		exit (0);
-	if (keycode == 126)
-		setting->model.rot[0] -= 1;
 	
 	controls_test(setting, keycode);
 
@@ -243,14 +245,39 @@ int		mouse_move(int x, int y, void *param)
 
 void	controls_test(t_setting *setting, int keycode)
 {
+	if (keycode == 257)
+		shift = 1;
+
+	if (keycode == 126)
+	{
+		if (shift)
+			setting->model.rot[0] -= 90;
+		else
+			setting->model.rot[0] -= 1;
+	}
 	if (keycode == 125)
-		setting->model.rot[0] += 1;
+	{
+		if (shift)
+			setting->model.rot[0] += 90;
+		else
+			setting->model.rot[0] += 1;
+	}
 	if (setting->model.rot[0] == -360 || setting->model.rot[0] == 360)
 			setting->model.rot[0] = 0;
 	if (keycode == 123)
-		setting->model.rot[1] -= 1;
+	{
+		if (shift)
+			setting->model.rot[1] -= 90;
+		else
+			setting->model.rot[1] -= 1;
+	}
 	if (keycode == 124)
-		setting->model.rot[1] += 1;
+	{
+		if (shift)
+			setting->model.rot[1] += 90;
+		else
+			setting->model.rot[1] += 1;
+	}
 	if (setting->model.rot[1] == -360 || setting->model.rot[1] == 360)
 			setting->model.rot[1] = 0;
 	if (keycode == 2)
@@ -274,6 +301,12 @@ void	controls_test(t_setting *setting, int keycode)
 	}
 }
 
+int		key_release(int keycode, void *param)
+{
+	if (keycode == 257)
+		shift = 0;
+	return (0);
+}
 
 
 
