@@ -162,7 +162,13 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 	total_height = coords->d_tris[2][1] - coords->d_tris[0][1];
 	cursor_y = coords->d_tris[0][1];
 
-	i = 0;
+	// i = 0;
+
+	// if (coords->d_tris[0][1] == coords->d_tris[1][1])
+	// 	i = 1;
+
+	i = coords->d_tris[0][1] == coords->d_tris[1][1] ? 1 : 0;
+
 	while (i < 2)
 	{
 		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1] + 1;
@@ -217,6 +223,8 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 
 			cursor_y += 1;
 		}
+		if (coords->d_tris[1][1] == coords->d_tris[2][1])
+			break ;
 		i += 1;
 	}
 }
@@ -378,7 +386,10 @@ void	ftris_nozbuf(t_system *system, t_coords *coords)
 	total_height = coords->d_tris[2][1] - coords->d_tris[0][1];
 	cursor_y = coords->d_tris[0][1];
 
-	i = 0;
+	// i = 0;
+
+	i = coords->d_tris[0][1] == coords->d_tris[1][1] ? 1 : 0;
+
 	while (i < 2)
 	{
 		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1] + 1;
@@ -405,6 +416,8 @@ void	ftris_nozbuf(t_system *system, t_coords *coords)
 
 			cursor_y += 1;
 		}
+		if (coords->d_tris[1][1] == coords->d_tris[2][1])
+			break ;
 		i += 1;
 	}
 
