@@ -195,19 +195,6 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_quad(t_system *system, t_model *model, t_coords *coords);
 
-void	fquad_zbuf(t_system *system, t_model *model, t_coords *coords);
-void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3);
-void	ftris_zbuf(t_system *system, t_coords *coords);
-void	sorty_zbuf(t_coords *coords);
-
-
-void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords);
-void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3);
-void	ftris_nozbuf(t_system *system, t_coords *coords);
-void	sorty_nozbuf(t_coords *coords);
-
-
-
 void	draw_quad(t_system *system, t_model *model, t_coords *coords);
 char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
@@ -248,6 +235,23 @@ void	line_zbuf(t_system *system, t_coords *coords);
 void	xmore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
 void	ymore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
 
+
+/*
+** r_silhouette_noz.c
+*/
+void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords);
+void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3);
+void	ftris_nozbuf(t_system *system, t_coords *coords);
+void	sorty_nozbuf(t_coords *coords);
+
+
+/*
+** r_silhouette_z.c
+*/
+void	fquad_zbuf(t_system *system, t_model *model, t_coords *coords);
+void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3);
+void	ftris_zbuf(t_system *system, t_coords *coords);
+void	sorty_zbuf(t_coords *coords);
 
 // /*
 // ** controls.c

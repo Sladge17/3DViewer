@@ -17,7 +17,9 @@ SRC_LIST = fdf.c\
 			r_vertex.c\
 			ortholines.c\
 			r_wireframe_noz.c\
-			r_wireframe_z.c
+			r_wireframe_z.c\
+			r_silhouette_noz.c\
+			r_silhouette_z.c
 			# controls.c\
 			# transform.c\
 			# drawing.c\
