@@ -70,44 +70,124 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 	if (model->color_f && system->render & 64)
 	{
 		fquad_zbuf(system, model, coords);
+		
+		if (coords->counter[1] == 0)
+		{
+			defline_zbuf(coords, 0, 2);
+			line_zbuf(system, coords);
+			if ((coords->counter[0] == model->width - 2) &&
+				(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+				(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+				((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+				coords->d_quad[2][1] * WIDTH]))
+				system->output[coords->d_quad[2][0] +
+					coords->d_quad[2][1] * WIDTH] = coords->d_quad[3][2];
+		}
+
+
+
+		if (coords->counter[1] == model->height - 2)
+		{
+			defline_zbuf(coords, 1, 3);
+			line_zbuf(system, coords);
+			if ((coords->index[3] == model->area - 1) &&
+				(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+				(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+				((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+				coords->d_quad[3][1] * WIDTH]))
+				system->output[coords->d_quad[3][0] +
+					coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
+		}
 		return ;
 	}
 	fquad_nozbuf(system, model, coords);
+	if (coords->counter[1] == 0)
+	{
+		defline_nozbuf(coords, 0, 2);
+		line_nozbuf(system, coords);
+		if ((coords->counter[0] == model->width - 2) &&
+			(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+			(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT))
+			system->output[coords->d_quad[2][0] +
+				coords->d_quad[2][1] * WIDTH] = COLOR_S;
+	}
+
+
+
+	if (coords->counter[1] == model->height - 2)
+	{
+		defline_nozbuf(coords, 1, 3);
+		line_nozbuf(system, coords);
+		if ((coords->index[3] == model->area - 1) &&
+			(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+			(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT))
+			system->output[coords->d_quad[3][0] +
+				coords->d_quad[3][1] * WIDTH] = COLOR_S;
+	}
 	
 }
 
 
 void	fquad_zbuf(t_system *system, t_model *model, t_coords *coords)
 {
-	quad_zbuf(system, model, coords);
 	if ((coords->d_quad[0][0] == coords->d_quad[1][0] &&
 		coords->d_quad[1][0] == coords->d_quad[2][0] &&
 		coords->d_quad[2][0] == coords->d_quad[3][0]) ||
 		(coords->d_quad[0][1] == coords->d_quad[1][1] &&
 		coords->d_quad[1][1] == coords->d_quad[2][1] &&
 		coords->d_quad[2][1] == coords->d_quad[3][1]))
+	{
+		quad_zbuf(system, model, coords);
 		return ;
+	}
 	if (model->diagonal[coords->counter[0] + coords->counter[1] * (model->width - 1)])
 	{
-
-		defline_zbuf(coords, 0, 3);
-		line_zbuf(system, coords);
 		
 		deftris_zbuf(coords, 0, 1, 3);
 		ftris_zbuf(system, coords);
 		deftris_zbuf(coords, 0, 2, 3);
 		ftris_zbuf(system, coords);
 
+		// // if (coords->counter[1] == model->height - 2)
+		// // {
+			
+		// 	coords->d_tris[0][0] = coords->d_tris[1][0];
+		// 	coords->d_tris[0][1] = coords->d_tris[1][1];
+		// 	coords->d_tris[0][2] = 0xFF;
+		// 	coords->f_tris[0] = coords->f_tris[1];
+
+		// 	coords->d_tris[1][0] = coords->d_tris[2][0];
+		// 	coords->d_tris[1][1] = coords->d_tris[2][1];
+		// 	coords->d_tris[1][2] = 0xFF;
+		// 	coords->f_tris[1] = coords->f_tris[2];
+
+		// // // defline_zbuf(coords, 1, 3);
+		// line_zbuf(system, coords);
+		// // }
+
 		return ;
 	}
-
-	defline_zbuf(coords, 1, 2);
-	line_zbuf(system, coords);
 
 	deftris_zbuf(coords, 0, 1, 2);
 	ftris_zbuf(system, coords);
 	deftris_zbuf(coords, 1, 2, 3);
 	ftris_zbuf(system, coords);
+
+	
+	// // if (coords->counter[1] == model->height - 2)
+	// // {
+	// 	coords->d_tris[0][0] = coords->d_tris[1][0];
+	// 	coords->d_tris[0][1] = coords->d_tris[1][1];
+	// 	coords->d_tris[0][2] = 0xFF;
+	// 	coords->f_tris[0] = coords->f_tris[1];
+
+	// 	coords->d_tris[1][0] = coords->d_tris[2][0];
+	// 	coords->d_tris[1][1] = coords->d_tris[2][1];
+	// 	coords->d_tris[1][2] = 0xFF;
+	// 	coords->f_tris[1] = coords->f_tris[2];
+	// // // defline_zbuf(coords, 1, 3);
+	// line_zbuf(system, coords);
+	// // }
 
 }
 
@@ -148,15 +228,7 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 	float	z2;
 	float	cur_z[2];
 
-	// line_nozbuf(system, coords);
-	// if ((0 <= coords->d_tris[1][0] && coords->d_tris[1][0] < WIDTH)
-	// 	&& (0 <= coords->d_tris[1][1] && coords->d_tris[1][1] < HEIGHT))
-	// 	system->output[coords->d_tris[1][0] +
-	// 		coords->d_tris[1][1] * WIDTH] = COLOR_W;
-
 	sorty_zbuf(coords);
-
-	// line_nozbuf(system, coords);
 
 
 	total_height = coords->d_tris[2][1] - coords->d_tris[0][1];
@@ -171,7 +243,7 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 
 	while (i < 2)
 	{
-		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1] + 1;
+		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1];
 		while (cursor_y < coords->d_tris[i + 1][1])
 		{
 
@@ -203,21 +275,11 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 			if ((0 <= vertex_1[0] && vertex_1[0] < WIDTH) &&
 				(0 <= vertex_1[1] && vertex_1[1] < HEIGHT) &&
 				(int)cur_z[1] > system->z_buf[vertex_1[0] + vertex_1[1] * WIDTH])
-			// if ((0 <= vertex_1[0] && vertex_1[0] < WIDTH) &&
-			// 	(0 <= vertex_1[1] && vertex_1[1] < HEIGHT))
 			{
 				system->output[vertex_1[0] +
 				vertex_1[1] * WIDTH] = vertex_1[2];
 				system->z_buf[vertex_1[0] + vertex_1[1] * WIDTH] = (int)cur_z[1];
 			}
-
-
-		// 	(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
-		// (0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
-		// ((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
-		// coords->d_quad[3][1] * WIDTH])
-		// system->output[coords->d_quad[3][0] +
-		// 	coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
 
 
 
@@ -267,14 +329,24 @@ void	sorty_zbuf(t_coords *coords)
 
 void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords)
 {
-	quad_nozbuf(system, model, coords);
+	// quad_nozbuf(system, model, coords);
+	// if ((coords->d_quad[0][0] == coords->d_quad[1][0] &&
+	// 	coords->d_quad[1][0] == coords->d_quad[2][0] &&
+	// 	coords->d_quad[2][0] == coords->d_quad[3][0]) ||
+	// 	(coords->d_quad[0][1] == coords->d_quad[1][1] &&
+	// 	coords->d_quad[1][1] == coords->d_quad[2][1] &&
+	// 	coords->d_quad[2][1] == coords->d_quad[3][1]))
+	// 	return ;
 	if ((coords->d_quad[0][0] == coords->d_quad[1][0] &&
 		coords->d_quad[1][0] == coords->d_quad[2][0] &&
 		coords->d_quad[2][0] == coords->d_quad[3][0]) ||
 		(coords->d_quad[0][1] == coords->d_quad[1][1] &&
 		coords->d_quad[1][1] == coords->d_quad[2][1] &&
 		coords->d_quad[2][1] == coords->d_quad[3][1]))
+	{
+		quad_nozbuf(system, model, coords);
 		return ;
+	}
 	if (model->diagonal[coords->counter[0] + coords->counter[1] * (model->width - 1)])
 	{
 
@@ -392,7 +464,7 @@ void	ftris_nozbuf(t_system *system, t_coords *coords)
 
 	while (i < 2)
 	{
-		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1] + 1;
+		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1];
 		while (cursor_y < coords->d_tris[i + 1][1])
 		{
 
