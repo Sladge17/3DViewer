@@ -122,16 +122,31 @@ void	set_light(t_coords *coords, char v0, char v1, char v2)
 }
 
 
-int		light_color(int color, float lightpower)
+int		set_xrgbl(int *vertex_0, int *vertex_1, int cursor, float light)
 {
-	unsigned char	rgb[3];
+	unsigned char	rgb[2][3];
+	char			d_rgb[3];
+	unsigned char	len[3];
+	float			int_color;
+	int				color;
 	
-	rgb[0] = (color & (255 << 16)) >> 16;
-	rgb[1] = (color & (255 << 8)) >> 8;
-	rgb[2] = color & 255;
-	color = ((int)(lightpower * rgb[0]) << 16) +
-			((int)(lightpower * rgb[1]) << 8) +
-			(int)(lightpower * rgb[2]);
+	rgb[0][0] = ((vertex_0[2] & (255 << 16)) >> 16);
+	rgb[0][1] = ((vertex_0[2] & (255 << 8)) >> 8);
+	rgb[0][2] = (vertex_0[2] & 255);
+	rgb[1][0] = ((vertex_1[2] & (255 << 16)) >> 16);
+	rgb[1][1] = ((vertex_1[2] & (255 << 8)) >> 8);
+	rgb[1][2] = (vertex_1[2] & 255);
+	d_rgb[0] = rgb[1][0] > rgb[0][0] ? 1 : -1;
+	d_rgb[1] = rgb[1][1] > rgb[0][1] ? 1 : -1;
+	d_rgb[2] = rgb[1][2] > rgb[0][2] ? 1 : -1;
+	len[0] = abs(rgb[1][0] - rgb[0][0]);
+	len[1] = abs(rgb[1][1] - rgb[0][1]);
+	len[2] = abs(rgb[1][2] - rgb[0][2]);
+	int_color = (float)(abs(cursor - vertex_0[0])) /
+				(float)(abs(vertex_0[0] - vertex_1[0]));
+	color = (lround((rgb[0][0] + len[0] * int_color * d_rgb[0]) * light) << 16) +
+			(lround((rgb[0][1] + len[1] * int_color * d_rgb[1]) * light) << 8) +
+			lround((rgb[0][2] + len[2] * int_color * d_rgb[2]) * light);
 	return (color);
 }
 
@@ -251,9 +266,9 @@ int		set_xrgb(int *vertex_0, int *vertex_1, int cursor)
 	len[2] = abs(rgb[1][2] - rgb[0][2]);
 	int_color = (float)(abs(cursor - vertex_0[0])) /
 				(float)(abs(vertex_0[0] - vertex_1[0]));
-	color = ((lround(rgb[0][0] + len[0] * int_color * d_rgb[0])) << 16) +
-			((lround(rgb[0][1] + len[1] * int_color * d_rgb[1])) << 8) +
-			((lround(rgb[0][2] + len[2] * int_color * d_rgb[2])) << 0);
+	color = (lround(rgb[0][0] + len[0] * int_color * d_rgb[0]) << 16) +
+			(lround(rgb[0][1] + len[1] * int_color * d_rgb[1]) << 8) +
+			lround(rgb[0][2] + len[2] * int_color * d_rgb[2]);
 	return (color);
 }
 
