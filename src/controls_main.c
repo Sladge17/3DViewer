@@ -98,11 +98,11 @@ int		key_press(int keycode, void *param)
 		setting->system.render &= 192;
 		setting->system.render |= 4;
 	}
-	// if (keycode == 20)
-	// {
-	// 	setting->system.render &= 128;
-	// 	setting->system.render |= 4;
-	// }
+	if (keycode == 21)
+	{
+		setting->system.render &= 192;
+		setting->system.render |= 8;
+	}
 	// if (keycode == 21)
 	// {
 	// 	setting->system.render &= 128;

@@ -46,7 +46,7 @@ void	liney_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
 	}
 }
 
-void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
+void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z, t_coords *coords)
 {
 	char	dx;
 	int		cursor;
@@ -64,11 +64,27 @@ void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
 			int_z = (float)(abs(cursor - vertex_0[0])) /
 				(float)(abs(vertex_1[0] - vertex_0[0]));
 			cursor_z = tris_z[0] + (tris_z[1] - tris_z[0]) * int_z;
+
+
+			if (system->render & 8)
+			{
+				if (cursor_z > system->z_buf[cursor + vertex_0[1] * WIDTH])
+				{
+					system->output[cursor + vertex_0[1] * WIDTH] =
+						light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);
+					system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
+				}
+			}
+
+			else
+			{
+
 			if (cursor_z > system->z_buf[cursor + vertex_0[1] * WIDTH])
 			{
 				system->output[cursor + vertex_0[1] * WIDTH] =
 					set_xrgb(vertex_0, vertex_1, cursor);
 				system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
+			}
 			}
 		}
 		cursor += dx;

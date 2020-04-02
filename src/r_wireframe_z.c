@@ -77,8 +77,7 @@ void	line_zbuf(t_system *system, t_coords *coords)
 	//
 	if (coords->d_tris[0][1] == coords->d_tris[1][1])
 	{
-		linex_zbuf(system, coords->d_tris[0], coords->d_tris[1],
-			coords->f_tris);
+		linex_zbuf(system, coords->d_tris[0], coords->d_tris[1], coords->f_tris, coords);
 		return ;
 	}
 	if (coords->d_tris[0][0] == coords->d_tris[1][0])

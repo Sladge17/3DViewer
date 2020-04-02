@@ -42,6 +42,7 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords)
 {
 	if (system->render & 8)
 	{
+		fill_qmesh(system, model, coords);
 		return ;
 	}
 	if (system->render & 4)
@@ -60,6 +61,78 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords)
 	// 	draw_qvertex(system, model, coords);
 	// 	return ;
 	// }
+}
+
+
+void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
+{
+	if (model->color_f && system->render & 64)
+	{
+		fqmesh_color(system, model, coords);
+	}
+}
+
+
+void	fqmesh_color(t_system *system, t_model *model, t_coords *coords)
+{
+	if (model->diagonal[coords->counter[0] +
+		coords->counter[1] * (model->width - 1)])
+	{
+		set_light(coords, 0, 1, 3);
+		deftris_zbuf(coords, 0, 1, 3);
+		ftris_zbuf(system, coords);
+		if (model->vertex[coords->index[0]][2] !=
+			model->vertex[coords->index[3]][2])
+			set_light(coords, 0, 2, 3);
+		deftris_zbuf(coords, 0, 2, 3);
+		ftris_zbuf(system, coords);
+		return ;
+	}
+	set_light(coords, 0, 1, 2);
+	deftris_zbuf(coords, 0, 1, 2);
+	ftris_zbuf(system, coords);
+	if (model->vertex[coords->index[1]][2] !=
+		model->vertex[coords->index[2]][2])
+		set_light(coords, 1, 2, 3);
+	deftris_zbuf(coords, 1, 2, 3);
+	ftris_zbuf(system, coords);
+}
+
+void	set_light(t_coords *coords, char v0, char v1, char v2)
+{
+	float	light;
+	float	vector[2][3];
+	float	normal[3];
+	float	norm_len;
+
+	vector[0][0] = coords->f_quad[v2][0] - coords->f_quad[v0][0];
+	vector[0][1] = coords->f_quad[v2][1] - coords->f_quad[v0][1];
+	vector[0][2] = coords->f_quad[v2][2] - coords->f_quad[v0][2];
+	vector[1][0] = coords->f_quad[v1][0] - coords->f_quad[v0][0];
+	vector[1][1] = coords->f_quad[v1][1] - coords->f_quad[v0][1];
+	vector[1][2] = coords->f_quad[v1][2] - coords->f_quad[v0][2];
+	normal[0] = vector[0][1] * vector[1][2] - vector[1][1] * vector[0][2];
+	normal[1] = vector[1][0] * vector[0][2] - vector[0][0] * vector[1][2];
+	normal[2] = vector[0][0] * vector[1][1] - vector[1][0] * vector[0][1];	
+	norm_len = sqrt((normal[0] * normal[0]) +
+					(normal[1] * normal[1]) +
+					(normal[2] * normal[2]));
+	coords->light = fabs(normal[2] / norm_len);
+	coords->light = coords->light * (2 - coords->light);
+}
+
+
+int		light_color(int color, float lightpower)
+{
+	unsigned char	rgb[3];
+	
+	rgb[0] = (color & (255 << 16)) >> 16;
+	rgb[1] = (color & (255 << 8)) >> 8;
+	rgb[2] = color & 255;
+	color = ((int)(lightpower * rgb[0]) << 16) +
+			((int)(lightpower * rgb[1]) << 8) +
+			(int)(lightpower * rgb[2]);
+	return (color);
 }
 
 

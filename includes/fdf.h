@@ -91,6 +91,7 @@ typedef struct	s_coords
 	float		lightpower;
 	int			d_tris[3][3];
 	float		f_tris[3];
+	float		light;
 }				t_coords;
 
 typedef struct	s_setting
@@ -195,6 +196,13 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_quad(t_system *system, t_model *model, t_coords *coords);
 
+void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
+void	fqmesh_color(t_system *system, t_model *model, t_coords *coords);
+// float	set_light(float *vertex_0, float *vertex_1, float *vertex_2);
+void	set_light(t_coords *coords, char v0, char v1, char v2);
+int		light_color(int color, float lightpower);
+
+
 void	draw_quad(t_system *system, t_model *model, t_coords *coords);
 char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
@@ -214,7 +222,7 @@ char	vert_onscreen(int *i, t_coords *coords);
 */
 void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
 void	liney_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
+void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z, t_coords *coords);
 void	liney_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
 
 /*

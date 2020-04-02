@@ -118,7 +118,7 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 			cur_z[1] = z2;
 
 
-			linex_zbuf(system, vertex_0, vertex_1, cur_z);
+			linex_zbuf(system, vertex_0, vertex_1, cur_z, coords);
 
 			if ((0 <= vertex_1[0] && vertex_1[0] < WIDTH) &&
 				(0 <= vertex_1[1] && vertex_1[1] < HEIGHT) &&
