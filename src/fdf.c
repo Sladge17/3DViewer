@@ -23,7 +23,7 @@ int		main(int argv, char **argc)
 	}
 	set_model(argc[1], &setting.model, &setting.coords);
 
-	set_system(&setting.system);
+	set_system(&setting.system, &setting.coords);
 
 	clean_frame(&setting.system, &setting.model);
 
@@ -145,7 +145,7 @@ void	pre_transform(t_model *model)
 }
 
 
-void	set_system(t_system *system)
+void	set_system(t_system *system, t_coords *coords)
 {
 	system->mlx = mlx_init();
 	system->win = mlx_new_window(system->mlx, WIDTH, HEIGHT, "FdF");
@@ -156,6 +156,7 @@ void	set_system(t_system *system)
 	set_backbuf(system->back_buf);
 	system->render = 66;
 	system->control = 0;
+	system->light = &(coords->light);
 }
 
 void	set_buffers(t_system *system)

@@ -60,6 +60,7 @@ typedef struct	s_system
 	char		render;
 	char		control;
 	int			mouse_pos[2];
+	float		*light;
 }				t_system;
 
 typedef struct	s_model
@@ -122,7 +123,8 @@ void	set_diagonal(t_model *model);
 float	len_diag(int *vertex_0, int *vertex_1);
 void	set_overall(t_model *model);
 void	pre_transform(t_model *model);
-void	set_system(t_system *system);
+// void	set_system(t_system *system);
+void	set_system(t_system *system, t_coords *coords);
 void	set_backbuf(int *back_buf);
 int		close_fdf(void *param);
 void	clean_frame(t_system *system, t_model *model);
@@ -222,7 +224,7 @@ char	vert_onscreen(int *i, t_coords *coords);
 */
 void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
 void	liney_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z, t_coords *coords);
+void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
 void	liney_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
 
 /*
