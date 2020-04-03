@@ -102,8 +102,12 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 			coords->d_line[0][0] = coords->d_tris[0][0] + (coords->d_tris[2][0] - coords->d_tris[0][0]) * int_x1;
 			coords->d_line[1][0] = coords->d_tris[i][0] + (coords->d_tris[i + 1][0] - coords->d_tris[i][0]) * int_x2;
 
-			coords->d_line[0][2] = set_yrgb(coords->d_tris[0], coords->d_tris[2], coords->d_line[0][1]);
-			coords->d_line[1][2] = set_yrgb(coords->d_tris[i], coords->d_tris[i + 1], coords->d_line[0][1]);
+			
+			if (system->render & 64)
+			{
+				coords->d_line[0][2] = set_yrgb(coords->d_tris[0], coords->d_tris[2], coords->d_line[0][1]);
+				coords->d_line[1][2] = set_yrgb(coords->d_tris[i], coords->d_tris[i + 1], coords->d_line[0][1]);
+			}
 
 			coords->f_line[0] = coords->f_tris[0] + (coords->f_tris[2] - coords->f_tris[0]) * int_x1;
 			coords->f_line[1] = coords->f_tris[i] + (coords->f_tris[i + 1] - coords->f_tris[i]) * int_x2;

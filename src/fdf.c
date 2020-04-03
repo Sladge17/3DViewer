@@ -183,10 +183,10 @@ void	clean_frame(t_system *system, t_model *model)
 {
 	int		i;
 
-	// mlx_clear_window(system->mlx, system->win);
+	// // mlx_clear_window(system->mlx, system->win);
 
 	i = 0;
-	if (model->color_f && system->render & 64)
+	if (system->render & 8 || (model->color_f && system->render & 64))
 	{
 		while (i < system->field)
 		{
@@ -206,6 +206,14 @@ void	clean_frame(t_system *system, t_model *model)
 			i += 1;
 		}
 	}
+
+	// while (i < system->field)
+	// {
+	// 	system->output[i] = system->back_buf[i];
+	// 	system->z_buf[i] = 1 << 31;
+	// 	// system->light_buf[i] = 0;
+	// 	i += 1;
+	// }
 }
 
 

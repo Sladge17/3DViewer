@@ -199,6 +199,11 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords);
 void	fill_quad(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
+
+void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords);
+void	shade_tris(t_coords *coords);
+
+
 void	fqmesh_color(t_system *system, t_model *model, t_coords *coords);
 // float	set_light(float *vertex_0, float *vertex_1, float *vertex_2);
 void	set_light(t_coords *coords, char v0, char v1, char v2);

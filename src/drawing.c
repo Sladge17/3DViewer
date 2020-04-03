@@ -70,6 +70,55 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 	{
 		fqmesh_color(system, model, coords);
 	}
+	fqmesh_nocolor(system, model, coords);
+}
+
+void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords)
+{
+	if (model->diagonal[coords->counter[0] +
+		coords->counter[1] * (model->width - 1)])
+	{
+		set_light(coords, 0, 1, 3);
+		shade_tris(coords);
+		deftris_zbuf(coords, 0, 1, 3);
+		ftris_zbuf(system, coords);
+		if (model->vertex[coords->index[0]][2] !=
+			model->vertex[coords->index[3]][2])
+		{
+			set_light(coords, 0, 2, 3);
+			shade_tris(coords);
+		}
+		deftris_zbuf(coords, 0, 2, 3);
+		ftris_zbuf(system, coords);
+		return ;
+	}
+	set_light(coords, 0, 1, 2);
+	shade_tris(coords);
+	deftris_zbuf(coords, 0, 1, 2);
+	ftris_zbuf(system, coords);
+	if (model->vertex[coords->index[1]][2] !=
+		model->vertex[coords->index[2]][2])
+	{
+		set_light(coords, 1, 2, 3);
+		shade_tris(coords);
+	}
+	deftris_zbuf(coords, 1, 2, 3);
+	ftris_zbuf(system, coords);
+}
+
+void	shade_tris(t_coords *coords)
+{
+	unsigned char	rgb[3];
+	
+	rgb[0] = (COLOR_S & (255 << 16)) >> 16;
+	rgb[1] = (COLOR_S & (255 << 8)) >> 8;
+	rgb[2] = COLOR_S & 255;
+	// color = lround(lightpower * rgb[0]) +
+	// 		(lround(lightpower * rgb[1]) << 8) +
+	// 		(lround(lightpower * rgb[2]) << 16);
+	coords->d_line[1][2] = (lround(coords->f_line[2] * rgb[2]) << 16) +
+							(lround(coords->f_line[2] * rgb[1]) << 8) +
+							lround(coords->f_line[2] * rgb[0]);
 }
 
 
