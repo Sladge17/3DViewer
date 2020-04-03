@@ -62,25 +62,26 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 	int		i;
 	float	int_x1;
 	float	int_x2;
-	int		cursor_y;
-	int		cursor_x1;
-	int		cursor_x2;
+	// int		coords->d_line[0][1];
+	// int		coords->d_line[0][0];
+	// int		coords->d_line[1][0];
 
-	int		color_1;
-	int		color_2;
+	// int		coords->d_line[0][2];
+	// int		coords->d_line[1][2];
 
-	int		vertex_0[3];
-	int		vertex_1[3];
+	// int		coords->d_line[0][3];
+	// int		coords->d_line[1][3];
 
-	float	z1;
-	float	z2;
-	float	cur_z[2];
+	// float	z1;
+	// float	z2;
+	// float	cur_z[3];
 
 	sorty_zbuf(coords);
 
 
 	total_height = coords->d_tris[2][1] - coords->d_tris[0][1];
-	cursor_y = coords->d_tris[0][1];
+	coords->d_line[0][1] = coords->d_tris[0][1];
+	// coords->d_line[1][1] = coords->d_tris[0][1];
 
 	// i = 0;
 
@@ -92,46 +93,50 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 	while (i < 2)
 	{
 		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1];
-		while (cursor_y < coords->d_tris[i + 1][1])
+		while (coords->d_line[0][1] < coords->d_tris[i + 1][1])
 		{
+			coords->d_line[1][1] = coords->d_line[0][1];
 
-			int_x1 = (float)(cursor_y - coords->d_tris[0][1]) / total_height;
-			int_x2 = (float)(cursor_y - coords->d_tris[i][1]) / segment_height;
-			cursor_x1 = coords->d_tris[0][0] + (coords->d_tris[2][0] - coords->d_tris[0][0]) * int_x1;
-			cursor_x2 = coords->d_tris[i][0] + (coords->d_tris[i + 1][0] - coords->d_tris[i][0]) * int_x2;
+			int_x1 = (float)(coords->d_line[0][1] - coords->d_tris[0][1]) / total_height;
+			int_x2 = (float)(coords->d_line[0][1] - coords->d_tris[i][1]) / segment_height;
+			coords->d_line[0][0] = coords->d_tris[0][0] + (coords->d_tris[2][0] - coords->d_tris[0][0]) * int_x1;
+			coords->d_line[1][0] = coords->d_tris[i][0] + (coords->d_tris[i + 1][0] - coords->d_tris[i][0]) * int_x2;
 
-			color_1 = set_yrgb(coords->d_tris[0], coords->d_tris[2], cursor_y);
-			color_2 = set_yrgb(coords->d_tris[i], coords->d_tris[i + 1], cursor_y);
+			coords->d_line[0][2] = set_yrgb(coords->d_tris[0], coords->d_tris[2], coords->d_line[0][1]);
+			coords->d_line[1][2] = set_yrgb(coords->d_tris[i], coords->d_tris[i + 1], coords->d_line[0][1]);
 
-			z1 = coords->f_tris[0] + (coords->f_tris[2] - coords->f_tris[0]) * int_x1;
-			z2 = coords->f_tris[i] + (coords->f_tris[i + 1] - coords->f_tris[i]) * int_x2;
+			coords->f_line[0] = coords->f_tris[0] + (coords->f_tris[2] - coords->f_tris[0]) * int_x1;
+			coords->f_line[1] = coords->f_tris[i] + (coords->f_tris[i + 1] - coords->f_tris[i]) * int_x2;
 
-			vertex_0[0] = cursor_x1;
-			vertex_0[1] = cursor_y;
-			vertex_0[2] = color_1;
+			// coords->d_line[0][0] = coords->d_line[0][0];
+			// coords->d_line[0][1] = coords->d_line[0][1];
+			// coords->d_line[0][2] = coords->d_line[0][2];
 
-			vertex_1[0] = cursor_x2;
-			vertex_1[1] = cursor_y;
-			vertex_1[2] = color_2;
+			// coords->d_line[1][0] = coords->d_line[1][0];
+			// coords->d_line[1][1] = coords->d_line[0][1];
+			// coords->d_line[1][2] = coords->d_line[1][2];
 
-			cur_z[0] = z1;
-			cur_z[1] = z2;
+			// cur_z[0] = z1;
+			// cur_z[1] = z2;
+			// cur_z[2] = coords->f_line[2];
 
 
-			linex_zbuf(system, vertex_0, vertex_1, cur_z);
+			// linex_zbuf(system, coords->d_line[0], coords->d_line[1], cur_z);
 
-			if ((0 <= vertex_1[0] && vertex_1[0] < WIDTH) &&
-				(0 <= vertex_1[1] && vertex_1[1] < HEIGHT) &&
-				(int)cur_z[1] > system->z_buf[vertex_1[0] + vertex_1[1] * WIDTH])
+			linex_zbuf(system, coords->d_line[0], coords->d_line[1], coords->f_line);
+
+			if ((0 <= coords->d_line[1][0] && coords->d_line[1][0] < WIDTH) &&
+				(0 <= coords->d_line[1][1] && coords->d_line[1][1] < HEIGHT) &&
+				(int)coords->f_line[1] > system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH])
 			{
-				system->output[vertex_1[0] +
-				vertex_1[1] * WIDTH] = vertex_1[2];
-				system->z_buf[vertex_1[0] + vertex_1[1] * WIDTH] = (int)cur_z[1];
+				system->output[coords->d_line[1][0] +
+				coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
+				system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH] = (int)coords->f_line[1];
 			}
 
+			coords->d_line[0][1] += 1;
+			// coords->d_line[1][1] += 1;
 
-
-			cursor_y += 1;
 		}
 		if (coords->d_tris[1][1] == coords->d_tris[2][1])
 			break ;

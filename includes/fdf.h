@@ -60,7 +60,7 @@ typedef struct	s_system
 	char		render;
 	char		control;
 	int			mouse_pos[2];
-	float		*light;
+	// float		*light;
 }				t_system;
 
 typedef struct	s_model
@@ -89,10 +89,11 @@ typedef struct	s_coords
 	float		tmp[3];
 	float		f_quad[4][3];
 	int			d_quad[4][3];
-	float		lightpower;
 	int			d_tris[3][3];
 	float		f_tris[3];
-	float		light;
+	int			d_line[2][3];
+	float		f_line[3];
+	// float		light;
 }				t_coords;
 
 typedef struct	s_setting
@@ -123,8 +124,7 @@ void	set_diagonal(t_model *model);
 float	len_diag(int *vertex_0, int *vertex_1);
 void	set_overall(t_model *model);
 void	pre_transform(t_model *model);
-// void	set_system(t_system *system);
-void	set_system(t_system *system, t_coords *coords);
+void	set_system(t_system *system);
 void	set_backbuf(int *back_buf);
 int		close_fdf(void *param);
 void	clean_frame(t_system *system, t_model *model);

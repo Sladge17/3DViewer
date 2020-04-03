@@ -117,8 +117,10 @@ void	set_light(t_coords *coords, char v0, char v1, char v2)
 	norm_len = sqrt((normal[0] * normal[0]) +
 					(normal[1] * normal[1]) +
 					(normal[2] * normal[2]));
-	coords->light = fabs(normal[2] / norm_len);
-	coords->light = coords->light * (2 - coords->light);
+	// coords->light = fabs(normal[2] / norm_len);
+	// coords->light = coords->light * (2 - coords->light);
+	coords->f_line[2] = fabs(normal[2] / norm_len);
+	coords->f_line[2] = coords->f_line[2] * (2 - coords->f_line[2]);
 }
 
 
