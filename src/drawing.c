@@ -69,6 +69,7 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 	if (model->color_f && system->render & 64)
 	{
 		fqmesh_color(system, model, coords);
+		return ;
 	}
 	fqmesh_nocolor(system, model, coords);
 }
