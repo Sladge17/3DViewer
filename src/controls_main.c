@@ -115,9 +115,6 @@ int		key_press(int keycode, void *param)
 	transform_model(&setting->system, &setting->model, &setting->coords);
 	mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 
-	 mlx_string_put(setting->system.mlx, setting->system.win, 30, 30, 0xff, ft_itoa(setting->model.pos[0]));
-	 mlx_string_put(setting->system.mlx, setting->system.win, 30, 60, 0xff, ft_itoa(setting->model.pos[1]));
-
 	return (0);
 }
 

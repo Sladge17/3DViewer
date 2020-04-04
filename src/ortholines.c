@@ -19,12 +19,13 @@ void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1)
 
 	if (vertex_0[1] < 0 || vertex_0[1] > HEIGHT - 1)
 		return ;
+	vertex_0[2] = system->render & 2 ? COLOR_W : COLOR_S;
 	dx = vertex_1[0] < vertex_0[0] ? -1 : 1;
 	cursor = vertex_0[0];
 	while (cursor != vertex_1[0])
 	{
 		if (cursor >= 0 && cursor < WIDTH)
-			system->output[cursor + vertex_0[1] * WIDTH] = COLOR_W;
+			system->output[cursor + vertex_0[1] * WIDTH] = vertex_0[2];
 		cursor += dx;
 	}
 }
