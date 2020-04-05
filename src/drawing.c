@@ -117,9 +117,9 @@ void	shade_tris(t_coords *coords)
 	// color = lround(lightpower * rgb[0]) +
 	// 		(lround(lightpower * rgb[1]) << 8) +
 	// 		(lround(lightpower * rgb[2]) << 16);
-	coords->d_line[1][2] = (lround(coords->f_line[2] * rgb[2]) << 16) +
+	coords->d_line[1][2] = (lround(coords->f_line[2] * rgb[0]) << 16) +
 							(lround(coords->f_line[2] * rgb[1]) << 8) +
-							lround(coords->f_line[2] * rgb[0]);
+							lround(coords->f_line[2] * rgb[2]);
 }
 
 

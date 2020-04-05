@@ -112,7 +112,7 @@ void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
 			{
 				if (system->render & 64)
 				{
-					if (cursor_z > system->z_buf[cursor + vertex_0[1] * WIDTH])
+					if (cursor_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
 					{
 						// system->output[cursor + vertex_0[1] * WIDTH] =
 						// 	light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);
@@ -126,7 +126,7 @@ void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
 				}
 				else
 				{
-					if (cursor_z > system->z_buf[cursor + vertex_0[1] * WIDTH])
+					if (cursor_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
 					{
 						// system->output[cursor + vertex_0[1] * WIDTH] =
 						// 	light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);

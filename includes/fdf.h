@@ -267,6 +267,9 @@ void	sorty_nozbuf(t_coords *coords);
 void	fquad_zbuf(t_system *system, t_model *model, t_coords *coords);
 void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3);
 void	ftris_zbuf(t_system *system, t_coords *coords);
+
+int		shade_lastpix(t_coords *coords, int color);
+
 void	sorty_zbuf(t_coords *coords);
 
 // /*

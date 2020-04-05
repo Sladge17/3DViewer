@@ -62,6 +62,9 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 	int		i;
 	float	int_x1;
 	float	int_x2;
+
+	// static char	flag = 1;
+
 	// int		coords->d_line[0][1];
 	// int		coords->d_line[0][0];
 	// int		coords->d_line[1][0];
@@ -129,14 +132,33 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 
 			linex_zbuf(system, coords->d_line[0], coords->d_line[1], coords->f_line);
 
-			if ((0 <= coords->d_line[1][0] && coords->d_line[1][0] < WIDTH) &&
-				(0 <= coords->d_line[1][1] && coords->d_line[1][1] < HEIGHT) &&
-				(int)coords->f_line[1] > system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH])
-			{
-				system->output[coords->d_line[1][0] +
-				coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
-				system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH] = (int)coords->f_line[1];
-			}
+			// if (!flag)
+			// {
+				if ((0 <= coords->d_line[1][0] && coords->d_line[1][0] < WIDTH) &&
+					(0 <= coords->d_line[1][1] && coords->d_line[1][1] < HEIGHT) &&
+					(int)coords->f_line[1] >= system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH])
+				{
+					
+
+					// if ((system->render & 72) == 72)
+					if ((system->render & 8) && (system->render & 64))
+					{
+						system->output[coords->d_line[1][0] +
+						coords->d_line[1][1] * WIDTH] = shade_lastpix(coords, coords->d_line[1][2]);
+					}
+					else
+					{
+						system->output[coords->d_line[1][0] +
+						coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
+					}
+
+					// system->output[coords->d_line[1][0] +
+					// coords->d_line[1][1] * WIDTH] = shade_lastpix(coords, coords->d_line[1][2]);
+
+					system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH] = (int)coords->f_line[1];
+				}
+			// }
+			// flag ^= 1;
 
 			coords->d_line[0][1] += 1;
 			// coords->d_line[1][1] += 1;
@@ -147,6 +169,27 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 		i += 1;
 	}
 }
+
+
+int		shade_lastpix(t_coords *coords, int color)
+{
+	unsigned char	rgb[3];
+	
+	rgb[0] = (color & (255 << 16)) >> 16;
+	rgb[1] = (color & (255 << 8)) >> 8;
+	rgb[2] = color & 255;
+	// color = lround(lightpower * rgb[0]) +
+	// 		(lround(lightpower * rgb[1]) << 8) +
+	// 		(lround(lightpower * rgb[2]) << 16);
+	color = (lround(coords->f_line[2] * rgb[0]) << 16) +
+			(lround(coords->f_line[2] * rgb[1]) << 8) +
+			lround(coords->f_line[2] * rgb[2]);
+	return (color);
+}
+
+
+
+
 
 void	sorty_zbuf(t_coords *coords)
 {
