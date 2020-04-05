@@ -69,9 +69,81 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 	if (model->color_f && system->render & 64)
 	{
 		fqmesh_color(system, model, coords);
+		
+		if (coords->counter[1] == 0)
+		{
+			defline_zbuf(coords, 0, 2);
+			coords->f_tris[2] = coords->f_line[2];
+
+			line_zbuf(system, coords);
+			if ((coords->counter[0] == model->width - 2) &&
+				(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+				(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+				((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+				coords->d_quad[2][1] * WIDTH]))
+				system->output[coords->d_quad[2][0] +
+					coords->d_quad[2][1] * WIDTH] = shade_lastpix(coords, coords->d_quad[3][2]);
+		}
+
+
+
+		if (coords->counter[1] == model->height - 2)
+		{
+			defline_zbuf(coords, 1, 3);
+			coords->f_tris[2] = coords->f_line[2];
+
+			line_zbuf(system, coords);
+			if ((coords->index[3] == model->area - 1) &&
+				(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+				(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+				((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+				coords->d_quad[3][1] * WIDTH]))
+				system->output[coords->d_quad[3][0] +
+					coords->d_quad[3][1] * WIDTH] = shade_lastpix(coords, coords->d_quad[3][2]);
+		}
+
+
+
 		return ;
 	}
+
 	fqmesh_nocolor(system, model, coords);
+
+	if (coords->counter[1] == 0)
+		{
+			defline_zbuf(coords, 0, 2);
+			coords->d_tris[0][2] = shade_lastpix(coords, COLOR_S);
+			coords->d_tris[1][2] = shade_lastpix(coords, COLOR_S);
+			coords->f_tris[2] = coords->f_line[2];
+			
+			line_zbuf(system, coords);
+			if ((coords->counter[0] == model->width - 2) &&
+				(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+				(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+				((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+				coords->d_quad[2][1] * WIDTH]))
+				system->output[coords->d_quad[2][0] +
+					coords->d_quad[2][1] * WIDTH] = shade_lastpix(coords, COLOR_S);
+		}
+
+
+
+	if (coords->counter[1] == model->height - 2)
+	{
+		defline_zbuf(coords, 1, 3);
+		coords->d_tris[0][2] = shade_lastpix(coords, COLOR_S);
+		coords->d_tris[1][2] = shade_lastpix(coords, COLOR_S);
+		coords->f_tris[2] = coords->f_line[2];
+
+		line_zbuf(system, coords);
+		if ((coords->index[3] == model->area - 1) &&
+			(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+			(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+			((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+			coords->d_quad[3][1] * WIDTH]))
+			system->output[coords->d_quad[3][0] +
+				coords->d_quad[3][1] * WIDTH] = shade_lastpix(coords, COLOR_S);
+	}
 }
 
 void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords)
@@ -129,6 +201,7 @@ void	fqmesh_color(t_system *system, t_model *model, t_coords *coords)
 		coords->counter[1] * (model->width - 1)])
 	{
 		set_light(coords, 0, 1, 3);
+
 		deftris_zbuf(coords, 0, 1, 3);
 		ftris_zbuf(system, coords);
 		if (model->vertex[coords->index[0]][2] !=
