@@ -140,18 +140,20 @@ void	ftris_zbuf(t_system *system, t_coords *coords)
 				{
 					
 
-					// if ((system->render & 72) == 72)
-					if ((system->render & 8) && (system->render & 64))
-					{
-						system->output[coords->d_line[1][0] +
-						coords->d_line[1][1] * WIDTH] = shade_lastpix(coords, coords->d_line[1][2]);
-					}
-					else
-					{
-						system->output[coords->d_line[1][0] +
-						coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
-					}
+					// // if ((system->render & 72) == 72)
+					// if ((system->render & 8) && (system->render & 64))
+					// {
+					// 	system->output[coords->d_line[1][0] +
+					// 	coords->d_line[1][1] * WIDTH] = shade_lastpix(coords, coords->d_line[1][2]);
+					// }
+					// else
+					// {
+					// 	system->output[coords->d_line[1][0] +
+					// 	coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
+					// }
 
+					system->output[coords->d_line[1][0] +
+					coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
 					// system->output[coords->d_line[1][0] +
 					// coords->d_line[1][1] * WIDTH] = shade_lastpix(coords, coords->d_line[1][2]);
 

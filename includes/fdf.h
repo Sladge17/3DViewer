@@ -206,6 +206,11 @@ void	shade_tris(t_coords *coords);
 
 
 void	fqmesh_color(t_system *system, t_model *model, t_coords *coords);
+
+void	shade_vtris(t_coords *coords);
+int		shade_color(int color, float light);
+
+
 // float	set_light(float *vertex_0, float *vertex_1, float *vertex_2);
 void	set_light(t_coords *coords, char v0, char v1, char v2);
 int		set_xrgbl(int *vertex_0, int *vertex_1, int cursor, float light);

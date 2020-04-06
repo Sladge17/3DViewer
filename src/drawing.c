@@ -70,7 +70,7 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 	{
 		fqmesh_color(system, model, coords);
 		
-		if (coords->counter[1] == 0)
+		if (coords->counter[1] == 0 && !(system->render & 128))
 		{
 			defline_zbuf(coords, 0, 2);
 			coords->f_tris[2] = coords->f_line[2];
@@ -87,7 +87,7 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 
 
 
-		if (coords->counter[1] == model->height - 2)
+		if (coords->counter[1] == model->height - 2 && !(system->render & 128))
 		{
 			defline_zbuf(coords, 1, 3);
 			coords->f_tris[2] = coords->f_line[2];
@@ -109,7 +109,7 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 
 	fqmesh_nocolor(system, model, coords);
 
-	if (coords->counter[1] == 0)
+	if (coords->counter[1] == 0 && !(system->render & 128))
 		{
 			defline_zbuf(coords, 0, 2);
 			coords->d_tris[0][2] = shade_lastpix(coords, COLOR_S);
@@ -128,7 +128,7 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 
 
 
-	if (coords->counter[1] == model->height - 2)
+	if (coords->counter[1] == model->height - 2 && !(system->render & 128))
 	{
 		defline_zbuf(coords, 1, 3);
 		coords->d_tris[0][2] = shade_lastpix(coords, COLOR_S);
@@ -203,23 +203,59 @@ void	fqmesh_color(t_system *system, t_model *model, t_coords *coords)
 		set_light(coords, 0, 1, 3);
 
 		deftris_zbuf(coords, 0, 1, 3);
+
+		shade_vtris(coords);
+
 		ftris_zbuf(system, coords);
 		if (model->vertex[coords->index[0]][2] !=
 			model->vertex[coords->index[3]][2])
 			set_light(coords, 0, 2, 3);
 		deftris_zbuf(coords, 0, 2, 3);
+		shade_vtris(coords);
 		ftris_zbuf(system, coords);
 		return ;
 	}
 	set_light(coords, 0, 1, 2);
 	deftris_zbuf(coords, 0, 1, 2);
+	shade_vtris(coords);
 	ftris_zbuf(system, coords);
 	if (model->vertex[coords->index[1]][2] !=
 		model->vertex[coords->index[2]][2])
 		set_light(coords, 1, 2, 3);
 	deftris_zbuf(coords, 1, 2, 3);
+	shade_vtris(coords);
 	ftris_zbuf(system, coords);
 }
+
+
+void	shade_vtris(t_coords *coords)
+{
+	coords->d_tris[0][2] = shade_color(coords->d_tris[0][2], coords->f_line[2]);
+	coords->d_tris[1][2] = shade_color(coords->d_tris[1][2], coords->f_line[2]);
+	coords->d_tris[2][2] = shade_color(coords->d_tris[2][2], coords->f_line[2]);
+}
+
+
+int		shade_color(int color, float light)
+{
+	unsigned char	rgb[3];
+	
+	// rgb[0] = (color & (255 << 16)) >> 16;
+	// rgb[1] = (color & (255 << 8)) >> 8;
+	// rgb[2] = color & 255;
+	rgb[0] = color >> 16;
+	rgb[1] = (color >> 8) & 255;
+	rgb[2] = color & 255;
+	color = (lround(light * rgb[0]) << 16) +
+			(lround(light * rgb[1]) << 8) +
+			lround(light * rgb[2]);
+	return (color);
+}
+
+
+
+
+
 
 void	set_light(t_coords *coords, char v0, char v1, char v2)
 {

@@ -108,62 +108,79 @@ void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
 			// 	}
 			// }
 
-			if (system->render & 8)
-			{
-				if (system->render & 64)
-				{
-					if (cursor_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
-					{
-						// system->output[cursor + vertex_0[1] * WIDTH] =
-						// 	light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);
-						// system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
-
-						system->output[cursor + vertex_0[1] * WIDTH] =
-							set_xrgbl(vertex_0, vertex_1, cursor, tris_z[2]);
-						// system->output[cursor + vertex_1[1] * WIDTH] = vertex_1[2];
-						system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
-
-					}
-				}
-				else
-				{
-					if (cursor_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
-					{
-						// system->output[cursor + vertex_0[1] * WIDTH] =
-						// 	light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);
-						// system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
-
-						system->output[cursor + vertex_1[1] * WIDTH] = vertex_1[2];
-						system->z_buf[cursor + vertex_1[1] * WIDTH] = cursor_z;
-
-					}
-				}
-			}
-
-
-			// if (system->render & 8 && !(system->render & 64))
+			// if (system->render & 8)
 			// {
-			// 	if (cursor_z > system->z_buf[cursor + vertex_0[1] * WIDTH])
+			// 	if (system->render & 64)
 			// 	{
-			// 		// system->output[cursor + vertex_0[1] * WIDTH] =
-			// 		// 	light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);
-			// 		// system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
+			// 		if (cursor_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
+			// 		{
+			// 			// system->output[cursor + vertex_0[1] * WIDTH] =
+			// 			// 	light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);
+			// 			// system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
 
-			// 		system->output[cursor + vertex_1[1] * WIDTH] = vertex_1[2];
-			// 		system->z_buf[cursor + vertex_1[1] * WIDTH] = cursor_z;
+			// 			system->output[cursor + vertex_0[1] * WIDTH] =
+			// 				set_xrgbl(vertex_0, vertex_1, cursor, tris_z[2]);
+			// 			// system->output[cursor + vertex_1[1] * WIDTH] = vertex_1[2];
+			// 			system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
 
+			// 		}
+			// 	}
+			// 	else
+			// 	{
+			// 		if (cursor_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
+			// 		{
+			// 			// system->output[cursor + vertex_0[1] * WIDTH] =
+			// 			// 	light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);
+			// 			// system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
+
+			// 			system->output[cursor + vertex_1[1] * WIDTH] = vertex_1[2];
+			// 			system->z_buf[cursor + vertex_1[1] * WIDTH] = cursor_z;
+
+			// 		}
 			// 	}
 			// }
 
-			if (!(system->render & 8))
-			{
 
-				if (cursor_z > system->z_buf[cursor + vertex_0[1] * WIDTH])
+			// // if (system->render & 8 && !(system->render & 64))
+			// // {
+			// // 	if (cursor_z > system->z_buf[cursor + vertex_0[1] * WIDTH])
+			// // 	{
+			// // 		// system->output[cursor + vertex_0[1] * WIDTH] =
+			// // 		// 	light_color(set_xrgb(vertex_0, vertex_1, cursor), coords->light);
+			// // 		// system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
+
+			// // 		system->output[cursor + vertex_1[1] * WIDTH] = vertex_1[2];
+			// // 		system->z_buf[cursor + vertex_1[1] * WIDTH] = cursor_z;
+
+			// // 	}
+			// // }
+
+			// if (!(system->render & 8))
+			// {
+
+			// 	if (cursor_z > system->z_buf[cursor + vertex_0[1] * WIDTH])
+			// 	{
+			// 		system->output[cursor + vertex_0[1] * WIDTH] =
+			// 			set_xrgb(vertex_0, vertex_1, cursor);
+			// 		system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
+			// 	}
+			// }
+
+
+			if (cursor_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
+			{
+				if (system->render & 64)
 				{
 					system->output[cursor + vertex_0[1] * WIDTH] =
 						set_xrgb(vertex_0, vertex_1, cursor);
-					system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
 				}
+				else
+				{
+					system->output[cursor + vertex_0[1] * WIDTH] =
+						vertex_1[2];
+				}
+
+				system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
 			}
 		}
 		cursor += dx;
