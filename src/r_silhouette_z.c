@@ -57,119 +57,70 @@ void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3)
 
 void	ftris_zbuf(t_system *system, t_coords *coords)	
 {
-	int		segment_height;
-	int		total_height;
+	int		height[2];
 	int		i;
-	float	int_x1;
-	float	int_x2;
-
-	// static char	flag = 1;
-
-	// int		coords->d_line[0][1];
-	// int		coords->d_line[0][0];
-	// int		coords->d_line[1][0];
-
-	// int		coords->d_line[0][2];
-	// int		coords->d_line[1][2];
-
-	// int		coords->d_line[0][3];
-	// int		coords->d_line[1][3];
-
-	// float	z1;
-	// float	z2;
-	// float	cur_z[3];
 
 	sorty_zbuf(coords);
-
-
-	total_height = coords->d_tris[2][1] - coords->d_tris[0][1];
+	height[0] = coords->d_tris[2][1] - coords->d_tris[0][1];
 	coords->d_line[0][1] = coords->d_tris[0][1];
-	// coords->d_line[1][1] = coords->d_tris[0][1];
-
-	// i = 0;
-
-	// if (coords->d_tris[0][1] == coords->d_tris[1][1])
-	// 	i = 1;
-
 	i = coords->d_tris[0][1] == coords->d_tris[1][1] ? 1 : 0;
-
 	while (i < 2)
 	{
-		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1];
+		height[1] = coords->d_tris[i + 1][1] - coords->d_tris[i][1];
 		while (coords->d_line[0][1] < coords->d_tris[i + 1][1])
 		{
-			coords->d_line[1][1] = coords->d_line[0][1];
-
-			int_x1 = (float)(coords->d_line[0][1] - coords->d_tris[0][1]) / total_height;
-			int_x2 = (float)(coords->d_line[0][1] - coords->d_tris[i][1]) / segment_height;
-			coords->d_line[0][0] = coords->d_tris[0][0] + (coords->d_tris[2][0] - coords->d_tris[0][0]) * int_x1;
-			coords->d_line[1][0] = coords->d_tris[i][0] + (coords->d_tris[i + 1][0] - coords->d_tris[i][0]) * int_x2;
-
-			
-			if (system->render & 64)
-			{
-				coords->d_line[0][2] = set_yrgb(coords->d_tris[0], coords->d_tris[2], coords->d_line[0][1]);
-				coords->d_line[1][2] = set_yrgb(coords->d_tris[i], coords->d_tris[i + 1], coords->d_line[0][1]);
-			}
-
-			coords->f_line[0] = coords->f_tris[0] + (coords->f_tris[2] - coords->f_tris[0]) * int_x1;
-			coords->f_line[1] = coords->f_tris[i] + (coords->f_tris[i + 1] - coords->f_tris[i]) * int_x2;
-
-			// coords->d_line[0][0] = coords->d_line[0][0];
-			// coords->d_line[0][1] = coords->d_line[0][1];
-			// coords->d_line[0][2] = coords->d_line[0][2];
-
-			// coords->d_line[1][0] = coords->d_line[1][0];
-			// coords->d_line[1][1] = coords->d_line[0][1];
-			// coords->d_line[1][2] = coords->d_line[1][2];
-
-			// cur_z[0] = z1;
-			// cur_z[1] = z2;
-			// cur_z[2] = coords->f_line[2];
-
-
-			// linex_zbuf(system, coords->d_line[0], coords->d_line[1], cur_z);
-
-			linex_zbuf(system, coords->d_line[0], coords->d_line[1], coords->f_line);
-
-			// if (!flag)
-			// {
-				if ((0 <= coords->d_line[1][0] && coords->d_line[1][0] < WIDTH) &&
-					(0 <= coords->d_line[1][1] && coords->d_line[1][1] < HEIGHT) &&
-					(int)coords->f_line[1] >= system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH])
-				{
-					
-
-					// // if ((system->render & 72) == 72)
-					// if ((system->render & 8) && (system->render & 64))
-					// {
-					// 	system->output[coords->d_line[1][0] +
-					// 	coords->d_line[1][1] * WIDTH] = shade_lastpix(coords, coords->d_line[1][2]);
-					// }
-					// else
-					// {
-					// 	system->output[coords->d_line[1][0] +
-					// 	coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
-					// }
-
-					system->output[coords->d_line[1][0] +
-					coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
-					// system->output[coords->d_line[1][0] +
-					// coords->d_line[1][1] * WIDTH] = shade_lastpix(coords, coords->d_line[1][2]);
-
-					system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH] = (int)coords->f_line[1];
-				}
-			// }
-			// flag ^= 1;
-
+			setlinex_zbuf(system, coords, height, i);
+			linex_zbuf(system, coords->d_line[0],
+				coords->d_line[1], coords->f_line);
+			lastvlx_zbuf(system, coords);
 			coords->d_line[0][1] += 1;
-			// coords->d_line[1][1] += 1;
-
 		}
 		if (coords->d_tris[1][1] == coords->d_tris[2][1])
 			break ;
 		i += 1;
 	}
+}
+
+void	lastvlx_zbuf(t_system *system, t_coords *coords)
+{
+	if ((0 <= coords->d_line[1][0] && coords->d_line[1][0] < WIDTH) &&
+		(0 <= coords->d_line[1][1] && coords->d_line[1][1] < HEIGHT) &&
+		(int)coords->f_line[1] >=
+		system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH])
+	{
+		system->output[coords->d_line[1][0] +
+		coords->d_line[1][1] * WIDTH] = coords->d_line[1][2];
+		system->z_buf[coords->d_line[1][0] + coords->d_line[1][1] * WIDTH] =
+			(int)coords->f_line[1];
+	}
+}
+
+
+void	setlinex_zbuf(t_system *system, t_coords *coords, int *height, int i)
+{
+	float	int_xz[2];
+
+	coords->d_line[1][1] = coords->d_line[0][1];
+
+	int_xz[0] = (float)(coords->d_line[0][1] - coords->d_tris[0][1]) /
+		height[0];
+	int_xz[1] = (float)(coords->d_line[0][1] - coords->d_tris[i][1]) /
+		height[1];
+	coords->d_line[0][0] = coords->d_tris[0][0] +
+		(coords->d_tris[2][0] - coords->d_tris[0][0]) * int_xz[0];
+	coords->d_line[1][0] = coords->d_tris[i][0] +
+		(coords->d_tris[i + 1][0] - coords->d_tris[i][0]) * int_xz[1];
+	if (system->render & 64)
+	{
+		coords->d_line[0][2] = set_yrgb(coords->d_tris[0],
+			coords->d_tris[2], coords->d_line[0][1]);
+		coords->d_line[1][2] = set_yrgb(coords->d_tris[i],
+			coords->d_tris[i + 1], coords->d_line[0][1]);
+	}
+	coords->f_line[0] = coords->f_tris[0] +
+		(coords->f_tris[2] - coords->f_tris[0]) * int_xz[0];
+	coords->f_line[1] = coords->f_tris[i] +
+		(coords->f_tris[i + 1] - coords->f_tris[i]) * int_xz[1];
 }
 
 
@@ -189,16 +140,10 @@ int		shade_lastpix(t_coords *coords, int color)
 	return (color);
 }
 
-
-
-
-
 void	sorty_zbuf(t_coords *coords)
 {
 	int		i;
 	int		j;
-	int		tmp_d;
-	float	tmp_f;
 
 	j = 0;
 	while (j < 2)
@@ -207,23 +152,34 @@ void	sorty_zbuf(t_coords *coords)
 		while (i < 2 - j)
 		{
 			if (coords->d_tris[i][1] > coords->d_tris[i + 1][1])
-			{
-				tmp_d = coords->d_tris[i][0];
-				coords->d_tris[i][0] = coords->d_tris[i + 1][0];
-				coords->d_tris[i + 1][0] = tmp_d;
-				tmp_d = coords->d_tris[i][1];
-				coords->d_tris[i][1] = coords->d_tris[i + 1][1];
-				coords->d_tris[i + 1][1] = tmp_d;
-				tmp_d = coords->d_tris[i][2];
-				coords->d_tris[i][2] = coords->d_tris[i + 1][2];
-				coords->d_tris[i + 1][2] = tmp_d;
-				tmp_f = coords->f_tris[i];
-				coords->f_tris[i] = coords->f_tris[i + 1];
-				coords->f_tris[i + 1] = tmp_f;
-			}
+				sorty_zbuf2(coords, i);
 			i += 1;
 		}
 		j += 1;
 	}
 }
+
+void	sorty_zbuf2(t_coords *coords, int i)
+{
+	int		tmp_d;
+	float	tmp_f;
+
+	tmp_d = coords->d_tris[i][0];
+	coords->d_tris[i][0] = coords->d_tris[i + 1][0];
+	coords->d_tris[i + 1][0] = tmp_d;
+	tmp_d = coords->d_tris[i][1];
+	coords->d_tris[i][1] = coords->d_tris[i + 1][1];
+	coords->d_tris[i + 1][1] = tmp_d;
+	tmp_d = coords->d_tris[i][2];
+	coords->d_tris[i][2] = coords->d_tris[i + 1][2];
+	coords->d_tris[i + 1][2] = tmp_d;
+	tmp_f = coords->f_tris[i];
+	coords->f_tris[i] = coords->f_tris[i + 1];
+	coords->f_tris[i + 1] = tmp_f;
+}
+
+
+
+
+
 

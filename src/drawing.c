@@ -183,9 +183,12 @@ void	shade_tris(t_coords *coords)
 {
 	unsigned char	rgb[3];
 	
-	rgb[0] = (COLOR_S & (255 << 16)) >> 16;
-	rgb[1] = (COLOR_S & (255 << 8)) >> 8;
-	rgb[2] = COLOR_S & 255;
+	// rgb[0] = (COLOR_S & (255 << 16)) >> 16;
+	// rgb[1] = (COLOR_S & (255 << 8)) >> 8;
+	// rgb[2] = COLOR_S & 255;
+	rgb[0] = COLOR_S >> 16;
+	rgb[1] = COLOR_S >> 8;
+	rgb[2] = (char)COLOR_S;
 	// color = lround(lightpower * rgb[0]) +
 	// 		(lround(lightpower * rgb[1]) << 8) +
 	// 		(lround(lightpower * rgb[2]) << 16);
@@ -318,34 +321,35 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 	if (model->color_f && system->render & 64)
 	{
 		fquad_zbuf(system, model, coords);
+		lastl_zbuf(system, model, coords);
 		
-		if (coords->counter[1] == 0)
-		{
-			defline_zbuf(coords, 0, 2);
-			line_zbuf(system, coords);
-			if ((coords->counter[0] == model->width - 2) &&
-				(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
-				(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
-				((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
-				coords->d_quad[2][1] * WIDTH]))
-				system->output[coords->d_quad[2][0] +
-					coords->d_quad[2][1] * WIDTH] = coords->d_quad[3][2];
-		}
+		// if (coords->counter[1] == 0)
+		// {
+		// 	defline_zbuf(coords, 0, 2);
+		// 	line_zbuf(system, coords);
+		// 	if ((coords->counter[0] == model->width - 2) &&
+		// 		(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+		// 		(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+		// 		((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+		// 		coords->d_quad[2][1] * WIDTH]))
+		// 		system->output[coords->d_quad[2][0] +
+		// 			coords->d_quad[2][1] * WIDTH] = coords->d_quad[3][2];
+		// }
 
 
 
-		if (coords->counter[1] == model->height - 2)
-		{
-			defline_zbuf(coords, 1, 3);
-			line_zbuf(system, coords);
-			if ((coords->index[3] == model->area - 1) &&
-				(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
-				(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
-				((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
-				coords->d_quad[3][1] * WIDTH]))
-				system->output[coords->d_quad[3][0] +
-					coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
-		}
+		// if (coords->counter[1] == model->height - 2)
+		// {
+		// 	defline_zbuf(coords, 1, 3);
+		// 	line_zbuf(system, coords);
+		// 	if ((coords->index[3] == model->area - 1) &&
+		// 		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		// 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+		// 		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+		// 		coords->d_quad[3][1] * WIDTH]))
+		// 		system->output[coords->d_quad[3][0] +
+		// 			coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
+		// }
 		return ;
 	}
 	fquad_nozbuf(system, model, coords);
@@ -372,6 +376,38 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 	// }
 	
 }
+
+void	lastl_zbuf(t_system *system, t_model *model, t_coords *coords)
+{
+	if (coords->counter[1] == 0)
+	{
+		defline_zbuf(coords, 0, 2);
+		line_zbuf(system, coords);
+		if ((coords->counter[0] == model->width - 2) &&
+			(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+			(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+			((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+			coords->d_quad[2][1] * WIDTH]))
+			system->output[coords->d_quad[2][0] +
+				coords->d_quad[2][1] * WIDTH] = coords->d_quad[3][2];
+	}
+	if (coords->counter[1] == model->height - 2)
+	{
+		defline_zbuf(coords, 1, 3);
+		line_zbuf(system, coords);
+		if ((coords->index[3] == model->area - 1) &&
+			(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+			(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+			((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+			coords->d_quad[3][1] * WIDTH]))
+			system->output[coords->d_quad[3][0] +
+				coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
+	}
+}
+
+
+
+
 
 void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords)
 {
