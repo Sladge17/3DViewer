@@ -56,11 +56,6 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords)
 		return ;
 	}
 	draw_qvertex(system, model, coords);
-	// if (system->render & 1)
-	// {
-	// 	draw_qvertex(system, model, coords);
-	// 	return ;
-	// }
 }
 
 
@@ -354,6 +349,32 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 		return ;
 	}
 	fquad_nozbuf(system, model, coords);
+	lastl_nozbuf(system, model, coords);
+	// if (coords->counter[1] == 0)
+	// {
+	// 	defline_nozbuf(coords, 0, 2);
+	// 	line_nozbuf(system, coords);
+	// 	if ((coords->counter[0] == model->width - 2) &&
+	// 		(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+	// 		(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT))
+	// 		system->output[coords->d_quad[2][0] +
+	// 			coords->d_quad[2][1] * WIDTH] = COLOR_S;
+	// }
+	// if (coords->counter[1] == model->height - 2)
+	// {
+	// 	defline_nozbuf(coords, 1, 3);
+	// 	line_nozbuf(system, coords);
+	// 	if ((coords->index[3] == model->area - 1) &&
+	// 		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+	// 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT))
+	// 		system->output[coords->d_quad[3][0] +
+	// 			coords->d_quad[3][1] * WIDTH] = COLOR_S;
+	// }
+	
+}
+
+void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords)
+{
 	if (coords->counter[1] == 0)
 	{
 		defline_nozbuf(coords, 0, 2);
@@ -364,9 +385,6 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 			system->output[coords->d_quad[2][0] +
 				coords->d_quad[2][1] * WIDTH] = COLOR_S;
 	}
-
-
-
 	if (coords->counter[1] == model->height - 2)
 	{
 		defline_nozbuf(coords, 1, 3);
@@ -377,10 +395,7 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 			system->output[coords->d_quad[3][0] +
 				coords->d_quad[3][1] * WIDTH] = COLOR_S;
 	}
-	
 }
-
-
 
 void	draw_quad(t_system *system, t_model *model, t_coords *coords)
 {

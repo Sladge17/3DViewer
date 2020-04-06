@@ -69,6 +69,7 @@ void	line_nozbuf(t_system *system, t_coords *coords)
 	d[1] = coords->d_tris[1][1] < coords->d_tris[0][1] ? -1 : 1;
 	len[0] = (coords->d_tris[1][0] - coords->d_tris[0][0]) * d[0];
 	len[1] = (coords->d_tris[1][1] - coords->d_tris[0][1]) * d[1];
+	coords->d_tris[0][2] = system->render & 2 ? COLOR_W : COLOR_S;
 	if (len[0] > len[1])
 	{
 		xmore_nozbuf(system, coords, d, len);
@@ -89,7 +90,8 @@ void	xmore_nozbuf(t_system *system, t_coords *coords, char *d, int *len)
 	{
 		if ((0 <= cursor[0] && cursor[0] < WIDTH)
 			&& (0 <= cursor[1] && cursor[1] < HEIGHT))
-			system->output[cursor[0] + cursor[1] * WIDTH] = COLOR_W;
+			system->output[cursor[0] + cursor[1] * WIDTH] = 
+				coords->d_tris[0][2];
 		overflow += len[1] + 1;
 		if (overflow >= len[0] + 1)
 		{
@@ -112,7 +114,8 @@ void	ymore_nozbuf(t_system *system, t_coords *coords, char *d, int *len)
 	{
 		if ((0 <= cursor[0] && cursor[0] < WIDTH)
 			&& (0 <= cursor[1] && cursor[1] < HEIGHT))
-			system->output[cursor[0] + cursor[1] * WIDTH] = COLOR_W;
+			system->output[cursor[0] + cursor[1] * WIDTH] =
+				coords->d_tris[0][2];
 		overflow += len[0] + 1;
 		if (overflow >= len[1] + 1)
 		{

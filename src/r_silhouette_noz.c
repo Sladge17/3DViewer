@@ -24,28 +24,19 @@ void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords)
 		quad_nozbuf(system, model, coords);
 		return ;
 	}
-	if (model->diagonal[coords->counter[0] + coords->counter[1] * (model->width - 1)])
+	if (model->diagonal[coords->counter[0] +
+		coords->counter[1] * (model->width - 1)])
 	{
-
-		// defline_nozbuf(coords, 0, 3);
-		// line_nozbuf(system, coords);
-		
 		deftris_nozbuf(coords, 0, 1, 3);
 		ftris_nozbuf(system, coords);
 		deftris_nozbuf(coords, 0, 2, 3);
 		ftris_nozbuf(system, coords);
-
 		return ;
 	}
-
-	// defline_nozbuf(coords, 1, 2);
-	// line_nozbuf(system, coords);
-
 	deftris_nozbuf(coords, 0, 1, 2);
 	ftris_nozbuf(system, coords);
 	deftris_nozbuf(coords, 1, 2, 3);
 	ftris_nozbuf(system, coords);
-
 }
 
 void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3)
@@ -60,60 +51,24 @@ void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3)
 
 void	ftris_nozbuf(t_system *system, t_coords *coords)	
 {
-	int		segment_height;
-	int		total_height;
+	int		height[2];
 	int		i;
-	float	int_x1;
-	float	int_x2;
-	// int		coords->d_line[0][1];
-	// int		coords->d_line[0][0];
-	// int		coords->d_line[1][0];
-
-	// int		vertex_0[2];
-	// int		vertex_1[2];
-
-	// line_nozbuf(system, coords);
-	// if ((0 <= coords->d_tris[1][0] && coords->d_tris[1][0] < WIDTH)
-	// 	&& (0 <= coords->d_tris[1][1] && coords->d_tris[1][1] < HEIGHT))
-	// 	system->output[coords->d_tris[1][0] +
-	// 		coords->d_tris[1][1] * WIDTH] = COLOR_W;
 
 	sorty_nozbuf(coords);
-
-	// line_nozbuf(system, coords);
-
-
-	total_height = coords->d_tris[2][1] - coords->d_tris[0][1];
+	height[0] = coords->d_tris[2][1] - coords->d_tris[0][1];
 	coords->d_line[0][1] = coords->d_tris[0][1];
-
-	// i = 0;
-
 	i = coords->d_tris[0][1] == coords->d_tris[1][1] ? 1 : 0;
-
 	while (i < 2)
 	{
-		segment_height = coords->d_tris[i + 1][1] - coords->d_tris[i][1];
+		height[1] = coords->d_tris[i + 1][1] - coords->d_tris[i][1];
 		while (coords->d_line[0][1] < coords->d_tris[i + 1][1])
 		{
-			coords->d_line[1][1] = coords->d_line[0][1];
-
-			int_x1 = (float)(coords->d_line[0][1] - coords->d_tris[0][1]) / total_height;
-			int_x2 = (float)(coords->d_line[0][1] - coords->d_tris[i][1]) / segment_height;
-			coords->d_line[0][0] = coords->d_tris[0][0] + (coords->d_tris[2][0] - coords->d_tris[0][0]) * int_x1;
-			coords->d_line[1][0] = coords->d_tris[i][0] + (coords->d_tris[i + 1][0] - coords->d_tris[i][0]) * int_x2;
-
-			// vertex_0[0] = coords->d_line[0][0];
-			// vertex_0[1] = coords->d_line[0][1];
-			// vertex_1[0] = coords->d_line[1][0];
-			// vertex_1[1] = coords->d_line[0][1];
-
+			setlinex_nozbuf(coords, height, i);
 			linex_nozbuf(system, coords->d_line[0], coords->d_line[1]);
-
 			if ((0 <= coords->d_line[1][0] && coords->d_line[1][0] < WIDTH)
 			&& (0 <= coords->d_line[1][1] && coords->d_line[1][1] < HEIGHT))
 				system->output[coords->d_line[1][0] +
 				coords->d_line[1][1] * WIDTH] = COLOR_S;
-
 			coords->d_line[0][1] += 1;
 		}
 		if (coords->d_tris[1][1] == coords->d_tris[2][1])
@@ -147,4 +102,19 @@ void	sorty_nozbuf(t_coords *coords)
 		}
 		j += 1;
 	}
+}
+
+void	setlinex_nozbuf(t_coords *coords, int *height, int i)
+{
+	float	int_x[2];
+
+	coords->d_line[1][1] = coords->d_line[0][1];
+	int_x[0] = (float)(coords->d_line[0][1] - coords->d_tris[0][1]) /
+		height[0];
+	int_x[1] = (float)(coords->d_line[0][1] - coords->d_tris[i][1]) /
+		height[1];
+	coords->d_line[0][0] = coords->d_tris[0][0] +
+		(coords->d_tris[2][0] - coords->d_tris[0][0]) * int_x[0];
+	coords->d_line[1][0] = coords->d_tris[i][0] +
+		(coords->d_tris[i + 1][0] - coords->d_tris[i][0]) * int_x[1];
 }

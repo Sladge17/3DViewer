@@ -198,6 +198,7 @@ char	draw_zeroscale(t_system *system, t_model *model);
 void	draw_model(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_quad(t_system *system, t_model *model, t_coords *coords);
+void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
 
@@ -264,6 +265,7 @@ void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords);
 void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3);
 void	ftris_nozbuf(t_system *system, t_coords *coords);
 void	sorty_nozbuf(t_coords *coords);
+void	setlinex_nozbuf(t_coords *coords, int *height, int i);
 
 
 /*
