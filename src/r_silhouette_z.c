@@ -124,21 +124,21 @@ void	setlinex_zbuf(t_system *system, t_coords *coords, int *height, int i)
 }
 
 
-int		shade_lastpix(t_coords *coords, int color)
-{
-	unsigned char	rgb[3];
+// int		shade_lastpix(t_coords *coords, int color)
+// {
+// 	unsigned char	rgb[3];
 	
-	rgb[0] = (color & (255 << 16)) >> 16;
-	rgb[1] = (color & (255 << 8)) >> 8;
-	rgb[2] = color & 255;
-	// color = lround(lightpower * rgb[0]) +
-	// 		(lround(lightpower * rgb[1]) << 8) +
-	// 		(lround(lightpower * rgb[2]) << 16);
-	color = (lround(coords->f_line[2] * rgb[0]) << 16) +
-			(lround(coords->f_line[2] * rgb[1]) << 8) +
-			lround(coords->f_line[2] * rgb[2]);
-	return (color);
-}
+// 	rgb[0] = (color & (255 << 16)) >> 16;
+// 	rgb[1] = (color & (255 << 8)) >> 8;
+// 	rgb[2] = color & 255;
+// 	// color = lround(lightpower * rgb[0]) +
+// 	// 		(lround(lightpower * rgb[1]) << 8) +
+// 	// 		(lround(lightpower * rgb[2]) << 16);
+// 	color = (lround(coords->f_line[2] * rgb[0]) << 16) +
+// 			(lround(coords->f_line[2] * rgb[1]) << 8) +
+// 			lround(coords->f_line[2] * rgb[2]);
+// 	return (color);
+// }
 
 void	sorty_zbuf(t_coords *coords)
 {

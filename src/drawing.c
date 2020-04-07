@@ -61,46 +61,54 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords)
 
 void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 {
+	if (lastvert_qmesh(system, model, coords))
+		return ;
+
 	if (model->color_f && system->render & 64)
 	{
+
 		fqmesh_color(system, model, coords);
 
+		if (firsthor_qmcolor(system, model, coords))
+			return ;
+		// if (coords->counter[1] == 0)
+		// {
+		// 	defline_zbuf(coords, 0, 2);
+		// 	// coords->f_tris[2] = coords->f_line[2];
+		// 	coords->d_tris[0][2] = shade_color(coords->d_tris[0][2], coords->f_line[2]);
+		// 	coords->d_tris[1][2] = shade_color(coords->d_tris[1][2], coords->f_line[2]);
+		// 	coords->f_tris[2] = coords->f_line[2];
 
-		if (coords->counter[1] == 0)
-		{
-			defline_zbuf(coords, 0, 2);
-			coords->f_tris[2] = coords->f_line[2];
-			coords->d_tris[0][2] = shade_color(coords->d_tris[0][2], coords->f_line[2]);
-			coords->d_tris[1][2] = shade_color(coords->d_tris[1][2], coords->f_line[2]);
+		// 	line_zbuf(system, coords);
+		// 	if ((coords->counter[0] == model->width - 2) &&
+		// 		(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+		// 		(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+		// 		((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+		// 		coords->d_quad[2][1] * WIDTH]))
+		// 		system->output[coords->d_quad[2][0] +
+		// 			coords->d_quad[2][1] * WIDTH] = shade_color(coords->d_quad[2][2], coords->f_line[2]);
+		// }
 
-			line_zbuf(system, coords);
-			if ((coords->counter[0] == model->width - 2) &&
-				(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
-				(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
-				((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
-				coords->d_quad[2][1] * WIDTH]))
-				system->output[coords->d_quad[2][0] +
-					coords->d_quad[2][1] * WIDTH] = shade_lastpix(coords, coords->d_quad[3][2]);
-		}
+		if (lasthor_qmcolor(system, model, coords))
+			return ;
 
+		// if (coords->counter[1] == model->height - 2)
+		// {
+		// 	defline_zbuf(coords, 1, 3);
+		// 	// coords->f_tris[2] = coords->f_line[2];
+		// 	coords->d_tris[0][2] = shade_color(coords->d_tris[0][2], coords->f_line[2]);
+		// 	coords->d_tris[1][2] = shade_color(coords->d_tris[1][2], coords->f_line[2]);
+		// 	coords->f_tris[2] = coords->f_line[2];
 
-
-		if (coords->counter[1] == model->height - 2)
-		{
-			defline_zbuf(coords, 1, 3);
-			coords->f_tris[2] = coords->f_line[2];
-			coords->d_tris[0][2] = shade_color(coords->d_tris[0][2], coords->f_line[2]);
-			coords->d_tris[1][2] = shade_color(coords->d_tris[1][2], coords->f_line[2]);
-
-			line_zbuf(system, coords);
-			if ((coords->index[3] == model->area - 1) &&
-				(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
-				(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
-				((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
-				coords->d_quad[3][1] * WIDTH]))
-				system->output[coords->d_quad[3][0] +
-					coords->d_quad[3][1] * WIDTH] = shade_lastpix(coords, coords->d_quad[3][2]);
-		}
+		// 	line_zbuf(system, coords);
+		// 	if ((coords->index[3] == model->area - 1) &&
+		// 		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		// 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+		// 		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+		// 		coords->d_quad[3][1] * WIDTH]))
+		// 		system->output[coords->d_quad[3][0] +
+		// 			coords->d_quad[3][1] * WIDTH] = shade_color(coords->d_quad[3][2], coords->f_line[2]);
+		// }
 
 
 
@@ -109,89 +117,216 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 
 	fqmesh_nocolor(system, model, coords);
 
-	if (coords->counter[1] == 0)
-		{
-			defline_zbuf(coords, 0, 2);
-			coords->d_tris[0][2] = shade_lastpix(coords, COLOR_S);
-			coords->d_tris[1][2] = shade_lastpix(coords, COLOR_S);
-			coords->f_tris[2] = coords->f_line[2];
+	if (firsthor_qmnocol(system, model, coords))
+		return ;
+	// if (coords->counter[1] == 0)
+	// 	{
+	// 		defline_zbuf(coords, 0, 2);
+	// 		coords->d_tris[0][2] = shade_color(COLOR_S, coords->f_line[2]);
+	// 		coords->d_tris[1][2] = shade_color(COLOR_S, coords->f_line[2]);
+	// 		coords->f_tris[2] = coords->f_line[2];
 			
-			line_zbuf(system, coords);
-			if ((coords->counter[0] == model->width - 2) &&
-				(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
-				(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
-				((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
-				coords->d_quad[2][1] * WIDTH]))
-				system->output[coords->d_quad[2][0] +
-					coords->d_quad[2][1] * WIDTH] = shade_lastpix(coords, COLOR_S);
-		}
+	// 		line_zbuf(system, coords);
+	// 		if ((coords->counter[0] == model->width - 2) &&
+	// 			(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+	// 			(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+	// 			((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+	// 			coords->d_quad[2][1] * WIDTH]))
+	// 			system->output[coords->d_quad[2][0] +
+	// 				coords->d_quad[2][1] * WIDTH] = shade_color(COLOR_S, coords->f_line[2]);
+	// 	}
 
 
+	if (lasthor_qmnocol(system, model, coords))
+		return ;
+	// if (coords->counter[1] == model->height - 2)
+	// {
+	// 	defline_zbuf(coords, 1, 3);
+	// 	coords->d_tris[0][2] = shade_color(COLOR_S, coords->f_line[2]);
+	// 	coords->d_tris[1][2] = shade_color(COLOR_S, coords->f_line[2]);
+	// 	coords->f_tris[2] = coords->f_line[2];
 
-	if (coords->counter[1] == model->height - 2)
-	{
-		defline_zbuf(coords, 1, 3);
-		coords->d_tris[0][2] = shade_lastpix(coords, COLOR_S);
-		coords->d_tris[1][2] = shade_lastpix(coords, COLOR_S);
-		coords->f_tris[2] = coords->f_line[2];
-
-		line_zbuf(system, coords);
-		if ((coords->index[3] == model->area - 1) &&
-			(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
-			(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
-			((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
-			coords->d_quad[3][1] * WIDTH]))
-			system->output[coords->d_quad[3][0] +
-				coords->d_quad[3][1] * WIDTH] = shade_lastpix(coords, COLOR_S);
-	}
+	// 	line_zbuf(system, coords);
+	// 	if ((coords->index[3] == model->area - 1) &&
+	// 		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+	// 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+	// 		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+	// 		coords->d_quad[3][1] * WIDTH]))
+	// 		system->output[coords->d_quad[3][0] +
+	// 			coords->d_quad[3][1] * WIDTH] = shade_color(COLOR_S, coords->f_line[2]);
+	// }
 }
+
+
+char	lasthor_qmnocol(t_system *system, t_model *model, t_coords *coords)
+{
+	if (coords->counter[1] != model->height - 2)
+		return (0);
+	defline_zbuf(coords, 1, 3);
+	coords->d_tris[0][2] = shade_color(COLOR_S, coords->f_line[2]);
+	coords->d_tris[1][2] = shade_color(COLOR_S, coords->f_line[2]);
+	coords->f_tris[2] = coords->f_line[2];
+	line_zbuf(system, coords);
+	if ((coords->index[3] == model->area - 1) &&
+		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+		coords->d_quad[3][1] * WIDTH]))
+		system->output[coords->d_quad[3][0] +
+			coords->d_quad[3][1] * WIDTH] =
+			shade_color(COLOR_S, coords->f_line[2]);
+	return (1);
+}
+
+
+
+
+char	firsthor_qmnocol(t_system *system, t_model *model, t_coords *coords)
+{
+	if (coords->counter[1] != 0)
+		return (0);
+	defline_zbuf(coords, 0, 2);
+	coords->d_tris[0][2] = shade_color(COLOR_S, coords->f_line[2]);
+	coords->d_tris[1][2] = shade_color(COLOR_S, coords->f_line[2]);
+	coords->f_tris[2] = coords->f_line[2];
+	line_zbuf(system, coords);
+	if ((coords->counter[0] == model->width - 2) &&
+		(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+		(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+		((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+		coords->d_quad[2][1] * WIDTH]))
+		system->output[coords->d_quad[2][0] +
+			coords->d_quad[2][1] * WIDTH] =
+			shade_color(COLOR_S, coords->f_line[2]);
+	return (1);
+}
+
+
+
+
+
+
+char	lasthor_qmcolor(t_system *system, t_model *model, t_coords *coords)
+{
+	if (coords->counter[1] != model->height - 2)
+		return (0);
+	defline_zbuf(coords, 1, 3);
+	// coords->f_tris[2] = coords->f_line[2];
+	coords->d_tris[0][2] =
+		shade_color(coords->d_tris[0][2], coords->f_line[2]);
+	coords->d_tris[1][2] =
+		shade_color(coords->d_tris[1][2], coords->f_line[2]);
+	coords->f_tris[2] = coords->f_line[2];
+	line_zbuf(system, coords);
+	if ((coords->index[3] == model->area - 1) &&
+		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+		coords->d_quad[3][1] * WIDTH]))
+		system->output[coords->d_quad[3][0] +
+			coords->d_quad[3][1] * WIDTH] =
+			shade_color(coords->d_quad[3][2], coords->f_line[2]);
+	return (1);
+}
+
+
+
+
+
+
+char	firsthor_qmcolor(t_system *system, t_model *model, t_coords *coords)
+{
+	if (coords->counter[1] != 0)
+		return (0);
+	defline_zbuf(coords, 0, 2);
+	// coords->f_tris[2] = coords->f_line[2];
+	coords->d_tris[0][2] =
+		shade_color(coords->d_tris[0][2], coords->f_line[2]);
+	coords->d_tris[1][2] =
+		shade_color(coords->d_tris[1][2], coords->f_line[2]);
+	coords->f_tris[2] = coords->f_line[2];
+	line_zbuf(system, coords);
+	if ((coords->counter[0] == model->width - 2) &&
+		(0 <= coords->d_quad[2][0] && coords->d_quad[2][0] < WIDTH) &&
+		(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT) &&
+		((int)coords->f_quad[2][2] > system->z_buf[coords->d_quad[2][0] +
+		coords->d_quad[2][1] * WIDTH]))
+		system->output[coords->d_quad[2][0] +
+			coords->d_quad[2][1] * WIDTH] =
+			shade_color(coords->d_quad[2][2], coords->f_line[2]);
+	return (1);
+}
+
+
+
+
+
+char	lastvert_qmesh(t_system *system, t_model *model, t_coords *coords)
+{
+	if (coords->d_quad[0][0] != coords->d_quad[2][0] ||
+		coords->d_quad[0][1] != coords->d_quad[2][1] ||
+		coords->d_quad[1][0] != coords->d_quad[3][0] ||
+		coords->d_quad[1][1] != coords->d_quad[3][1] ||
+		coords->counter[0] != model->width - 2)
+		return (0);
+	defline_zbuf(coords, 0, 1);
+	coords->d_tris[0][2] = 0;
+	coords->d_tris[1][2] = 0;
+	line_zbuf(system, coords);
+	if ((coords->index[3] == model->area - 1) &&
+		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+		coords->d_quad[3][1] * WIDTH]))
+		system->output[coords->d_quad[3][0] +
+			coords->d_quad[3][1] * WIDTH] = 0;
+	return (1);
+}
+
+
+
 
 void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords)
 {
 	if (model->diagonal[coords->counter[0] +
 		coords->counter[1] * (model->width - 1)])
 	{
-		set_light(coords, 0, 1, 3);
-		shade_tris(coords);
+		set_shadetris(coords, 0, 1, 3);
 		deftris_zbuf(coords, 0, 1, 3);
 		ftris_zbuf(system, coords);
 		if (model->vertex[coords->index[0]][2] !=
 			model->vertex[coords->index[3]][2])
-		{
-			set_light(coords, 0, 2, 3);
-			shade_tris(coords);
-		}
+			set_shadetris(coords, 0, 2, 3);
 		deftris_zbuf(coords, 0, 2, 3);
 		ftris_zbuf(system, coords);
 		return ;
 	}
-	set_light(coords, 0, 1, 2);
-	shade_tris(coords);
+	set_shadetris(coords, 0, 1, 2);
 	deftris_zbuf(coords, 0, 1, 2);
 	ftris_zbuf(system, coords);
 	if (model->vertex[coords->index[1]][2] !=
 		model->vertex[coords->index[2]][2])
-	{
-		set_light(coords, 1, 2, 3);
-		shade_tris(coords);
-	}
+		set_shadetris(coords, 1, 2, 3);
 	deftris_zbuf(coords, 1, 2, 3);
 	ftris_zbuf(system, coords);
 }
+
+void	set_shadetris(t_coords *coords, char v0, char v1, char v2)
+{
+	set_light(coords, v0, v1, v2);
+	shade_tris(coords);
+}
+
+
+
 
 void	shade_tris(t_coords *coords)
 {
 	unsigned char	rgb[3];
 	
-	// rgb[0] = (COLOR_S & (255 << 16)) >> 16;
-	// rgb[1] = (COLOR_S & (255 << 8)) >> 8;
-	// rgb[2] = COLOR_S & 255;
 	rgb[0] = COLOR_S >> 16;
 	rgb[1] = COLOR_S >> 8;
 	rgb[2] = (char)COLOR_S;
-	// color = lround(lightpower * rgb[0]) +
-	// 		(lround(lightpower * rgb[1]) << 8) +
-	// 		(lround(lightpower * rgb[2]) << 16);
 	coords->d_line[1][2] = (lround(coords->f_line[2] * rgb[0]) << 16) +
 							(lround(coords->f_line[2] * rgb[1]) << 8) +
 							lround(coords->f_line[2] * rgb[2]);
@@ -204,11 +339,8 @@ void	fqmesh_color(t_system *system, t_model *model, t_coords *coords)
 		coords->counter[1] * (model->width - 1)])
 	{
 		set_light(coords, 0, 1, 3);
-
 		deftris_zbuf(coords, 0, 1, 3);
-
 		shade_vtris(coords);
-
 		ftris_zbuf(system, coords);
 		if (model->vertex[coords->index[0]][2] !=
 			model->vertex[coords->index[3]][2])
@@ -262,7 +394,6 @@ int		shade_color(int color, float light)
 
 void	set_light(t_coords *coords, char v0, char v1, char v2)
 {
-	float	light;
 	float	vector[2][3];
 	float	normal[3];
 	float	norm_len;
@@ -275,12 +406,10 @@ void	set_light(t_coords *coords, char v0, char v1, char v2)
 	vector[1][2] = coords->f_quad[v1][2] - coords->f_quad[v0][2];
 	normal[0] = vector[0][1] * vector[1][2] - vector[1][1] * vector[0][2];
 	normal[1] = vector[1][0] * vector[0][2] - vector[0][0] * vector[1][2];
-	normal[2] = vector[0][0] * vector[1][1] - vector[1][0] * vector[0][1];	
+	normal[2] = vector[0][0] * vector[1][1] - vector[1][0] * vector[0][1];
 	norm_len = sqrt((normal[0] * normal[0]) +
 					(normal[1] * normal[1]) +
 					(normal[2] * normal[2]));
-	// coords->light = fabs(normal[2] / norm_len);
-	// coords->light = coords->light * (2 - coords->light);
 	coords->f_line[2] = fabs(normal[2] / norm_len);
 	coords->f_line[2] = coords->f_line[2] * (2 - coords->f_line[2]);
 }
@@ -320,6 +449,30 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 {
 	if (model->color_f && system->render & 64)
 	{
+		
+		if (lastvert_qcolor(system, model, coords))
+			return ;
+		// if (coords->d_quad[0][0] == coords->d_quad[2][0] && coords->d_quad[0][1] == coords->d_quad[2][1] &&
+		// 	coords->d_quad[1][0] == coords->d_quad[3][0] && coords->d_quad[1][1] == coords->d_quad[3][1] &&
+		// 	coords->counter[0] == model->width - 2)
+		// {
+		// 	defline_zbuf(coords, 0, 1);
+		// 	line_zbuf(system, coords);
+		// 	if ((coords->index[3] == model->area - 1) &&
+		// 		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		// 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+		// 		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+		// 		coords->d_quad[3][1] * WIDTH]))
+		// 		system->output[coords->d_quad[3][0] +
+		// 			coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
+		// 	return ;
+		// }
+
+
+
+
+
+
 		fquad_zbuf(system, model, coords);
 		lastl_zbuf(system, model, coords);
 		
@@ -352,6 +505,27 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 		// }
 		return ;
 	}
+
+
+	if (lastvert_qnocol(system, model, coords))
+			return ;
+	// if (coords->d_quad[0][0] == coords->d_quad[2][0] && coords->d_quad[0][1] == coords->d_quad[2][1] &&
+	// 	coords->d_quad[1][0] == coords->d_quad[3][0] && coords->d_quad[1][1] == coords->d_quad[3][1] &&
+	// 	coords->counter[0] == model->width - 2)
+	// {
+	// 	defline_nozbuf(coords, 0, 1);
+	// 	line_nozbuf(system, coords);
+	// 	if ((coords->index[3] == model->area - 1) &&
+	// 		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+	// 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+	// 		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+	// 		coords->d_quad[3][1] * WIDTH]))
+	// 		system->output[coords->d_quad[3][0] +
+	// 			coords->d_quad[3][1] * WIDTH] = COLOR_S;
+	// 	return ;
+	// }
+
+
 	fquad_nozbuf(system, model, coords);
 	lastl_nozbuf(system, model, coords);
 	// if (coords->counter[1] == 0)
@@ -377,6 +551,54 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 	
 }
 
+
+char	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords)
+{
+	if (coords->d_quad[0][0] == coords->d_quad[2][0] &&
+		coords->d_quad[0][1] == coords->d_quad[2][1] &&
+		coords->d_quad[1][0] == coords->d_quad[3][0] &&
+		coords->d_quad[1][1] == coords->d_quad[3][1] &&
+		coords->counter[0] == model->width - 2)
+		return (0);
+	defline_nozbuf(coords, 0, 1);
+	line_nozbuf(system, coords);
+	if ((coords->index[3] == model->area - 1) &&
+		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+		coords->d_quad[3][1] * WIDTH]))
+		system->output[coords->d_quad[3][0] +
+			coords->d_quad[3][1] * WIDTH] = COLOR_S;
+	return (1);
+}
+
+
+
+char	lastvert_qcolor(t_system *system, t_model *model, t_coords *coords)
+{
+	if (coords->d_quad[0][0] != coords->d_quad[2][0] ||
+		coords->d_quad[0][1] != coords->d_quad[2][1] ||
+		coords->d_quad[1][0] != coords->d_quad[3][0] ||
+		coords->d_quad[1][1] != coords->d_quad[3][1] ||
+		coords->counter[0] != model->width - 2)
+		return (0);
+	defline_zbuf(coords, 0, 1);
+	line_zbuf(system, coords);
+	if ((coords->index[3] == model->area - 1) &&
+		(0 <= coords->d_quad[3][0] && coords->d_quad[3][0] < WIDTH) &&
+		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT) &&
+		((int)coords->f_quad[3][2] > system->z_buf[coords->d_quad[3][0] +
+		coords->d_quad[3][1] * WIDTH]))
+		system->output[coords->d_quad[3][0] +
+			coords->d_quad[3][1] * WIDTH] = coords->d_quad[3][2];
+	return (1);
+}
+
+
+
+
+
+
 void	lastl_zbuf(t_system *system, t_model *model, t_coords *coords)
 {
 	if (coords->counter[1] == 0)
@@ -390,6 +612,7 @@ void	lastl_zbuf(t_system *system, t_model *model, t_coords *coords)
 			coords->d_quad[2][1] * WIDTH]))
 			system->output[coords->d_quad[2][0] +
 				coords->d_quad[2][1] * WIDTH] = coords->d_quad[3][2];
+		return ;
 	}
 	if (coords->counter[1] == model->height - 2)
 	{
@@ -420,6 +643,7 @@ void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords)
 			(0 <= coords->d_quad[2][1] && coords->d_quad[2][1] < HEIGHT))
 			system->output[coords->d_quad[2][0] +
 				coords->d_quad[2][1] * WIDTH] = COLOR_S;
+		return ;
 	}
 	if (coords->counter[1] == model->height - 2)
 	{
