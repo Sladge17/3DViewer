@@ -15,16 +15,18 @@ SRC_LIST = fdf.c\
 			def_transform.c\
 			transform.c\
 			controls_main.c\
-			drawing.c\
+			render_mode.c\
 			r_vertex.c\
 			r_wireframe_noz.c\
 			r_wireframe_z.c\
 			ortholines.c\
+			parse_color.c\
 			r_silhouette.c\
 			postfill_quad.c\
 			r_mesh1.c\
 			r_mesh2.c\
-			filltris_zbuf.c
+			filltris_zbuf.c\
+			postfill_qmesh.c
 			# controls.c\
 			# transform.c\
 			# drawing.c\

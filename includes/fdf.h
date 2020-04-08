@@ -182,30 +182,12 @@ void	move_quad(t_model *model, t_coords *coords, int k);
 void	round_quad(t_model *model, t_coords *coords, int k);
 
 /*
-** drawing.c
+** render_mode.c
 */
 void	draw_model(t_system *system, t_model *model, t_coords *coords);
-
-void	fill_quad(t_system *system, t_model *model, t_coords *coords);
-
-
-void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
-char	lastvert_qmesh(t_system *system, t_model *model, t_coords *coords);
-char	firsthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
-char	lasthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
-char	firsthor_qmcolor(t_system *system, t_model *model, t_coords *coords);
-char	lasthor_qmcolor(t_system *system, t_model *model, t_coords *coords);
-
-
-int		set_xrgbl(int *vertex_0, int *vertex_1, int cursor, float light);
-
-
 void	draw_quad(t_system *system, t_model *model, t_coords *coords);
-char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
-int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
-int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
-
-
+void	fill_quad(t_system *system, t_model *model, t_coords *coords);
+void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
 
 /*
 ** controls_main.c
@@ -254,6 +236,12 @@ void	fill_pixel(t_system *system, int *vertex_0, int *vertex_1, int cursor);
 void	liney_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
 
 /*
+** parse_color.c
+*/
+int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
+int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
+
+/*
 ** r_silhouette.c
 */
 void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords);
@@ -269,6 +257,7 @@ char	lastvert_qcolor(t_system *system, t_model *model, t_coords *coords);
 void	lastl_zbuf(t_system *system, t_model *model, t_coords *coords);
 void	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords);
 void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords);
+char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 
 /*
 ** r_mesh1.c
@@ -295,6 +284,26 @@ void	sorty_zbuf(t_coords *coords);
 void	sorty_zbuf2(t_coords *coords, int i);
 void	setlinex_zbuf(t_system *system, t_coords *coords, int *height, int i);
 void	lastvlx_zbuf(t_system *system, t_coords *coords);
+
+/*
+** postfill_qmesh.c
+*/
+char	lastvert_qmesh(t_system *system, t_model *model, t_coords *coords);
+char	firsthor_qmcolor(t_system *system, t_model *model, t_coords *coords);
+char	lasthor_qmcolor(t_system *system, t_model *model, t_coords *coords);
+char	firsthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
+char	lasthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
+
+
+
+
+
+
+
+
+
+
+
 
 
 #endif

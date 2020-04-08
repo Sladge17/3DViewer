@@ -104,3 +104,20 @@ void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords)
 				coords->d_quad[3][1] * WIDTH] = COLOR_S;
 	}
 }
+
+char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir)
+{
+	float	int_z;
+	float	cursor_z;
+
+	int_z = (float)(abs(cursor[dir] - coords->d_tris[0][dir])) /
+		(float)(abs(coords->d_tris[1][dir] - coords->d_tris[0][dir]));
+	cursor_z = coords->f_tris[0] +
+		(coords->f_tris[1] - coords->f_tris[0]) * int_z;
+	if (cursor_z > system->z_buf[cursor[0] + cursor[1] * WIDTH])
+	{
+		system->z_buf[cursor[0] + cursor[1] * WIDTH] = cursor_z;
+		return (1);
+	}
+	return (0);
+}
