@@ -17,11 +17,14 @@ SRC_LIST = fdf.c\
 			controls_main.c\
 			drawing.c\
 			r_vertex.c\
-			ortholines.c\
 			r_wireframe_noz.c\
 			r_wireframe_z.c\
-			r_silhouette_noz.c\
-			r_silhouette_z.c
+			ortholines.c\
+			r_silhouette.c\
+			postfill_quad.c\
+			r_mesh1.c\
+			r_mesh2.c\
+			filltris_zbuf.c
 			# controls.c\
 			# transform.c\
 			# drawing.c\

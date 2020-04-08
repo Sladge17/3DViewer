@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_silhouette_noz.c                                 :+:      :+:    :+:   */
+/*   r_silhouette.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -49,7 +49,7 @@ void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3)
 	coords->d_tris[2][1] = coords->d_quad[v3][1];
 }
 
-void	ftris_nozbuf(t_system *system, t_coords *coords)	
+void	ftris_nozbuf(t_system *system, t_coords *coords)
 {
 	int		height[2];
 	int		i;

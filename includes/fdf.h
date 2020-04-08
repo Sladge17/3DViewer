@@ -187,12 +187,7 @@ void	round_quad(t_model *model, t_coords *coords, int k);
 void	draw_model(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_quad(t_system *system, t_model *model, t_coords *coords);
-char	lastvert_qcolor(t_system *system, t_model *model, t_coords *coords);
-void	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords);
 
-
-void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords);
-void	lastl_zbuf(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
 char	lastvert_qmesh(t_system *system, t_model *model, t_coords *coords);
@@ -201,19 +196,7 @@ char	lasthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
 char	firsthor_qmcolor(t_system *system, t_model *model, t_coords *coords);
 char	lasthor_qmcolor(t_system *system, t_model *model, t_coords *coords);
 
-void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords);
-void	set_shadetris(t_coords *coords, char v0, char v1, char v2);
-void	shade_tris(t_coords *coords);
 
-
-void	fqmesh_color(t_system *system, t_model *model, t_coords *coords);
-
-void	shade_vtris(t_coords *coords);
-int		shade_color(int color, float light);
-
-
-// float	set_light(float *vertex_0, float *vertex_1, float *vertex_2);
-void	set_light(t_coords *coords, char v0, char v1, char v2);
 int		set_xrgbl(int *vertex_0, int *vertex_1, int cursor, float light);
 
 
@@ -221,6 +204,8 @@ void	draw_quad(t_system *system, t_model *model, t_coords *coords);
 char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
 int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
+
+
 
 /*
 ** controls_main.c
@@ -242,14 +227,6 @@ void	vert_nozbuf(t_system *system, t_coords *coords, int i);
 char	vert_onscreen(int *i, t_coords *coords);
 
 /*
-** ortholines.c
-*/
-void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-void	liney_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
-void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
-void	liney_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
-
-/*
 ** r_wireframe_noz.c
 */
 void	quad_nozbuf(t_system *system, t_model *model, t_coords *coords);
@@ -267,9 +244,17 @@ void	line_zbuf(t_system *system, t_coords *coords);
 void	xmore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
 void	ymore_zbuf(t_system *system, t_coords *coords, char *d, int *len);
 
+/*
+** ortholines.c
+*/
+void	linex_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
+void	liney_nozbuf(t_system *system, int *vertex_0, int *vertex_1);
+void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
+void	fill_pixel(t_system *system, int *vertex_0, int *vertex_1, int cursor);
+void	liney_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z);
 
 /*
-** r_silhouette_noz.c
+** r_silhouette.c
 */
 void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords);
 void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3);
@@ -277,20 +262,39 @@ void	ftris_nozbuf(t_system *system, t_coords *coords);
 void	sorty_nozbuf(t_coords *coords);
 void	setlinex_nozbuf(t_coords *coords, int *height, int i);
 
+/*
+** postfill_quad.c
+*/
+char	lastvert_qcolor(t_system *system, t_model *model, t_coords *coords);
+void	lastl_zbuf(t_system *system, t_model *model, t_coords *coords);
+void	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords);
+void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords);
 
 /*
-** r_silhouette_z.c
+** r_mesh1.c
 */
 void	fquad_zbuf(t_system *system, t_model *model, t_coords *coords);
 void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3);
+void	fqmesh_color(t_system *system, t_model *model, t_coords *coords);
+void	set_light(t_coords *coords, char v0, char v1, char v2);
+
+/*
+** r_mesh2.c
+*/
+void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords);
+void	set_shadetris(t_coords *coords, char v0, char v1, char v2);
+void	shade_tris(t_coords *coords);
+void	shade_vtris(t_coords *coords);
+int		shade_color(int color, float light);
+
+/*
+** filltris_zbuf.c
+*/
 void	ftris_zbuf(t_system *system, t_coords *coords);
-void	setlinex_zbuf(t_system *system, t_coords *coords, int *height, int i);
-void	lastvlx_zbuf(t_system *system, t_coords *coords);
-
-// int		shade_lastpix(t_coords *coords, int color);
-
 void	sorty_zbuf(t_coords *coords);
 void	sorty_zbuf2(t_coords *coords, int i);
+void	setlinex_zbuf(t_system *system, t_coords *coords, int *height, int i);
+void	lastvlx_zbuf(t_system *system, t_coords *coords);
 
 
 #endif

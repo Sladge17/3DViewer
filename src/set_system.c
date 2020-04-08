@@ -50,12 +50,12 @@ t_back	*set_backset(void)
 
 	if (!(back = (t_back *)malloc(sizeof(t_back))))
 		exit(0);
-	back->color_rgb[0][0] = ((COLOR_UP & (255 << 16)) >> 16);
-	back->color_rgb[0][2] = (COLOR_UP & 255);
-	back->color_rgb[0][1] = ((COLOR_UP & (255 << 8)) >> 8);
-	back->color_rgb[1][0] = ((COLOR_DOWN & (255 << 16)) >> 16);
-	back->color_rgb[1][1] = ((COLOR_DOWN & (255 << 8)) >> 8);
-	back->color_rgb[1][2] = (COLOR_DOWN & 255);
+	back->color_rgb[0][0] = (char)(COLOR_UP >> 16);
+	back->color_rgb[0][1] = (char)(COLOR_UP >> 8);
+	back->color_rgb[0][2] = (char)COLOR_UP;
+	back->color_rgb[1][0] = (char)(COLOR_DOWN >> 16);
+	back->color_rgb[1][1] = (char)(COLOR_DOWN >> 8);
+	back->color_rgb[1][2] = (char)COLOR_DOWN;
 	back->d[0] = back->color_rgb[1][0] > back->color_rgb[0][0] ? 1 : -1;
 	back->d[1] = back->color_rgb[1][1] > back->color_rgb[0][1] ? 1 : -1;
 	back->d[2] = back->color_rgb[1][2] > back->color_rgb[0][2] ? 1 : -1;

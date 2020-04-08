@@ -68,17 +68,23 @@ void	linex_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
 			cursor_z = tris_z[0] + (tris_z[1] - tris_z[0]) * int_z;
 			if (cursor_z >= system->z_buf[cursor + vertex_0[1] * WIDTH])
 			{
-				if (system->render & 64)
-					system->output[cursor + vertex_0[1] * WIDTH] =
-						set_xrgb(vertex_0, vertex_1, cursor);
-				else
-					system->output[cursor + vertex_0[1] * WIDTH] =
-						vertex_1[2];
+				fill_pixel(system, vertex_0, vertex_1, cursor);
 				system->z_buf[cursor + vertex_0[1] * WIDTH] = cursor_z;
 			}
 		}
 		cursor += dx;
 	}
+}
+
+void	fill_pixel(t_system *system, int *vertex_0, int *vertex_1, int cursor)
+{
+	if (system->render & 64)
+	{
+		system->output[cursor + vertex_0[1] * WIDTH] =
+			set_xrgb(vertex_0, vertex_1, cursor);
+		return ;
+	}
+	system->output[cursor + vertex_0[1] * WIDTH] = vertex_1[2];
 }
 
 void	liney_zbuf(t_system *system, int *vertex_0, int *vertex_1, float *tris_z)
