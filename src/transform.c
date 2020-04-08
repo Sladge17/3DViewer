@@ -12,38 +12,6 @@
 
 #include "fdf.h"
 
-void	transform_model(t_system *system, t_model *model, t_coords *coords)
-{
-	int		k;
-
-	if (draw_zeroscale(system, model))
-		return ;
-
-	coords->counter[1] = 0;
-	while (coords->counter[1] < model->height - 1)
-	{
-		coords->counter[0] = 0;
-		while (coords->counter[0] < model->width - 1)
-		{
-			setup_quad(model, coords, &k);
-			while (k < 4)
-			{
-				rotate_quad(model, coords, k);
-				if (system->render & 128)
-					persp_distortion(model, coords, k);
-				scale_quad(model, coords, k);
-				move_quad(model, coords, k);
-				round_quad(model, coords, k);
-				k += 1;
-			}
-			draw_model(system, model, coords);
-			// draw_qvertex(system, model, coords);
-			coords->counter[0] += 1;
-		}
-		coords->counter[1] += 1;
-	}
-}
-
 void	rotate_quad(t_model *model, t_coords *coords, int k)
 {
 	coords->tmp[0] = model->vertex[coords->index[k]][0];
@@ -69,18 +37,17 @@ void	rotate_quad(t_model *model, t_coords *coords, int k)
 
 void	persp_distortion(t_model *model, t_coords *coords, int k)
 {
-	int		z_offset = 100;
-	int		fov = 90;
+	int		z_offset;
+	int		fov;
+
+	fov = 90;
 	z_offset = 1000 * tan(fov * 0.5 * M_PI / 180);
-	
 	coords->tmp[0] = coords->f_quad[k][0] - (WIDTH / 2 - model->pos[0]);
 	coords->tmp[1] = coords->f_quad[k][1] - (HEIGHT / 2 - model->pos[1]);
 	coords->tmp[2] = coords->f_quad[k][2];
-
 	coords->f_quad[k][0] = coords->tmp[0] / (1 - coords->tmp[2] / z_offset);
 	coords->f_quad[k][1] = coords->tmp[1] / (1 - coords->tmp[2] / z_offset);
 	coords->f_quad[k][2] = coords->tmp[2] / (1 - coords->tmp[2] / z_offset);
-
 	coords->f_quad[k][0] += WIDTH / 2 - model->pos[0];
 	coords->f_quad[k][1] += HEIGHT / 2 - model->pos[1];
 	coords->f_quad[k][2] = coords->f_quad[k][2];
@@ -105,4 +72,3 @@ void	round_quad(t_model *model, t_coords *coords, int k)
 	coords->d_quad[k][1] = lround(coords->f_quad[k][1]);
 	coords->d_quad[k][2] = model->vertex[coords->index[k]][3];
 }
-

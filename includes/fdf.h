@@ -148,15 +148,6 @@ void	pre_transform(t_model *model);
 void	set_overall(t_model *model);
 
 /*
-** set_system.c
-*/
-void	set_buffers(t_system *system);
-void	set_backbuf(int *back_buf);
-t_back	*set_backset(void);
-int		backcolor(float cursor, t_back *backset);
-
-
-/*
 ** set_scale.c
 */
 void	set_scalepos(t_model *model, t_coords *coords);
@@ -166,30 +157,33 @@ void	setup_quad(t_model *model, t_coords *coords, int *k);
 void	shift_quadvert(t_coords *coords);
 
 /*
-** transform.c
+** set_system.c
+*/
+void	set_buffers(t_system *system);
+void	set_backbuf(int *back_buf);
+t_back	*set_backset(void);
+int		backcolor(float cursor, t_back *backset);
+
+/*
+** def_transform.c
 */
 void	transform_model(t_system *system, t_model *model, t_coords *coords);
+char	draw_zeroscale(t_system *system, t_model *model);
+void	transform_quad(t_system *system, t_model *model, t_coords *coords, int k);
+char	vertz_zbuf(t_system *system, t_coords *coords);
+
+/*
+** transform.c
+*/
 void	rotate_quad(t_model *model, t_coords *coords, int k);
 void	persp_distortion(t_model *model, t_coords *coords, int k);
 void	scale_quad(t_model *model, t_coords *coords, int k);
 void	move_quad(t_model *model, t_coords *coords, int k);
 void	round_quad(t_model *model, t_coords *coords, int k);
 
-
-/*
-** controls_main.c
-*/
-int		key_press(int keycode, void *param);
-int		key_release(int keycode, void *param);
-int		mouse_press(int button, int x, int y, void *param);
-int		mouse_release(int button, int x, int y, void *param);
-int		mouse_move(int x, int y, void *param);
-void	controls_test(t_setting *setting, int keycode);
-
 /*
 ** drawing.c
 */
-char	draw_zeroscale(t_system *system, t_model *model);
 void	draw_model(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_quad(t_system *system, t_model *model, t_coords *coords);
@@ -227,6 +221,16 @@ void	draw_quad(t_system *system, t_model *model, t_coords *coords);
 char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
 int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
+
+/*
+** controls_main.c
+*/
+int		key_press(int keycode, void *param);
+int		key_release(int keycode, void *param);
+int		mouse_press(int button, int x, int y, void *param);
+int		mouse_release(int button, int x, int y, void *param);
+int		mouse_move(int x, int y, void *param);
+void	controls_test(t_setting *setting, int keycode);
 
 /*
 ** r_vertex.c
@@ -287,72 +291,6 @@ void	lastvlx_zbuf(t_system *system, t_coords *coords);
 
 void	sorty_zbuf(t_coords *coords);
 void	sorty_zbuf2(t_coords *coords, int i);
-
-// /*
-// ** controls.c
-// */
-// int		key_press(int keycode, void *param);
-// int		mouse_press(int button, int x, int y, void *param);
-// int		mouse_release(int button, int x, int y, void *param);
-// int		mouse_move(int x, int y, void *param);
-// void	clean_frame(t_system *system);
-
-
-// /*
-// ** def_data.c
-// */
-// // void	*get_mem(int size);
-// void	set_params(t_model *model);
-// void	set_model(t_model *model);
-// void	shift_to_origin(t_model *model);
-// void	set_coords(t_coords *coords);
-// void	set_diagonal(t_model *model);
-// float	len_diag(int *vertex_0, int *vertex_1);
-// void	set_buffers(t_system *system);
-
-// /*
-// ** transform.c
-// */
-// void	transform_model(t_system *system, t_model *model, t_coords *coords);
-// void	setup_quad(t_model *model, t_coords *coords, int *k);
-// void	rotate_quad(t_model *model, t_coords *coords, int k);
-// void	persp_distortion(t_model *model, t_coords *coords, int k);
-// void	scale_quad(t_model *model, t_coords *coords, int k);
-// void	move_quad(t_model *model, t_coords *coords, int k);
-// void	round_quad(t_coords *coords, int k);
-// float	set_lightpower(t_system *system, float *vertex_0, float *vertex_1, float *vertex_2);
-// void	set_scale(t_model *model);
-
-// /*
-// ** drawing.c
-// */
-// void	draw_model(t_system *system, t_model *model, t_coords *coords);
-// void	draw_quad(t_system *system, t_model *model, t_coords *coords);
-// void	fill_quad(t_system *system, t_coords *coords);
-// void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
-// void	draw_qvertex(t_system *system, t_coords *coords);
-
-// /*
-// ** draw_line.c
-// */
-// void	draw_line(t_system *system, int *vertex_1, int *vertex_2, int color);
-// void	x_more_y(t_system *system, int *vertex_0, int *vertex_1, int color);
-// void	y_more_x(t_system *system, int *vertex_0, int *vertex_1, int color);
-// int		set_diffuse(int *vertex_0, int *vertex_1, int *coord);
-
-// /*
-// ** fill_triangle.c
-// */
-// void	fill_triangle(t_system *system, t_coords *coords);
-// void	sort_triangle_y(t_coords *coords);
-
-// /*
-// ** parser.c
-// */
-// int		ft_wordscounter(char const *str, char c);
-// void	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y);
-// int		allocate_mem(char *filename, t_model *model);
-// int		parse(char *filename, t_model *model);
 
 
 #endif

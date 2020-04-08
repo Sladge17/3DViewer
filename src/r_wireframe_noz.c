@@ -34,7 +34,6 @@ void	quad_nozbuf(t_system *system, t_model *model, t_coords *coords)
 		(0 <= coords->d_quad[3][1] && coords->d_quad[3][1] < HEIGHT))
 		system->output[coords->d_quad[3][0] +
 			coords->d_quad[3][1] * WIDTH] = COLOR_W;
-			// coords->d_quad[3][1] * WIDTH] = 0xFF00;
 }
 
 void	defline_nozbuf(t_coords *coords, char v1, char v2)
@@ -50,11 +49,6 @@ void	line_nozbuf(t_system *system, t_coords *coords)
 	char	d[2];
 	int		len[2];
 
-	// func pointz_nozbuf
-	if (coords->d_tris[0][0] == coords->d_tris[1][0] &&
-		coords->d_tris[0][1] == coords->d_tris[1][1])
-		return ;
-	//
 	if (coords->d_tris[0][1] == coords->d_tris[1][1])
 	{
 		linex_nozbuf(system, coords->d_tris[0], coords->d_tris[1]);
@@ -90,7 +84,7 @@ void	xmore_nozbuf(t_system *system, t_coords *coords, char *d, int *len)
 	{
 		if ((0 <= cursor[0] && cursor[0] < WIDTH)
 			&& (0 <= cursor[1] && cursor[1] < HEIGHT))
-			system->output[cursor[0] + cursor[1] * WIDTH] = 
+			system->output[cursor[0] + cursor[1] * WIDTH] =
 				coords->d_tris[0][2];
 		overflow += len[1] + 1;
 		if (overflow >= len[0] + 1)

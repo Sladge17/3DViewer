@@ -10,8 +10,9 @@ SRC_LIST = fdf.c\
 			parser.c\
 			utils.c\
 			set_model.c\
-			set_system.c\
 			set_scale.c\
+			set_system.c\
+			def_transform.c\
 			transform.c\
 			controls_main.c\
 			drawing.c\

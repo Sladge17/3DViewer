@@ -86,7 +86,6 @@ void	shift_quadvert(t_coords *coords)
 {
 	coords->index[0] = coords->index[2];
 	coords->index[1] = coords->index[3];
-
 	coords->f_quad[0][0] = coords->f_quad[2][0];
 	coords->f_quad[0][1] = coords->f_quad[2][1];
 	coords->f_quad[0][2] = coords->f_quad[2][2];

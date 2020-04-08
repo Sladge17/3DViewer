@@ -56,25 +56,9 @@ void	line_zbuf(t_system *system, t_coords *coords)
 {
 	char	d[2];
 	int		len[2];
-	
-	// func pointz_zbuf
-	if (coords->d_tris[0][0] == coords->d_tris[1][0] &&
-		coords->d_tris[0][1] == coords->d_tris[1][1])
-	{
-		if ((0 <= coords->d_tris[0][0] && coords->d_tris[0][0] < WIDTH) &&
-			(0 <= coords->d_tris[0][1] && coords->d_tris[0][1] < HEIGHT) &&
-			coords->f_tris[0] > coords->f_tris[1] &&
-			((int)coords->f_tris[0] > system->z_buf[coords->d_tris[0][0] +
-			coords->d_tris[0][1] * WIDTH]))
-		{
-			system->output[coords->d_tris[0][0] +
-			coords->d_tris[0][1] * WIDTH] = coords->d_tris[0][2];
-			system->z_buf[coords->d_tris[0][0] +
-			coords->d_tris[0][1] * WIDTH] = coords->f_tris[0];
-		}
+
+	if (vertz_zbuf(system, coords))
 		return ;
-	}
-	//
 	if (coords->d_tris[0][1] == coords->d_tris[1][1])
 	{
 		linex_zbuf(system, coords->d_tris[0], coords->d_tris[1], coords->f_tris);
@@ -82,8 +66,7 @@ void	line_zbuf(t_system *system, t_coords *coords)
 	}
 	if (coords->d_tris[0][0] == coords->d_tris[1][0])
 	{
-		liney_zbuf(system, coords->d_tris[0], coords->d_tris[1],
-			coords->f_tris);
+		liney_zbuf(system, coords->d_tris[0], coords->d_tris[1], coords->f_tris);
 		return ;
 	}
 	d[0] = coords->d_tris[1][0] < coords->d_tris[0][0] ? -1 : 1;

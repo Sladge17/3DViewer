@@ -12,32 +12,6 @@
 
 #include "fdf.h"
 
-char	draw_zeroscale(t_system *system, t_model *model)
-{
-	if (model->scale)
-		return (0);
-	if (model->color_f && system->render & 64)
-	{
-		system->output[model->pos[0] + model->pos[1] * WIDTH] =
-			model->vertex[model->area / 2][3];
-		return (1);
-	}
-	if (system->render & 12)
-	{
-		system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_S;
-		return (1);
-	}
-		if (system->render & 2)
-	{
-		system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_W;
-		return (1);
-	}
-	system->output[model->pos[0] + model->pos[1] * WIDTH] = COLOR_V;
-	return (1);
-}
-
-
-
 void	draw_model(t_system *system, t_model *model, t_coords *coords)
 {
 	if (system->render & 8)
