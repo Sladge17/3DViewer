@@ -507,8 +507,8 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 	}
 
 
-	if (lastvert_qnocol(system, model, coords))
-			return ;
+	lastvert_qnocol(system, model, coords);
+
 	// if (coords->d_quad[0][0] == coords->d_quad[2][0] && coords->d_quad[0][1] == coords->d_quad[2][1] &&
 	// 	coords->d_quad[1][0] == coords->d_quad[3][0] && coords->d_quad[1][1] == coords->d_quad[3][1] &&
 	// 	coords->counter[0] == model->width - 2)
@@ -552,14 +552,14 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords)
 }
 
 
-char	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords)
+void	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords)
 {
 	if (coords->d_quad[0][0] == coords->d_quad[2][0] &&
 		coords->d_quad[0][1] == coords->d_quad[2][1] &&
 		coords->d_quad[1][0] == coords->d_quad[3][0] &&
 		coords->d_quad[1][1] == coords->d_quad[3][1] &&
 		coords->counter[0] == model->width - 2)
-		return (0);
+		return ;
 	defline_nozbuf(coords, 0, 1);
 	line_nozbuf(system, coords);
 	if ((coords->index[3] == model->area - 1) &&
@@ -569,7 +569,6 @@ char	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords)
 		coords->d_quad[3][1] * WIDTH]))
 		system->output[coords->d_quad[3][0] +
 			coords->d_quad[3][1] * WIDTH] = COLOR_S;
-	return (1);
 }
 
 

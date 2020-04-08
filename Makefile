@@ -9,7 +9,8 @@ SRC_DIR = ./src/
 SRC_LIST = fdf.c\
 			parser.c\
 			utils.c\
-			set_background.c\
+			set_model.c\
+			set_system.c\
 			set_scale.c\
 			transform.c\
 			controls_main.c\

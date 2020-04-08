@@ -115,20 +115,10 @@ typedef struct		s_backset
 /*
 ** fdf.c
 */
-// void	draw_line(t_system *system, int *vertex_1, int *vertex_2, int color);
-// void	fill_triangle(t_system *system, int *vertex_0, int *vertex_1, int *vertex_2);
-// void	sort_triangle_y(int **triangle);
-// int		light_color(int color, float lightpower);
 void	set_model(char *filename, t_model *model, t_coords *coords);
-void	set_diagonal(t_model *model);
-float	len_diag(int *vertex_0, int *vertex_1);
-void	set_overall(t_model *model);
-void	pre_transform(t_model *model);
-// void	set_system(t_system *system);
 void	set_system(t_system *system, t_model *model);
-void	set_backbuf(int *back_buf);
-int		close_fdf(void *param);
 void	clean_frame(t_system *system, t_model *model);
+int		close_fdf(void *param);
 
 /*
 ** parser.c
@@ -149,15 +139,20 @@ int			ft_isspace(int c);
 int			ft_isnumber(char *str, int base);
 int			ft_atoi_base(const char *str, int base);
 
-
-// void	set_overall(t_model *model);
-// void	set_maxcoord(t_model *model);
+/*
+** set_model.c
+*/
+void	set_diagonal(t_model *model);
+float	len_diag(int *vertex_0, int *vertex_1);
+void	pre_transform(t_model *model);
+void	set_overall(t_model *model);
 
 /*
-** set_background.c
+** set_system.c
 */
 void	set_buffers(t_system *system);
-t_back	*set_backset();
+void	set_backbuf(int *back_buf);
+t_back	*set_backset(void);
 int		backcolor(float cursor, t_back *backset);
 
 
@@ -199,7 +194,7 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords);
 
 void	fill_quad(t_system *system, t_model *model, t_coords *coords);
 char	lastvert_qcolor(t_system *system, t_model *model, t_coords *coords);
-char	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords);
+void	lastvert_qnocol(t_system *system, t_model *model, t_coords *coords);
 
 
 void	lastl_nozbuf(t_system *system, t_model *model, t_coords *coords);

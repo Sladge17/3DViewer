@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_background.c                                   :+:      :+:    :+:   */
+/*   set_system.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/16 15:08:31 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 15:20:33 by jthuy            ###   ########.fr       */
+/*   Created: 2020/04/07 19:38:21 by student           #+#    #+#             */
+/*   Updated: 2020/04/07 19:38:25 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	set_buffers(t_system *system)
+{
+	if (!(system->back_buf = (int *)malloc(sizeof(int) * system->field)))
+		exit(0);
+	if (!(system->z_buf = (int *)malloc(sizeof(int) * system->field)))
+		exit(0);
+}
 
 void	set_backbuf(int *back_buf)
 {
