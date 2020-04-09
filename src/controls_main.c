@@ -54,6 +54,18 @@ int		key_press(int keycode, void *param)
 		setting->model.rot[2] += 1;
 	if (setting->model.rot[2] == -360 || setting->model.rot[2] == 360)
 			setting->model.rot[2] = 0;
+
+
+
+
+	if (keycode == 8)
+		setting->system.render ^= 16;
+	if (keycode == 34)
+		setting->system.render ^= 32;
+
+
+
+
 	
 	rescale(setting, keycode);
 	// if (keycode == 15)
@@ -76,7 +88,6 @@ int		key_press(int keycode, void *param)
 
 	if (render_option(setting, keycode))
 		return (0);
-
 	// if (keycode == 35)
 	// 	setting->system.render ^= 128;
 	// if (keycode == 50)
@@ -109,9 +120,15 @@ int		key_press(int keycode, void *param)
 	// 	setting->system.render |= 8;
 	// }
 
-	clean_frame(&setting->system, &setting->model);
-	transform_model(&setting->system, &setting->model, &setting->coords);
-	mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+	re_render(setting);
+	// clean_frame(&setting->system, &setting->model);
+	// transform_model(&setting->system, &setting->model, &setting->coords);
+	// if (setting->system.render & 16)
+	// 	ui_boxcontrols(&setting->system);
+	// if (setting->system.render & 32)
+	// 	ui_boxinfo(&setting->system);
+	// ui_buttons(&setting->system);
+	// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 
 	return (0);
 }
@@ -121,25 +138,25 @@ void	render_mode(t_setting *setting, int keycode)
 {
 	if (keycode == 21)
 	{
-		setting->system.render &= 192;
+		setting->system.render &= 240;
 		setting->system.render |= 8;
 		return ;
 	}
 	if (keycode == 20)
 	{
-		setting->system.render &= 192;
+		setting->system.render &= 240;
 		setting->system.render |= 4;
 		return ;
 	}
 	if (keycode == 19)
 	{
-		setting->system.render &= 192;
+		setting->system.render &= 240;
 		setting->system.render |= 2;
 		return ;
 	}
 	if (keycode == 18)
 	{
-		setting->system.render &= 192;
+		setting->system.render &= 240;
 		setting->system.render |= 1;
 		return ;
 	}
@@ -198,9 +215,15 @@ int		mouse_press(int button, int x, int y, void *param)
 			setting->model.scale = 0;
 		// mlx_clear_window(setting->system.mlx, setting->system.win);
 		// transform_model(&setting->system, &setting->model, &setting->coords);
-		clean_frame(&setting->system, &setting->model);
-		transform_model(&setting->system, &setting->model, &setting->coords);
-		mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+		re_render(setting);
+		// clean_frame(&setting->system, &setting->model);
+		// transform_model(&setting->system, &setting->model, &setting->coords);
+		// if (setting->system.render & 16)
+		// 	ui_boxcontrols(&setting->system);
+		// if (setting->system.render & 32)
+		// 	ui_boxinfo(&setting->system);
+		// ui_buttons(&setting->system);
+		// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 		return (0);
 	}
 	if (button == 5)
@@ -208,13 +231,49 @@ int		mouse_press(int button, int x, int y, void *param)
 		setting->model.scale += SPEED_S1;
 		// mlx_clear_window(setting->system.mlx, setting->system.win);
 		// transform_model(&setting->system, &setting->model, &setting->coords);
-		clean_frame(&setting->system, &setting->model);
-		transform_model(&setting->system, &setting->model, &setting->coords);
-		mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+		re_render(setting);
+		// clean_frame(&setting->system, &setting->model);
+		// transform_model(&setting->system, &setting->model, &setting->coords);
+		// if (setting->system.render & 16)
+		// 	ui_boxcontrols(&setting->system);
+		// if (setting->system.render & 32)
+		// 	ui_boxinfo(&setting->system);
+		// ui_buttons(&setting->system);
+		// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 		return (0);
 	}
 	if (button == 1 && setting->model.scale)
+	{
+		if (x >= 0 && x < UIBUTTON_W && y >= HEIGHT - UIBUTTON_H && y < HEIGHT)
+		{
+			setting->system.render ^= 16;
+			re_render(setting);
+			// clean_frame(&setting->system, &setting->model);
+			// transform_model(&setting->system, &setting->model, &setting->coords);
+			// if (setting->system.render & 16)
+			// 	ui_boxcontrols(&setting->system);
+			// if (setting->system.render & 32)
+			// 	ui_boxinfo(&setting->system);
+			// ui_buttons(&setting->system);
+			// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+			return (0);
+		}
+		if (x >= WIDTH - UIBUTTON_W && x < WIDTH && y >= HEIGHT - UIBUTTON_H && y < HEIGHT)
+		{
+			setting->system.render ^= 32;
+			re_render(setting);
+			// clean_frame(&setting->system, &setting->model);
+			// transform_model(&setting->system, &setting->model, &setting->coords);
+			// if (setting->system.render & 16)
+			// 	ui_boxcontrols(&setting->system);
+			// if (setting->system.render & 32)
+			// 	ui_boxinfo(&setting->system);
+			// ui_buttons(&setting->system);
+			// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+			return (0);
+		}
 		setting->system.control ^= 1;
+	}
 	if (button == 2)
 		setting->system.control ^= 2;
 	if (button == 3)
@@ -231,8 +290,8 @@ int		mouse_release(int button, int x, int y, void *param)
 	x = 0;
 	y = 0;
 	setting = (t_setting *)param;
-	if (button == 1 && setting->model.scale)
-		setting->system.control ^= 1;
+	if (button == 1 && setting->model.scale && setting->system.control)
+		setting->system.control = 0;
 	if (button == 2)
 		setting->system.control ^= 2;
 	if (button == 3)
@@ -300,10 +359,15 @@ int		mouse_move(int x, int y, void *param)
 	setting->system.mouse_pos[0] = x;
 	setting->system.mouse_pos[1] = y;
 
-	clean_frame(&setting->system, &setting->model);
-	transform_model(&setting->system, &setting->model, &setting->coords);
-	mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
-	
+	re_render(setting);
+	// clean_frame(&setting->system, &setting->model);
+	// transform_model(&setting->system, &setting->model, &setting->coords);
+	// if (setting->system.render & 16)
+	// 	ui_boxcontrols(&setting->system);
+	// if (setting->system.render & 32)
+	// 	ui_boxinfo(&setting->system);
+	// ui_buttons(&setting->system);
+	// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
 	return (0);
 }
 

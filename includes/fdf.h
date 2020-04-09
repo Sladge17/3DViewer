@@ -42,8 +42,12 @@
 #define ROT_Y -30
 #define ROT_Z 0
 
-# define DIVIDE_SYMBOL ' '
-# define AMOUNT_OF_PARAMETERS_PER_DOT 3
+#define DIVIDE_SYMBOL ' '
+#define AMOUNT_OF_PARAMETERS_PER_DOT 3
+
+#define UIBUTTON_W 200
+#define UIBUTTON_H 100
+#define UIBOX_W 500
 
 
 typedef struct	s_system
@@ -181,6 +185,7 @@ void	draw_model(t_system *system, t_model *model, t_coords *coords);
 void	draw_quad(t_system *system, t_model *model, t_coords *coords);
 void	fill_quad(t_system *system, t_model *model, t_coords *coords);
 void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
+void	re_render(t_setting *setting);
 
 /*
 ** r_vertex.c
@@ -290,8 +295,13 @@ void	render_mode(t_setting *setting, int keycode);
 char	render_option(t_setting *setting, int keycode);
 void	rescale(t_setting *setting, int keycode);
 
-
-
+/*
+** render_ui.c
+*/
+void	ui_boxcontrols(t_system *system);
+void	ui_boxinfo(t_system *system);
+void	get_rgba(int *color);
+void	ui_buttons(t_system *system);
 
 
 

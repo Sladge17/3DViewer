@@ -26,7 +26,8 @@ SRC_LIST = fdf.c\
 			r_mesh1.c\
 			r_mesh2.c\
 			filltris_zbuf.c\
-			postfill_qmesh.c
+			postfill_qmesh.c\
+			render_ui.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 
 OBJ_DIR = ./obj/

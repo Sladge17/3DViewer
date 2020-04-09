@@ -76,3 +76,16 @@ void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
 	if (lasthor_qmnocol(system, model, coords))
 		return ;
 }
+
+void	re_render(t_setting *setting)
+{
+	clean_frame(&setting->system, &setting->model);
+	transform_model(&setting->system, &setting->model, &setting->coords);
+	if (setting->system.render & 16)
+		ui_boxcontrols(&setting->system);
+	if (setting->system.render & 32)
+		ui_boxinfo(&setting->system);
+	ui_buttons(&setting->system);
+	mlx_put_image_to_window(setting->system.mlx,
+		setting->system.win, setting->system.img, 0, 0);
+}

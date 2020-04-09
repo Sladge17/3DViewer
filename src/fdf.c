@@ -25,6 +25,7 @@ int		main(int argv, char **argc)
 	set_system(&setting.system, &setting.model);
 	clean_frame(&setting.system, &setting.model);
 	transform_model(&setting.system, &setting.model, &setting.coords);
+	ui_buttons(&setting.system);
 	mlx_put_image_to_window(setting.system.mlx, setting.system.win,
 							setting.system.img, 0, 0);
 	mlx_hook(setting.system.win, 2, 0, key_press, &setting);
