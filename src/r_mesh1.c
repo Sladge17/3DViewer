@@ -55,33 +55,41 @@ void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3)
 	coords->f_tris[2] = coords->f_quad[v3][2];
 }
 
-void	fqmesh_color(t_system *system, t_model *model, t_coords *coords)
+void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords)
 {
 	if (model->diagonal[coords->counter[0] +
 		coords->counter[1] * (model->width - 1)])
 	{
-		set_light(coords, 0, 1, 3);
+		set_shadetris(coords, 0, 1, 3);
 		deftris_zbuf(coords, 0, 1, 3);
-		shade_vtris(coords);
 		ftris_zbuf(system, coords);
 		if (model->vertex[coords->index[0]][2] !=
 			model->vertex[coords->index[3]][2])
-			set_light(coords, 0, 2, 3);
+			set_shadetris(coords, 0, 2, 3);
 		deftris_zbuf(coords, 0, 2, 3);
-		shade_vtris(coords);
 		ftris_zbuf(system, coords);
 		return ;
 	}
-	set_light(coords, 0, 1, 2);
+	set_shadetris(coords, 0, 1, 2);
 	deftris_zbuf(coords, 0, 1, 2);
-	shade_vtris(coords);
 	ftris_zbuf(system, coords);
 	if (model->vertex[coords->index[1]][2] !=
 		model->vertex[coords->index[2]][2])
-		set_light(coords, 1, 2, 3);
+		set_shadetris(coords, 1, 2, 3);
 	deftris_zbuf(coords, 1, 2, 3);
-	shade_vtris(coords);
 	ftris_zbuf(system, coords);
+}
+
+void	set_shadetris(t_coords *coords, char v0, char v1, char v2)
+{
+	unsigned char	*chanal;
+
+	set_light(coords, v0, v1, v2);
+	coords->d_line[1][2] = COLOR_S;
+	chanal = (unsigned char *)&coords->d_line[1][2];
+	chanal[0] = lround(coords->f_line[2] * chanal[0]);
+	chanal[1] = lround(coords->f_line[2] * chanal[1]);
+	chanal[2] = lround(coords->f_line[2] * chanal[2]);
 }
 
 void	set_light(t_coords *coords, char v0, char v1, char v2)

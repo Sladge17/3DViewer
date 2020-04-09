@@ -55,6 +55,114 @@ int		key_press(int keycode, void *param)
 	if (setting->model.rot[2] == -360 || setting->model.rot[2] == 360)
 			setting->model.rot[2] = 0;
 	
+	rescale(setting, keycode);
+	// if (keycode == 15)
+	// {
+	// 	if (setting->system.render & 128)
+	// 		setting->system.render ^= 128;
+	// 	setting->model.rot[0] = ROT_X;
+	// 	setting->model.rot[1] = ROT_Y;
+	// 	setting->model.rot[2] = ROT_Z;
+	// 	setting->model.scale = setting->model.first_scale;
+	// 	setting->model.pos[0] = setting->model.first_pos[0];
+	// 	setting->model.pos[1] = setting->model.first_pos[1];
+	// }
+	// if (keycode == 3 && !(setting->system.render & 128))
+	// {
+	// 	set_scalepos(&setting->model, &setting->coords);
+	// }
+
+
+
+	if (render_option(setting, keycode))
+		return (0);
+
+	// if (keycode == 35)
+	// 	setting->system.render ^= 128;
+	// if (keycode == 50)
+	// {
+	// 	if (!setting->model.color_f)
+	// 		return (0);
+	// 	setting->system.render ^= 64;
+	// }
+
+
+	render_mode(setting, keycode);
+	// if (keycode == 18)
+	// {
+	// 	setting->system.render &= 192;
+	// 	setting->system.render |= 1;
+	// }
+	// if (keycode == 19)
+	// {
+	// 	setting->system.render &= 192;
+	// 	setting->system.render |= 2;
+	// }
+	// if (keycode == 20)
+	// {
+	// 	setting->system.render &= 192;
+	// 	setting->system.render |= 4;
+	// }
+	// if (keycode == 21)
+	// {
+	// 	setting->system.render &= 192;
+	// 	setting->system.render |= 8;
+	// }
+
+	clean_frame(&setting->system, &setting->model);
+	transform_model(&setting->system, &setting->model, &setting->coords);
+	mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+
+	return (0);
+}
+
+
+void	render_mode(t_setting *setting, int keycode)
+{
+	if (keycode == 21)
+	{
+		setting->system.render &= 192;
+		setting->system.render |= 8;
+		return ;
+	}
+	if (keycode == 20)
+	{
+		setting->system.render &= 192;
+		setting->system.render |= 4;
+		return ;
+	}
+	if (keycode == 19)
+	{
+		setting->system.render &= 192;
+		setting->system.render |= 2;
+		return ;
+	}
+	if (keycode == 18)
+	{
+		setting->system.render &= 192;
+		setting->system.render |= 1;
+		return ;
+	}
+}
+
+char	render_option(t_setting *setting, int keycode)
+{
+	if (keycode == 35)
+	{
+		setting->system.render ^= 128;
+		return (0);
+	}
+	if (keycode == 50)
+	{
+		if (!setting->model.color_f)
+			return (1);
+		setting->system.render ^= 64;
+	}
+	return (0);
+}
+
+void	rescale(t_setting *setting, int keycode)
+{
 	if (keycode == 15)
 	{
 		if (setting->system.render & 128)
@@ -65,58 +173,18 @@ int		key_press(int keycode, void *param)
 		setting->model.scale = setting->model.first_scale;
 		setting->model.pos[0] = setting->model.first_pos[0];
 		setting->model.pos[1] = setting->model.first_pos[1];
+		return ;
 	}
 	if (keycode == 3 && !(setting->system.render & 128))
 	{
 		set_scalepos(&setting->model, &setting->coords);
+		return ;
 	}
-
-
-
-		
-	if (keycode == 35)
-		setting->system.render ^= 128;
-	if (keycode == 50)
-	{
-		if (!setting->model.color_f)
-			return (0);
-		setting->system.render ^= 64;
-	}
-
-	if (keycode == 18)
-	{
-		setting->system.render &= 192;
-		setting->system.render |= 1;
-	}
-	if (keycode == 19)
-	{
-		setting->system.render &= 192;
-		setting->system.render |= 2;
-	}
-	if (keycode == 20)
-	{
-		setting->system.render &= 192;
-		setting->system.render |= 4;
-	}
-	if (keycode == 21)
-	{
-		setting->system.render &= 192;
-		setting->system.render |= 8;
-	}
-	// if (keycode == 21)
-	// {
-	// 	setting->system.render &= 128;
-	// 	setting->system.render |= 8;
-	// }
-	// if (keycode == 2)
-	// 	setting->system.control ^= 8;
-
-	clean_frame(&setting->system, &setting->model);
-	transform_model(&setting->system, &setting->model, &setting->coords);
-	mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
-
-	return (0);
 }
+
+
+
+
 
 int		mouse_press(int button, int x, int y, void *param)
 {

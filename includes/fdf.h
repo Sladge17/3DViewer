@@ -56,11 +56,9 @@ typedef struct	s_system
 	int			*output;
 	int			*back_buf;
 	int			*z_buf;
-	// int			*light_buf;
 	char		render;
 	char		control;
 	int			mouse_pos[2];
-	// float		*light;
 }				t_system;
 
 typedef struct	s_model
@@ -73,11 +71,9 @@ typedef struct	s_model
 	short		pos[2];
 	short		rot[3];
 	float		scale;
-	// char		overall;
 	float		**o_vertex;
 	float		first_scale;
 	short		first_pos[2];
-	// int			max_coord;
 	char		color_f;
 	char		*modelname;
 }				t_model;
@@ -93,7 +89,6 @@ typedef struct	s_coords
 	float		f_tris[3];
 	int			d_line[2][3];
 	float		f_line[3];
-	// float		light;
 }				t_coords;
 
 typedef struct	s_setting
@@ -103,14 +98,12 @@ typedef struct	s_setting
 	t_coords	coords;
 }				t_setting;
 
-
 typedef struct		s_backset
 {
 	unsigned char	color_rgb[2][3];
 	char			d[3];
 	unsigned char	len[3];
 }					t_back;
-
 
 /*
 ** fdf.c
@@ -190,16 +183,6 @@ void	fill_quad(t_system *system, t_model *model, t_coords *coords);
 void	fill_qmesh(t_system *system, t_model *model, t_coords *coords);
 
 /*
-** controls_main.c
-*/
-int		key_press(int keycode, void *param);
-int		key_release(int keycode, void *param);
-int		mouse_press(int button, int x, int y, void *param);
-int		mouse_release(int button, int x, int y, void *param);
-int		mouse_move(int x, int y, void *param);
-void	controls_test(t_setting *setting, int keycode);
-
-/*
 ** r_vertex.c
 */
 void	draw_qvertex(t_system *system, t_model *model, t_coords *coords);
@@ -264,15 +247,14 @@ char	check_zbuf(t_system *system, t_coords *coords, int *cursor, char dir);
 */
 void	fquad_zbuf(t_system *system, t_model *model, t_coords *coords);
 void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3);
-void	fqmesh_color(t_system *system, t_model *model, t_coords *coords);
+void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords);
+void	set_shadetris(t_coords *coords, char v0, char v1, char v2);
 void	set_light(t_coords *coords, char v0, char v1, char v2);
 
 /*
 ** r_mesh2.c
 */
-void	fqmesh_nocolor(t_system *system, t_model *model, t_coords *coords);
-void	set_shadetris(t_coords *coords, char v0, char v1, char v2);
-void	shade_tris(t_coords *coords);
+void	fqmesh_color(t_system *system, t_model *model, t_coords *coords);
 void	shade_vtris(t_coords *coords);
 int		shade_color(int color, float light);
 
@@ -294,7 +276,19 @@ char	lasthor_qmcolor(t_system *system, t_model *model, t_coords *coords);
 char	firsthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
 char	lasthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
 
+/*
+** controls_main.c
+*/
+int		key_press(int keycode, void *param);
+int		key_release(int keycode, void *param);
+int		mouse_press(int button, int x, int y, void *param);
+int		mouse_release(int button, int x, int y, void *param);
+int		mouse_move(int x, int y, void *param);
+void	controls_test(t_setting *setting, int keycode);
 
+void	render_mode(t_setting *setting, int keycode);
+char	render_option(t_setting *setting, int keycode);
+void	rescale(t_setting *setting, int keycode);
 
 
 
