@@ -23,9 +23,9 @@ void	set_scalepos(t_model *model, t_coords *coords)
 	set_minmaxvert(model, vert_min, vert_max);
 	o_len[0] = vert_max[0] - vert_min[0];
 	o_len[1] = vert_max[1] - vert_min[1];
-	model->scale = WIDTH / o_len[0] < HEIGHT / o_len[1] ?
-					(WIDTH - 100) / o_len[0] :
-					(HEIGHT - 100) / o_len[1];
+	model->scale = (WIDTH - 2 * UIBOX_W) / o_len[0] < HEIGHT / o_len[1] ?
+		(WIDTH - 100 - 2 * UIBOX_W) / o_len[0] :
+		(HEIGHT - 100) / o_len[1];
 	model->pos[0] = WIDTH / 2 - model->scale * (vert_min[0] + o_len[0] / 2);
 	model->pos[1] = HEIGHT / 2 - model->scale * (vert_min[1] + o_len[1] / 2);
 	if (!first)

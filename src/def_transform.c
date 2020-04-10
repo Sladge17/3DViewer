@@ -89,4 +89,3 @@ char	vertz_zbuf(t_system *system, t_coords *coords)
 	}
 	return (1);
 }
-

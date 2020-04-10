@@ -27,8 +27,6 @@
 // # include "minilibx_macos/mlx.h"
 
 
-#include <stdio.h>
-
 
 #include "colors.h"
 
@@ -45,9 +43,9 @@
 #define DIVIDE_SYMBOL ' '
 #define AMOUNT_OF_PARAMETERS_PER_DOT 3
 
-#define UIBUTTON_W 200
-#define UIBUTTON_H 100
-#define UIBOX_W 500
+#define UIBUTTON_W 100
+#define UIBUTTON_H 40
+#define UIBOX_W 200
 
 
 typedef struct	s_system
@@ -282,20 +280,6 @@ char	firsthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
 char	lasthor_qmnocol(t_system *system, t_model *model, t_coords *coords);
 
 /*
-** controls_main.c
-*/
-int		key_press(int keycode, void *param);
-int		key_release(int keycode, void *param);
-int		mouse_press(int button, int x, int y, void *param);
-int		mouse_release(int button, int x, int y, void *param);
-int		mouse_move(int x, int y, void *param);
-void	controls_test(t_setting *setting, int keycode);
-
-void	render_mode(t_setting *setting, int keycode);
-char	render_option(t_setting *setting, int keycode);
-void	rescale(t_setting *setting, int keycode);
-
-/*
 ** render_ui.c
 */
 void	ui_boxcontrols(t_system *system);
@@ -303,11 +287,40 @@ void	ui_boxinfo(t_system *system);
 void	get_rgba(int *color);
 void	ui_buttons(t_system *system);
 
+/*
+** controls_main.c
+*/
+int		key_press(int keycode, void *param);
+int		key_release(int keycode, void *param);
+int		mouse_press(int button, int x, int y, void *param);
+int		mouse_release(int button, int x, int y, void *param);
+int		mouse_move(int x, int y, void *param);
 
+/*
+** controls_keybrd.c
+*/
+char	render_mode1(t_setting *setting, int keycode);
+char	render_mode2(t_setting *setting, int keycode);
+char	render_option(t_setting *setting, int keycode);
+char	switch_uipanels(t_setting *setting, int keycode);
+char	rescale(t_setting *setting, int keycode);
 
+/*
+** controls_mouse.c
+*/
+char	mouse_scale(t_setting *setting, int button, int x, int y);
+char	mouse_uipanels(t_setting *setting, int button, int x, int y);
+char	mouse_mrotation(t_setting *setting, int x, int y, char inv_y);
+char	mouse_mmove(t_setting *setting, int x, int y);
+char	mouse_mscale(t_setting *setting, int x, int y);
 
-
-
-
+/*
+** controls_debug.c
+*/
+void	debug_input(t_setting *setting, int keycode);
+void	debug_rotatex(t_setting *setting, int keycode);
+void	debug_rotatey(t_setting *setting, int keycode);
+void	debug_move(t_setting *setting, int keycode);
+char	z_rotation(t_setting *setting, int keycode);
 
 #endif

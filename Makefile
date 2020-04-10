@@ -14,7 +14,6 @@ SRC_LIST = fdf.c\
 			set_system.c\
 			def_transform.c\
 			transform.c\
-			controls_main.c\
 			render_mode.c\
 			r_vertex.c\
 			r_wireframe_noz.c\
@@ -27,7 +26,11 @@ SRC_LIST = fdf.c\
 			r_mesh2.c\
 			filltris_zbuf.c\
 			postfill_qmesh.c\
-			render_ui.c
+			render_ui.c\
+			controls_main.c\
+			controls_keybrd.c\
+			controls_mouse.c\
+			controls_debug.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 
 OBJ_DIR = ./obj/

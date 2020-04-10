@@ -22,8 +22,8 @@
 #define COLOR_W 0x0000FF
 #define COLOR_S 0x00FF00
 
-#define UI_BOX 0x80FF0000;
-#define UI_BUTTON 0xFF;
+#define UI_BOX 0x80202020;
+#define UI_BUTTON 0x242424;
 
 
 #endif

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/09 11:16:01 by student           #+#    #+#             */
-/*   Updated: 2020/04/09 11:16:06 by student          ###   ########.fr       */
+/*   Created: 2020/04/10 16:24:10 by student           #+#    #+#             */
+/*   Updated: 2020/04/10 16:24:15 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ui_buttons(t_system *system)
 			j += 1;
 		}
 		j = WIDTH - UIBUTTON_W;
-		while(j < WIDTH)
+		while (j < WIDTH)
 		{
 			system->output[j + i * WIDTH] = UI_BUTTON;
 			j += 1;
@@ -72,19 +72,15 @@ void	ui_buttons(t_system *system)
 	}
 }
 
-
-
-
-
-
-void		get_rgba(int *color)
+void	get_rgba(int *color)
 {
-	unsigned int	a_color = UI_BOX;
+	unsigned int	a_color;
 	unsigned char	*rgb[2];
 	float			opacity;
 	char			d_rgb[3];
 	unsigned char	len[3];
 
+	a_color = UI_BOX;
 	rgb[0] = (unsigned char *)color;
 	rgb[1] = (unsigned char *)&a_color;
 	opacity = rgb[1][3] / (float)255;
@@ -95,17 +91,7 @@ void		get_rgba(int *color)
 	len[1] = abs(rgb[1][1] - rgb[0][1]);
 	len[2] = abs(rgb[1][2] - rgb[0][2]);
 	a_color = (lround(rgb[0][0] + len[0] * opacity * d_rgb[0])) +
-			(lround(rgb[0][1] + len[1] * opacity * d_rgb[1]) << 8) +
-			(lround(rgb[0][2] + len[2] * opacity * d_rgb[2]) << 16);
+		(lround(rgb[0][1] + len[1] * opacity * d_rgb[1]) << 8) +
+		(lround(rgb[0][2] + len[2] * opacity * d_rgb[2]) << 16);
 	*color = a_color;
 }
-
-
-
-
-
-
-
-
-
-

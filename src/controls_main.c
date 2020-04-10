@@ -12,274 +12,62 @@
 
 #include "fdf.h"
 
-
-char	shift = 0;
-
-
 int		key_press(int keycode, void *param)
-{	
+{
 	t_setting		*setting;
 
 	setting = (t_setting *)param;
-	
 	if (keycode == 53)
-		exit (0);
-	
-	controls_test(setting, keycode);
-
-
-	// if (keycode == 125)
-	// 	setting->model.rot[0] += 1;
-	// if (setting->model.rot[0] == -360 || setting->model.rot[0] == 360)
-	// 		setting->model.rot[0] = 0;
-	// if (keycode == 123)
-	// 	setting->model.rot[1] -= 1;
-	// if (keycode == 124)
-	// 	setting->model.rot[1] += 1;
-	// if (setting->model.rot[1] == -360 || setting->model.rot[1] == 360)
-	// 		setting->model.rot[1] = 0;
-	// if (keycode == 2)
-	// 	setting->model.pos[0] += 1;
-	// if (keycode == 0)
-	// 	setting->model.pos[0] -= 1;
-	// if (keycode == 1)
-	// 	setting->model.pos[1] += 1;
-	// if (keycode == 13)
-	// 	setting->model.pos[1] -= 1;
-
-
-	if (keycode == 6)
-		setting->model.rot[2] -= 1;
-	if (keycode == 7)
-		setting->model.rot[2] += 1;
-	if (setting->model.rot[2] == -360 || setting->model.rot[2] == 360)
-			setting->model.rot[2] = 0;
-
-
-
-
-	if (keycode == 8)
-		setting->system.render ^= 16;
-	if (keycode == 34)
-		setting->system.render ^= 32;
-
-
-
-
-	
-	rescale(setting, keycode);
-	// if (keycode == 15)
-	// {
-	// 	if (setting->system.render & 128)
-	// 		setting->system.render ^= 128;
-	// 	setting->model.rot[0] = ROT_X;
-	// 	setting->model.rot[1] = ROT_Y;
-	// 	setting->model.rot[2] = ROT_Z;
-	// 	setting->model.scale = setting->model.first_scale;
-	// 	setting->model.pos[0] = setting->model.first_pos[0];
-	// 	setting->model.pos[1] = setting->model.first_pos[1];
-	// }
-	// if (keycode == 3 && !(setting->system.render & 128))
-	// {
-	// 	set_scalepos(&setting->model, &setting->coords);
-	// }
-
-
-
+		exit(0);
+	if (render_mode1(setting, keycode))
+		return (0);
+	if (render_mode2(setting, keycode))
+		return (0);
 	if (render_option(setting, keycode))
 		return (0);
-	// if (keycode == 35)
-	// 	setting->system.render ^= 128;
-	// if (keycode == 50)
-	// {
-	// 	if (!setting->model.color_f)
-	// 		return (0);
-	// 	setting->system.render ^= 64;
-	// }
-
-
-	render_mode(setting, keycode);
-	// if (keycode == 18)
-	// {
-	// 	setting->system.render &= 192;
-	// 	setting->system.render |= 1;
-	// }
-	// if (keycode == 19)
-	// {
-	// 	setting->system.render &= 192;
-	// 	setting->system.render |= 2;
-	// }
-	// if (keycode == 20)
-	// {
-	// 	setting->system.render &= 192;
-	// 	setting->system.render |= 4;
-	// }
-	// if (keycode == 21)
-	// {
-	// 	setting->system.render &= 192;
-	// 	setting->system.render |= 8;
-	// }
-
-	re_render(setting);
-	// clean_frame(&setting->system, &setting->model);
-	// transform_model(&setting->system, &setting->model, &setting->coords);
-	// if (setting->system.render & 16)
-	// 	ui_boxcontrols(&setting->system);
-	// if (setting->system.render & 32)
-	// 	ui_boxinfo(&setting->system);
-	// ui_buttons(&setting->system);
-	// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
-
-	return (0);
-}
-
-
-void	render_mode(t_setting *setting, int keycode)
-{
-	if (keycode == 21)
-	{
-		setting->system.render &= 240;
-		setting->system.render |= 8;
-		return ;
-	}
-	if (keycode == 20)
-	{
-		setting->system.render &= 240;
-		setting->system.render |= 4;
-		return ;
-	}
-	if (keycode == 19)
-	{
-		setting->system.render &= 240;
-		setting->system.render |= 2;
-		return ;
-	}
-	if (keycode == 18)
-	{
-		setting->system.render &= 240;
-		setting->system.render |= 1;
-		return ;
-	}
-}
-
-char	render_option(t_setting *setting, int keycode)
-{
-	if (keycode == 35)
-	{
-		setting->system.render ^= 128;
+	if (switch_uipanels(setting, keycode))
 		return (0);
-	}
-	if (keycode == 50)
-	{
-		if (!setting->model.color_f)
-			return (1);
-		setting->system.render ^= 64;
-	}
+	if (rescale(setting, keycode))
+		return (0);
+	if (z_rotation(setting, keycode))
+		return (0);
+	debug_input(setting, keycode);
 	return (0);
 }
 
-void	rescale(t_setting *setting, int keycode)
+int		key_release(int keycode, void *param)
 {
-	if (keycode == 15)
-	{
-		if (setting->system.render & 128)
-			setting->system.render ^= 128;
-		setting->model.rot[0] = ROT_X;
-		setting->model.rot[1] = ROT_Y;
-		setting->model.rot[2] = ROT_Z;
-		setting->model.scale = setting->model.first_scale;
-		setting->model.pos[0] = setting->model.first_pos[0];
-		setting->model.pos[1] = setting->model.first_pos[1];
-		return ;
-	}
-	if (keycode == 3 && !(setting->system.render & 128))
-	{
-		set_scalepos(&setting->model, &setting->coords);
-		return ;
-	}
+	t_setting		*setting;
+
+	setting = (t_setting *)param;
+	if (keycode == 257)
+		setting->system.control ^= 8;
+	return (0);
 }
-
-
-
-
 
 int		mouse_press(int button, int x, int y, void *param)
 {
 	t_setting		*setting;
 
 	setting = (t_setting *)param;
-	if (button == 4)
-	{
-		setting->model.scale -= SPEED_S1;
-		if (setting->model.scale < 0)
-			setting->model.scale = 0;
-		// mlx_clear_window(setting->system.mlx, setting->system.win);
-		// transform_model(&setting->system, &setting->model, &setting->coords);
-		re_render(setting);
-		// clean_frame(&setting->system, &setting->model);
-		// transform_model(&setting->system, &setting->model, &setting->coords);
-		// if (setting->system.render & 16)
-		// 	ui_boxcontrols(&setting->system);
-		// if (setting->system.render & 32)
-		// 	ui_boxinfo(&setting->system);
-		// ui_buttons(&setting->system);
-		// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+	if (mouse_scale(setting, button, x, y))
 		return (0);
-	}
-	if (button == 5)
-	{
-		setting->model.scale += SPEED_S1;
-		// mlx_clear_window(setting->system.mlx, setting->system.win);
-		// transform_model(&setting->system, &setting->model, &setting->coords);
-		re_render(setting);
-		// clean_frame(&setting->system, &setting->model);
-		// transform_model(&setting->system, &setting->model, &setting->coords);
-		// if (setting->system.render & 16)
-		// 	ui_boxcontrols(&setting->system);
-		// if (setting->system.render & 32)
-		// 	ui_boxinfo(&setting->system);
-		// ui_buttons(&setting->system);
-		// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
-		return (0);
-	}
 	if (button == 1 && setting->model.scale)
 	{
-		if (x >= 0 && x < UIBUTTON_W && y >= HEIGHT - UIBUTTON_H && y < HEIGHT)
-		{
-			setting->system.render ^= 16;
-			re_render(setting);
-			// clean_frame(&setting->system, &setting->model);
-			// transform_model(&setting->system, &setting->model, &setting->coords);
-			// if (setting->system.render & 16)
-			// 	ui_boxcontrols(&setting->system);
-			// if (setting->system.render & 32)
-			// 	ui_boxinfo(&setting->system);
-			// ui_buttons(&setting->system);
-			// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+		if (mouse_uipanels(setting, button, x, y))
 			return (0);
-		}
-		if (x >= WIDTH - UIBUTTON_W && x < WIDTH && y >= HEIGHT - UIBUTTON_H && y < HEIGHT)
-		{
-			setting->system.render ^= 32;
-			re_render(setting);
-			// clean_frame(&setting->system, &setting->model);
-			// transform_model(&setting->system, &setting->model, &setting->coords);
-			// if (setting->system.render & 16)
-			// 	ui_boxcontrols(&setting->system);
-			// if (setting->system.render & 32)
-			// 	ui_boxinfo(&setting->system);
-			// ui_buttons(&setting->system);
-			// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
-			return (0);
-		}
 		setting->system.control ^= 1;
+		setting->system.mouse_pos[0] = x;
+		setting->system.mouse_pos[1] = y;
+		return (0);
 	}
 	if (button == 2)
+	{
 		setting->system.control ^= 2;
-	if (button == 3)
-		setting->system.control ^= 4;
-	setting->system.mouse_pos[0] = x;
-	setting->system.mouse_pos[1] = y;
+		setting->system.mouse_pos[0] = x;
+		setting->system.mouse_pos[1] = y;
+		return (0);
+	}
 	return (0);
 }
 
@@ -287,11 +75,9 @@ int		mouse_release(int button, int x, int y, void *param)
 {
 	t_setting		*setting;
 
-	x = 0;
-	y = 0;
 	setting = (t_setting *)param;
 	if (button == 1 && setting->model.scale && setting->system.control)
-		setting->system.control = 0;
+		setting->system.control ^= 1;
 	if (button == 2)
 		setting->system.control ^= 2;
 	if (button == 3)
@@ -307,146 +93,11 @@ int		mouse_move(int x, int y, void *param)
 	setting = (t_setting *)param;
 	if (!(setting->system.control))
 		return (0);
-	if (setting->system.control & 1)
-	{
-		inv_y = ((setting->model.rot[1] < -90 && setting->model.rot[1] > -270) || (setting->model.rot[1] > 90 && setting->model.rot[1] < 270)) ? -1 : 1;
-		
-		if (x < setting->system.mouse_pos[0])
-			setting->model.rot[1] -= SPEED_R;
-		if (x > setting->system.mouse_pos[0])
-			setting->model.rot[1] += SPEED_R;
-		if (y < setting->system.mouse_pos[1])
-			setting->model.rot[0] -= SPEED_R * inv_y;
-		if (y > setting->system.mouse_pos[1])
-			setting->model.rot[0] += SPEED_R * inv_y;
-		
-		// if (setting->model.rot[0] == 360 || setting->model.rot[0] == -360)
-		// 	setting->model.rot[0] = 0;
-		// if (setting->model.rot[1] == 360 || setting->model.rot[1] == -360)
-		// 	setting->model.rot[1] = 0;
-		if (setting->model.rot[0] >= 360)
-			setting->model.rot[0] -= 360;
-		if (setting->model.rot[0] <= -360)
-			setting->model.rot[0] += 360;
-		if (setting->model.rot[1] >= 360)
-			setting->model.rot[1] -= 360;
-		if (setting->model.rot[1] <= -360)
-			setting->model.rot[1] += 360;
-		
-	}
-	if (setting->system.control & 2)
-	{
-		if (x < setting->system.mouse_pos[0])
-			setting->model.pos[0] -= SPEED_M;
-		if (x > setting->system.mouse_pos[0])
-			setting->model.pos[0] += SPEED_M;
-		if (y < setting->system.mouse_pos[1])
-			setting->model.pos[1] -= SPEED_M;
-		if (y > setting->system.mouse_pos[1])
-			setting->model.pos[1] += SPEED_M;
-	}
-	if (setting->system.control & 4)
-	{	
-		if (y > setting->system.mouse_pos[1])
-			setting->model.scale += SPEED_S2;
-		if (y < setting->system.mouse_pos[1])
-		{
-			setting->model.scale -= SPEED_S2;
-			if (setting->model.scale < 0)
-				setting->model.scale = 0;
-		}
-	}
-	setting->system.mouse_pos[0] = x;
-	setting->system.mouse_pos[1] = y;
-
-	re_render(setting);
-	// clean_frame(&setting->system, &setting->model);
-	// transform_model(&setting->system, &setting->model, &setting->coords);
-	// if (setting->system.render & 16)
-	// 	ui_boxcontrols(&setting->system);
-	// if (setting->system.render & 32)
-	// 	ui_boxinfo(&setting->system);
-	// ui_buttons(&setting->system);
-	// mlx_put_image_to_window(setting->system.mlx, setting->system.win, setting->system.img, 0, 0);
+	if (mouse_mrotation(setting, x, y, inv_y))
+		return (0);
+	if (mouse_mmove(setting, x, y))
+		return (0);
+	if (mouse_mscale(setting, x, y))
+		return (0);
 	return (0);
 }
-
-
-void	controls_test(t_setting *setting, int keycode)
-{
-	if (keycode == 257)
-		shift = 1;
-
-	if (keycode == 126)
-	{
-		if (shift)
-			setting->model.rot[0] -= 90;
-		else
-			setting->model.rot[0] -= 1;
-	}
-	if (keycode == 125)
-	{
-		if (shift)
-			setting->model.rot[0] += 90;
-		else
-			setting->model.rot[0] += 1;
-	}
-	if (setting->model.rot[0] == -360 || setting->model.rot[0] == 360)
-			setting->model.rot[0] = 0;
-	if (keycode == 123)
-	{
-		if (shift)
-			setting->model.rot[1] -= 90;
-		else
-			setting->model.rot[1] -= 1;
-	}
-	if (keycode == 124)
-	{
-		if (shift)
-			setting->model.rot[1] += 90;
-		else
-			setting->model.rot[1] += 1;
-	}
-	if (setting->model.rot[1] == -360 || setting->model.rot[1] == 360)
-			setting->model.rot[1] = 0;
-	if (keycode == 2)
-		setting->model.pos[0] += 1;
-	if (keycode == 0)
-		setting->model.pos[0] -= 1;
-	if (keycode == 1)
-		setting->model.pos[1] += 1;
-	if (keycode == 13)
-		setting->model.pos[1] -= 1;
-	if (keycode == 12)
-	{
-		if (setting->system.render & 128)
-			setting->system.render ^= 128;
-		setting->model.rot[0] = 0;
-		setting->model.rot[1] = 0;
-		setting->model.rot[2] = 0;
-		set_scalepos(&setting->model, &setting->coords);
-		setting->model.pos[0] = lround(setting->model.vertex[setting->model.area - 1][0] * setting->model.scale);
-		setting->model.pos[1] = lround(setting->model.vertex[setting->model.area - 1][1] * setting->model.scale);
-	}
-}
-
-int		key_release(int keycode, void *param)
-{
-	if (keycode == 257)
-		shift = 0;
-	return (0);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
