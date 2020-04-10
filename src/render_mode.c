@@ -3,89 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   render_mode.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:34:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/11 12:55:35 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/04/10 16:53:13 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_model(t_system *system, t_model *model, t_coords *coords)
+void	draw_model(t_sys *sys, t_model *model, t_coords *coords)
 {
-	if (system->render & 8)
+	if (sys->render & 8)
 	{
-		fill_qmesh(system, model, coords);
+		fill_qmesh(sys, model, coords);
 		return ;
 	}
-	if (system->render & 4)
+	if (sys->render & 4)
 	{
-		fill_quad(system, model, coords);
+		fill_quad(sys, model, coords);
 		return ;
 	}
-	if (system->render & 2)
+	if (sys->render & 2)
 	{
-		draw_quad(system, model, coords);
+		draw_quad(sys, model, coords);
 		return ;
 	}
-	draw_qvertex(system, model, coords);
+	draw_qvertex(sys, model, coords);
 }
 
-void	draw_quad(t_system *system, t_model *model, t_coords *coords)
+void	draw_quad(t_sys *sys, t_model *model, t_coords *coords)
 {
-	if (model->color_f && system->render & 64)
+	if (model->color_f && sys->render & 64)
 	{
-		quad_zbuf(system, model, coords);
+		quad_zbuf(sys, model, coords);
 		return ;
 	}
-	quad_nozbuf(system, model, coords);
+	quad_nozbuf(sys, model, coords);
 }
 
-void	fill_quad(t_system *system, t_model *model, t_coords *coords)
+void	fill_quad(t_sys *sys, t_model *model, t_coords *coords)
 {
-	if (model->color_f && system->render & 64)
+	if (model->color_f && sys->render & 64)
 	{
-		if (lastvert_qcolor(system, model, coords))
+		if (lastvert_qcolor(sys, model, coords))
 			return ;
-		fquad_zbuf(system, model, coords);
-		lastl_zbuf(system, model, coords);
+		fquad_zbuf(sys, model, coords);
+		lastl_zbuf(sys, model, coords);
 		return ;
 	}
-	lastvert_qnocol(system, model, coords);
-	fquad_nozbuf(system, model, coords);
-	lastl_nozbuf(system, model, coords);
+	lastvert_qnocol(sys, model, coords);
+	fquad_nozbuf(sys, model, coords);
+	lastl_nozbuf(sys, model, coords);
 }
 
-void	fill_qmesh(t_system *system, t_model *model, t_coords *coords)
+void	fill_qmesh(t_sys *sys, t_model *model, t_coords *coords)
 {
-	if (lastvert_qmesh(system, model, coords))
+	if (lastvert_qmesh(sys, model, coords))
 		return ;
-	if (model->color_f && system->render & 64)
+	if (model->color_f && sys->render & 64)
 	{
-		fqmesh_color(system, model, coords);
-		if (firsthor_qmcolor(system, model, coords))
+		fqmesh_color(sys, model, coords);
+		if (firsthor_qmcolor(sys, model, coords))
 			return ;
-		if (lasthor_qmcolor(system, model, coords))
+		if (lasthor_qmcolor(sys, model, coords))
 			return ;
 		return ;
 	}
-	fqmesh_nocolor(system, model, coords);
-	if (firsthor_qmnocol(system, model, coords))
+	fqmesh_nocolor(sys, model, coords);
+	if (firsthor_qmnocol(sys, model, coords))
 		return ;
-	if (lasthor_qmnocol(system, model, coords))
+	if (lasthor_qmnocol(sys, model, coords))
 		return ;
 }
 
 void	re_render(t_setting *setting)
 {
-	clean_frame(&setting->system, &setting->model);
-	transform_model(&setting->system, &setting->model, &setting->coords);
-	if (setting->system.render & 16)
-		ui_boxcontrols(&setting->system);
-	if (setting->system.render & 32)
-		ui_boxinfo(&setting->system);
-	ui_buttons(&setting->system);
-	mlx_put_image_to_window(setting->system.mlx,
-		setting->system.win, setting->system.img, 0, 0);
+	clean_frame(&setting->sys, &setting->model);
+	transform_model(&setting->sys, &setting->model, &setting->coords);
+	if (setting->sys.render & 16)
+		ui_boxcontrols(&setting->sys);
+	if (setting->sys.render & 32)
+		ui_boxinfo(&setting->sys);
+	ui_buttons(&setting->sys);
+	mlx_put_image_to_window(setting->sys.mlx,
+		setting->sys.win, setting->sys.img, 0, 0);
 }

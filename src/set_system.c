@@ -12,11 +12,11 @@
 
 #include "fdf.h"
 
-void	set_buffers(t_system *system)
+void	set_buffers(t_sys *sys)
 {
-	if (!(system->back_buf = (int *)malloc(sizeof(int) * system->field)))
+	if (!(sys->back_buf = (int *)malloc(sizeof(int) * sys->field)))
 		exit(0);
-	if (!(system->z_buf = (int *)malloc(sizeof(int) * system->field)))
+	if (!(sys->z_buf = (int *)malloc(sizeof(int) * sys->field)))
 		exit(0);
 }
 

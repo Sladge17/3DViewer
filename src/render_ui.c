@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:24:10 by student           #+#    #+#             */
-/*   Updated: 2020/04/10 16:24:15 by student          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:53:13 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ui_boxcontrols(t_system *system)
+void	ui_boxcontrols(t_sys *sys)
 {
 	int		i;
 	int		j;
@@ -23,14 +23,14 @@ void	ui_boxcontrols(t_system *system)
 		j = 0;
 		while (j < UIBOX_W)
 		{
-			get_rgba(&system->output[j + i * WIDTH]);
+			get_rgba(&sys->output[j + i * WIDTH]);
 			j += 1;
 		}
 		i += 1;
 	}
 }
 
-void	ui_boxinfo(t_system *system)
+void	ui_boxinfo(t_sys *sys)
 {
 	int		i;
 	int		j;
@@ -41,14 +41,14 @@ void	ui_boxinfo(t_system *system)
 		j = WIDTH - UIBOX_W;
 		while (j < WIDTH)
 		{
-			get_rgba(&system->output[j + i * WIDTH]);
+			get_rgba(&sys->output[j + i * WIDTH]);
 			j += 1;
 		}
 		i += 1;
 	}
 }
 
-void	ui_buttons(t_system *system)
+void	ui_buttons(t_sys *sys)
 {
 	int		i;
 	int		j;
@@ -59,13 +59,13 @@ void	ui_buttons(t_system *system)
 		j = 0;
 		while (j < UIBUTTON_W)
 		{
-			system->output[j + i * WIDTH] = UI_BUTTON;
+			sys->output[j + i * WIDTH] = UI_BUTTON;
 			j += 1;
 		}
 		j = WIDTH - UIBUTTON_W;
 		while (j < WIDTH)
 		{
-			system->output[j + i * WIDTH] = UI_BUTTON;
+			sys->output[j + i * WIDTH] = UI_BUTTON;
 			j += 1;
 		}
 		i += 1;

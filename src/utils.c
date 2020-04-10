@@ -26,7 +26,7 @@ static int		ft_isdigit_base(char c, int base)
 }
 
 /*
-** Check is this string contain prefix of its numeral system
+** Check is this string contain prefix of its numeral sys
 */
 
 static int	ft_has_prefix(const char *str, int base)
@@ -49,7 +49,7 @@ static int	ft_has_prefix(const char *str, int base)
 }
 
 /*
-** Check is this string a number according to the selected numeral system
+** Check is this string a number according to the selected numeral sys
 */
 
 int			ft_isnumber(char *str, int base)
@@ -78,7 +78,7 @@ int			ft_isnumber(char *str, int base)
 }
 
 /*
-** Convert string to number according to the selected numeral system
+** Convert string to number according to the selected numeral sys
 */
 
 int				ft_atoi_base(const char *str, int base)

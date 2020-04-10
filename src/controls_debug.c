@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls_debug.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 11:54:58 by student           #+#    #+#             */
-/*   Updated: 2020/04/10 11:55:00 by student          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:45:27 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	debug_input(t_setting *setting, int keycode)
 {
 	if (keycode == 257)
-		setting->system.control ^= 8;
+		setting->sys.control ^= 8;
 	debug_rotatex(setting, keycode);
 	debug_rotatey(setting, keycode);
 	debug_move(setting, keycode);
 	if (keycode == 12)
 	{
-		if (setting->system.render & 128)
-			setting->system.render ^= 128;
+		if (setting->sys.render & 128)
+			setting->sys.render ^= 128;
 		setting->model.rot[0] = 0;
 		setting->model.rot[1] = 0;
 		setting->model.rot[2] = 0;
@@ -41,14 +41,14 @@ void	debug_rotatex(t_setting *setting, int keycode)
 {
 	if (keycode == 126)
 	{
-		if (setting->system.control & 8)
+		if (setting->sys.control & 8)
 			setting->model.rot[0] -= 90;
 		else
 			setting->model.rot[0] -= 1;
 	}
 	if (keycode == 125)
 	{
-		if (setting->system.control & 8)
+		if (setting->sys.control & 8)
 			setting->model.rot[0] += 90;
 		else
 			setting->model.rot[0] += 1;
@@ -61,14 +61,14 @@ void	debug_rotatey(t_setting *setting, int keycode)
 {
 	if (keycode == 123)
 	{
-		if (setting->system.control & 8)
+		if (setting->sys.control & 8)
 			setting->model.rot[1] -= 90;
 		else
 			setting->model.rot[1] -= 1;
 	}
 	if (keycode == 124)
 	{
-		if (setting->system.control & 8)
+		if (setting->sys.control & 8)
 			setting->model.rot[1] += 90;
 		else
 			setting->model.rot[1] += 1;

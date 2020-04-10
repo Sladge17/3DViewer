@@ -18,7 +18,7 @@ management.
 
 .SH BSD/LINUX X-WINDOW CONCEPT
 
-X-Window is a network-oriented graphical system for Unix.
+X-Window is a network-oriented graphical sys for Unix.
 It is based on two main parts:
 .br
 On one side, your software wants to draw something on the screen and/or
@@ -33,13 +33,13 @@ events (from the X-Server to the software).
 
 .SH MACOSX CONCEPT
 
-The MacOSX operating system handle graphical access to the screen (or "display").
+The MacOSX operating sys handle graphical access to the screen (or "display").
 .br
 On one side, your software wants to draw something on the screen and/or
 get keyboard & mouse entries.
 .br
 On the other side, the underlying MacOSX graphical framework that handles
-the screen, the windowing system, keyboard and mouse.
+the screen, the windowing sys, keyboard and mouse.
 .br
 A connection between these two entities must be established.
 
@@ -93,7 +93,7 @@ flag.
 
 .SH LINKING MiniLibX on MACOSX
 To use MiniLibX functions, you'll need to link your software with the
-MiniLibX library, and several system frameworks:
+MiniLibX library, and several sys frameworks:
 
 .B -lmlx -framework OpenGL -framework AppKit
 
@@ -105,7 +105,7 @@ flag.
 .SH RETURN VALUES
 If
 .B mlx_init()
-fails to set up the connection to the graphical system, it will return NULL, otherwise
+fails to set up the connection to the graphical sys, it will return NULL, otherwise
 a non-null pointer is returned as a connection identifier.
 
 .SH SEE ALSO

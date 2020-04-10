@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   r_mesh2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 15:33:26 by student           #+#    #+#             */
-/*   Updated: 2020/04/08 15:33:29 by student          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:53:13 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	fqmesh_color(t_system *system, t_model *model, t_coords *coords)
+void	fqmesh_color(t_sys *sys, t_model *model, t_coords *coords)
 {
 	if (model->diagonal[coords->counter[0] +
 		coords->counter[1] * (model->width - 1)])
@@ -20,25 +20,25 @@ void	fqmesh_color(t_system *system, t_model *model, t_coords *coords)
 		set_light(coords, 0, 1, 3);
 		deftris_zbuf(coords, 0, 1, 3);
 		shade_vtris(coords);
-		ftris_zbuf(system, coords);
+		ftris_zbuf(sys, coords);
 		if (model->vertex[coords->index[0]][2] !=
 			model->vertex[coords->index[3]][2])
 			set_light(coords, 0, 2, 3);
 		deftris_zbuf(coords, 0, 2, 3);
 		shade_vtris(coords);
-		ftris_zbuf(system, coords);
+		ftris_zbuf(sys, coords);
 		return ;
 	}
 	set_light(coords, 0, 1, 2);
 	deftris_zbuf(coords, 0, 1, 2);
 	shade_vtris(coords);
-	ftris_zbuf(system, coords);
+	ftris_zbuf(sys, coords);
 	if (model->vertex[coords->index[1]][2] !=
 		model->vertex[coords->index[2]][2])
 		set_light(coords, 1, 2, 3);
 	deftris_zbuf(coords, 1, 2, 3);
 	shade_vtris(coords);
-	ftris_zbuf(system, coords);
+	ftris_zbuf(sys, coords);
 }
 
 void	shade_vtris(t_coords *coords)

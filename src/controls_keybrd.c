@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls_keybrd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:05:28 by student           #+#    #+#             */
-/*   Updated: 2020/04/10 12:05:32 by student          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:45:27 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ char	render_mode1(t_setting *setting, int keycode)
 {
 	if (keycode == 21)
 	{
-		setting->system.render &= 240;
-		setting->system.render |= 8;
+		setting->sys.render &= 240;
+		setting->sys.render |= 8;
 		re_render(setting);
 		return (1);
 	}
 	if (keycode == 20)
 	{
-		setting->system.render &= 240;
-		setting->system.render |= 4;
+		setting->sys.render &= 240;
+		setting->sys.render |= 4;
 		re_render(setting);
 		return (1);
 	}
@@ -35,15 +35,15 @@ char	render_mode2(t_setting *setting, int keycode)
 {
 	if (keycode == 19)
 	{
-		setting->system.render &= 240;
-		setting->system.render |= 2;
+		setting->sys.render &= 240;
+		setting->sys.render |= 2;
 		re_render(setting);
 		return (1);
 	}
 	if (keycode == 18)
 	{
-		setting->system.render &= 240;
-		setting->system.render |= 1;
+		setting->sys.render &= 240;
+		setting->sys.render |= 1;
 		re_render(setting);
 		return (1);
 	}
@@ -54,7 +54,7 @@ char	render_option(t_setting *setting, int keycode)
 {
 	if (keycode == 35)
 	{
-		setting->system.render ^= 128;
+		setting->sys.render ^= 128;
 		re_render(setting);
 		return (1);
 	}
@@ -62,7 +62,7 @@ char	render_option(t_setting *setting, int keycode)
 	{
 		if (!setting->model.color_f)
 			return (1);
-		setting->system.render ^= 64;
+		setting->sys.render ^= 64;
 		re_render(setting);
 		return (1);
 	}
@@ -73,13 +73,13 @@ char	switch_uipanels(t_setting *setting, int keycode)
 {
 	if (keycode == 8)
 	{
-		setting->system.render ^= 16;
+		setting->sys.render ^= 16;
 		re_render(setting);
 		return (1);
 	}
 	if (keycode == 34)
 	{
-		setting->system.render ^= 32;
+		setting->sys.render ^= 32;
 		re_render(setting);
 		return (1);
 	}
@@ -90,8 +90,8 @@ char	rescale(t_setting *setting, int keycode)
 {
 	if (keycode == 15)
 	{
-		if (setting->system.render & 128)
-			setting->system.render ^= 128;
+		if (setting->sys.render & 128)
+			setting->sys.render ^= 128;
 		setting->model.rot[0] = ROT_X;
 		setting->model.rot[1] = ROT_Y;
 		setting->model.rot[2] = ROT_Z;
@@ -101,7 +101,7 @@ char	rescale(t_setting *setting, int keycode)
 		re_render(setting);
 		return (1);
 	}
-	if (keycode == 3 && !(setting->system.render & 128))
+	if (keycode == 3 && !(setting->sys.render & 128))
 	{
 		set_scalepos(&setting->model, &setting->coords);
 		re_render(setting);

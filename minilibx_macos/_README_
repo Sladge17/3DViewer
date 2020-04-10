@@ -15,11 +15,11 @@ L'interface / l'API, reste identique a la version precedente. Les man presents d
 d'origine sont toujours valides.
 
 Le fichier mlx.h a inclure dans vos programmes rapelle les petites differences de comportement
-entre les 2 versions, dues a la gestion graphique differente selon les systemes d'exploitation.
+entre les 2 versions, dues a la gestion graphique differente selon les syses d'exploitation.
 
 #
 
-Cette version utilise le systeme de fenetrage Cocoa de MacOSX ( AppKit ), et les primitives
+Cette version utilise le syse de fenetrage Cocoa de MacOSX ( AppKit ), et les primitives
 graphiques OpenGL moderne.
 
 #

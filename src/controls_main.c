@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 15:24:46 by student           #+#    #+#             */
-/*   Updated: 2020/03/23 20:15:31 by student          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:45:27 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		key_release(int keycode, void *param)
 
 	setting = (t_setting *)param;
 	if (keycode == 257)
-		setting->system.control ^= 8;
+		setting->sys.control ^= 8;
 	return (0);
 }
 
@@ -56,16 +56,16 @@ int		mouse_press(int button, int x, int y, void *param)
 	{
 		if (mouse_uipanels(setting, button, x, y))
 			return (0);
-		setting->system.control ^= 1;
-		setting->system.mouse_pos[0] = x;
-		setting->system.mouse_pos[1] = y;
+		setting->sys.control ^= 1;
+		setting->sys.mouse_pos[0] = x;
+		setting->sys.mouse_pos[1] = y;
 		return (0);
 	}
 	if (button == 2)
 	{
-		setting->system.control ^= 2;
-		setting->system.mouse_pos[0] = x;
-		setting->system.mouse_pos[1] = y;
+		setting->sys.control ^= 2;
+		setting->sys.mouse_pos[0] = x;
+		setting->sys.mouse_pos[1] = y;
 		return (0);
 	}
 	return (0);
@@ -76,12 +76,12 @@ int		mouse_release(int button, int x, int y, void *param)
 	t_setting		*setting;
 
 	setting = (t_setting *)param;
-	if (button == 1 && setting->model.scale && setting->system.control)
-		setting->system.control ^= 1;
+	if (button == 1 && setting->model.scale && setting->sys.control)
+		setting->sys.control ^= 1;
 	if (button == 2)
-		setting->system.control ^= 2;
+		setting->sys.control ^= 2;
 	if (button == 3)
-		setting->system.control ^= 4;
+		setting->sys.control ^= 4;
 	return (0);
 }
 
@@ -91,7 +91,7 @@ int		mouse_move(int x, int y, void *param)
 	char			inv_y;
 
 	setting = (t_setting *)param;
-	if (!(setting->system.control))
+	if (!(setting->sys.control))
 		return (0);
 	if (mouse_mrotation(setting, x, y, inv_y))
 		return (0);

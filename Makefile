@@ -21,11 +21,11 @@ SRC_LIST = fdf.c\
 			ortholines.c\
 			parse_color.c\
 			r_silhouette.c\
-			postfill_quad.c\
+			except_quad.c\
 			r_mesh1.c\
 			r_mesh2.c\
 			filltris_zbuf.c\
-			postfill_qmesh.c\
+			except_qmesh.c\
 			render_ui.c\
 			controls_main.c\
 			controls_keybrd.c\

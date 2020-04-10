@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   r_silhouette.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 12:43:49 by student           #+#    #+#             */
-/*   Updated: 2020/04/01 12:44:01 by student          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:53:13 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords)
+void	fquad_nozbuf(t_sys *sys, t_model *model, t_coords *coords)
 {
 	if ((coords->d_quad[0][0] == coords->d_quad[1][0] &&
 		coords->d_quad[1][0] == coords->d_quad[2][0] &&
@@ -21,22 +21,22 @@ void	fquad_nozbuf(t_system *system, t_model *model, t_coords *coords)
 		coords->d_quad[1][1] == coords->d_quad[2][1] &&
 		coords->d_quad[2][1] == coords->d_quad[3][1]))
 	{
-		quad_nozbuf(system, model, coords);
+		quad_nozbuf(sys, model, coords);
 		return ;
 	}
 	if (model->diagonal[coords->counter[0] +
 		coords->counter[1] * (model->width - 1)])
 	{
 		deftris_nozbuf(coords, 0, 1, 3);
-		ftris_nozbuf(system, coords);
+		ftris_nozbuf(sys, coords);
 		deftris_nozbuf(coords, 0, 2, 3);
-		ftris_nozbuf(system, coords);
+		ftris_nozbuf(sys, coords);
 		return ;
 	}
 	deftris_nozbuf(coords, 0, 1, 2);
-	ftris_nozbuf(system, coords);
+	ftris_nozbuf(sys, coords);
 	deftris_nozbuf(coords, 1, 2, 3);
-	ftris_nozbuf(system, coords);
+	ftris_nozbuf(sys, coords);
 }
 
 void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3)
@@ -49,7 +49,7 @@ void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3)
 	coords->d_tris[2][1] = coords->d_quad[v3][1];
 }
 
-void	ftris_nozbuf(t_system *system, t_coords *coords)
+void	ftris_nozbuf(t_sys *sys, t_coords *coords)
 {
 	int		height[2];
 	int		i;
@@ -64,10 +64,10 @@ void	ftris_nozbuf(t_system *system, t_coords *coords)
 		while (coords->d_line[0][1] < coords->d_tris[i + 1][1])
 		{
 			setlinex_nozbuf(coords, height, i);
-			linex_nozbuf(system, coords->d_line[0], coords->d_line[1]);
+			linex_nozbuf(sys, coords->d_line[0], coords->d_line[1]);
 			if ((0 <= coords->d_line[1][0] && coords->d_line[1][0] < WIDTH)
 			&& (0 <= coords->d_line[1][1] && coords->d_line[1][1] < HEIGHT))
-				system->output[coords->d_line[1][0] +
+				sys->output[coords->d_line[1][0] +
 				coords->d_line[1][1] * WIDTH] = COLOR_S;
 			coords->d_line[0][1] += 1;
 		}
