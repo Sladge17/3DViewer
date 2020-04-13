@@ -19,7 +19,6 @@ SRC_LIST = fdf.c\
 			r_wireframe_noz.c\
 			r_wireframe_z.c\
 			ortholines.c\
-			parse_color.c\
 			r_silhouette.c\
 			except_quad.c\
 			r_mesh1.c\
@@ -46,8 +45,8 @@ $(NAME): $(OBJ)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
 	mkdir -p $(OBJ_DIR)
-	# gcc -c $(HEADER) $< -o $@ $(FLAG)
-	gcc -c $(HEADER) $< -o $@
+	gcc -c $(HEADER) $< -o $@ $(FLAG)
+# 	gcc -c $(HEADER) $< -o $@
 
 clean:
 	@rm -rf $(OBJ_DIR)

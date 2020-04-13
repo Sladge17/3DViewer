@@ -38,7 +38,7 @@ char	mouse_scale(t_setting *setting, int button, int x, int y)
 	return (0);
 }
 
-char	mouse_uipanels(t_setting *setting, int button, int x, int y)
+char	mouse_uipanels(t_setting *setting, int x, int y)
 {
 	if (x >= 0 && x < UIBUTTON_W &&
 		y >= HEIGHT - UIBUTTON_H && y < HEIGHT)

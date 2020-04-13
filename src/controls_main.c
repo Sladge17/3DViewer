@@ -54,7 +54,7 @@ int		mouse_press(int button, int x, int y, void *param)
 		return (0);
 	if (button == 1 && setting->model.scale)
 	{
-		if (mouse_uipanels(setting, button, x, y))
+		if (mouse_uipanels(setting, x, y))
 			return (0);
 		setting->sys.control ^= 1;
 		setting->sys.mouse_pos[0] = x;
@@ -75,6 +75,8 @@ int		mouse_release(int button, int x, int y, void *param)
 {
 	t_setting		*setting;
 
+	x = 0;
+	y = 0;
 	setting = (t_setting *)param;
 	if (button == 1 && setting->model.scale && setting->sys.control)
 		setting->sys.control ^= 1;
@@ -90,6 +92,7 @@ int		mouse_move(int x, int y, void *param)
 	t_setting		*setting;
 	char			inv_y;
 
+	inv_y = 0;
 	setting = (t_setting *)param;
 	if (!(setting->sys.control))
 		return (0);

@@ -198,7 +198,7 @@ char	vert_onscreen(int *i, t_coords *coords);
 ** r_wireframe_noz.c
 */
 void	quad_nozbuf(t_sys *sys, t_model *model, t_coords *coords);
-void	defline_nozbuf(t_coords *coords, char v1, char v2);
+void	defline_nozbuf(t_coords *coords, int v1, int v2);
 void	line_nozbuf(t_sys *sys, t_coords *coords);
 void	xmore_nozbuf(t_sys *sys, t_coords *coords, char *d, int *len);
 void	ymore_nozbuf(t_sys *sys, t_coords *coords, char *d, int *len);
@@ -207,7 +207,7 @@ void	ymore_nozbuf(t_sys *sys, t_coords *coords, char *d, int *len);
 ** r_wireframe_z.c
 */
 void	quad_zbuf(t_sys *sys, t_model *model, t_coords *coords);
-void	defline_zbuf(t_coords *coords, char v1, char v2);
+void	defline_zbuf(t_coords *coords, int v1, int v2);
 void	line_zbuf(t_sys *sys, t_coords *coords);
 void	xmore_zbuf(t_sys *sys, t_coords *coords, char *d, int *len);
 void	ymore_zbuf(t_sys *sys, t_coords *coords, char *d, int *len);
@@ -222,16 +222,10 @@ void	fill_pixel(t_sys *sys, int *vertex_0, int *vertex_1, int cursor);
 void	liney_zbuf(t_sys *sys, int *vertex_0, int *vertex_1, float *tris_z);
 
 /*
-** parse_color.c
-*/
-int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
-int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
-
-/*
 ** r_silhouette.c
 */
 void	fquad_nozbuf(t_sys *sys, t_model *model, t_coords *coords);
-void	deftris_nozbuf(t_coords *coords, char v1, char v2, char v3);
+void	deftris_nozbuf(t_coords *coords, int v1, int v2, int v3);
 void	ftris_nozbuf(t_sys *sys, t_coords *coords);
 void	sorty_nozbuf(t_coords *coords);
 void	setlinex_nozbuf(t_coords *coords, int *height, int i);
@@ -243,16 +237,16 @@ char	lastvert_qcolor(t_sys *sys, t_model *model, t_coords *coords);
 void	lastl_zbuf(t_sys *sys, t_model *model, t_coords *coords);
 void	lastvert_qnocol(t_sys *sys, t_model *model, t_coords *coords);
 void	lastl_nozbuf(t_sys *sys, t_model *model, t_coords *coords);
-char	check_zbuf(t_sys *sys, t_coords *coords, int *cursor, char dir);
+char	check_zbuf(t_sys *sys, t_coords *coords, int *cursor, int dir);
 
 /*
 ** r_mesh1.c
 */
 void	fquad_zbuf(t_sys *sys, t_model *model, t_coords *coords);
-void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3);
+void	deftris_zbuf(t_coords *coords, int v1, int v2, int v3);
 void	fqmesh_nocolor(t_sys *sys, t_model *model, t_coords *coords);
 void	set_shadetris(t_coords *coords, char v0, char v1, char v2);
-void	set_light(t_coords *coords, char v0, char v1, char v2);
+void	set_light(t_coords *coords, int v0, int v1, int v2);
 
 /*
 ** r_mesh2.c
@@ -260,6 +254,8 @@ void	set_light(t_coords *coords, char v0, char v1, char v2);
 void	fqmesh_color(t_sys *sys, t_model *model, t_coords *coords);
 void	shade_vtris(t_coords *coords);
 int		shade_color(int color, float light);
+int		set_xrgb(int *vertex_0, int *vertex_1, int cursor);
+int		set_yrgb(int *vertex_0, int *vertex_1, int cursor);
 
 /*
 ** filltris_zbuf.c
@@ -309,7 +305,7 @@ char	rescale(t_setting *setting, int keycode);
 ** controls_mouse.c
 */
 char	mouse_scale(t_setting *setting, int button, int x, int y);
-char	mouse_uipanels(t_setting *setting, int button, int x, int y);
+char	mouse_uipanels(t_setting *setting, int x, int y);
 char	mouse_mrotation(t_setting *setting, int x, int y, char inv_y);
 char	mouse_mmove(t_setting *setting, int x, int y);
 char	mouse_mscale(t_setting *setting, int x, int y);

@@ -36,7 +36,7 @@ void	quad_nozbuf(t_sys *sys, t_model *model, t_coords *coords)
 			coords->d_quad[3][1] * WIDTH] = COLOR_W;
 }
 
-void	defline_nozbuf(t_coords *coords, char v1, char v2)
+void	defline_nozbuf(t_coords *coords, int v1, int v2)
 {
 	coords->d_tris[0][0] = coords->d_quad[v1][0];
 	coords->d_tris[0][1] = coords->d_quad[v1][1];

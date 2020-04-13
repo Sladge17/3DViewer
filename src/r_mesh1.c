@@ -39,7 +39,7 @@ void	fquad_zbuf(t_sys *sys, t_model *model, t_coords *coords)
 	ftris_zbuf(sys, coords);
 }
 
-void	deftris_zbuf(t_coords *coords, char v1, char v2, char v3)
+void	deftris_zbuf(t_coords *coords, int v1, int v2, int v3)
 {
 	coords->d_tris[0][0] = coords->d_quad[v1][0];
 	coords->d_tris[0][1] = coords->d_quad[v1][1];
@@ -92,7 +92,7 @@ void	set_shadetris(t_coords *coords, char v0, char v1, char v2)
 	chanal[2] = lround(coords->f_line[2] * chanal[2]);
 }
 
-void	set_light(t_coords *coords, char v0, char v1, char v2)
+void	set_light(t_coords *coords, int v0, int v1, int v2)
 {
 	float	vector[2][3];
 	float	normal[3];

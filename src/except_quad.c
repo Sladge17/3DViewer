@@ -105,7 +105,7 @@ void	lastl_nozbuf(t_sys *sys, t_model *model, t_coords *coords)
 	}
 }
 
-char	check_zbuf(t_sys *sys, t_coords *coords, int *cursor, char dir)
+char	check_zbuf(t_sys *sys, t_coords *coords, int *cursor, int dir)
 {
 	float	int_z;
 	float	cursor_z;
