@@ -54,7 +54,7 @@ void	set_model(char *filename, t_model *model, t_coords *coords)
 void	set_system(t_sys *sys, t_model *model)
 {
 	sys->mlx = mlx_init();
-	sys->win = mlx_new_window(sys->mlx, WIDTH, HEIGHT, "FdF");
+	sys->win = mlx_new_window(sys->mlx, WIDTH, HEIGHT, "fdf");
 	sys->img = mlx_new_image(sys->mlx, WIDTH, HEIGHT);
 	sys->output = (int *)mlx_get_data_addr(sys->img,
 		&sys->img_s[0], &sys->img_s[1], &sys->img_s[2]);
