@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:24:10 by student           #+#    #+#             */
-/*   Updated: 2020/04/10 16:53:13 by student          ###   ########.fr       */
+/*   Updated: 2020/04/14 12:09:14 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ui_boxcontrols(t_sys *sys)
+void	ui_boxcontrols(t_setting *setting)
 {
 	int		i;
 	int		j;
@@ -23,14 +23,14 @@ void	ui_boxcontrols(t_sys *sys)
 		j = 0;
 		while (j < UIBOX_W)
 		{
-			get_rgba(&sys->output[j + i * WIDTH]);
+			get_rgba(&setting->sys.output[j + i * WIDTH]);
 			j += 1;
 		}
 		i += 1;
 	}
 }
 
-void	ui_boxinfo(t_sys *sys)
+void	ui_boxinfo(t_setting *setting)
 {
 	int		i;
 	int		j;
@@ -41,14 +41,16 @@ void	ui_boxinfo(t_sys *sys)
 		j = WIDTH - UIBOX_W;
 		while (j < WIDTH)
 		{
-			get_rgba(&sys->output[j + i * WIDTH]);
+			get_rgba(&setting->sys.output[j + i * WIDTH]);
 			j += 1;
 		}
 		i += 1;
 	}
+	//print_left_text(setting, 0xffffff);
+	//print_right_text(setting, 0xffffff);
 }
 
-void	ui_buttons(t_sys *sys)
+void	ui_buttons(t_setting *setting)
 {
 	int		i;
 	int		j;
@@ -59,17 +61,18 @@ void	ui_buttons(t_sys *sys)
 		j = 0;
 		while (j < UIBUTTON_W)
 		{
-			sys->output[j + i * WIDTH] = UI_BUTTON;
+			setting->sys.output[j + i * WIDTH] = UI_BUTTON;
 			j += 1;
 		}
 		j = WIDTH - UIBUTTON_W;
 		while (j < WIDTH)
 		{
-			sys->output[j + i * WIDTH] = UI_BUTTON;
+			setting->sys.output[j + i * WIDTH] = UI_BUTTON;
 			j += 1;
 		}
 		i += 1;
 	}
+
 }
 
 void	get_rgba(int *color)

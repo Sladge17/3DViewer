@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuy <jthuy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 16:56:08 by jthuy             #+#    #+#             */
-/*   Updated: 2020/03/16 16:49:38 by jthuy            ###   ########.fr       */
+/*   Updated: 2020/04/14 12:30:52 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,28 @@ int		ft_wordscounter(char const *str, char c)
 	return (words);
 }
 
+
+char *parse_name(char *str)
+{
+	int i;
+	int size;
+
+	i = ft_strlen(str);
+	size = ft_strlen(str);
+
+	if (str)
+	{
+		while(str[i] != '/' && i != 0)
+		{
+			i--;
+		}
+		i++;
+		if (ft_strstr(str, ".fdf"))
+			size -= 4;
+	}
+	return(ft_strsub(str, i, size - i));
+}
+
 int check_point(char *str)
 {
 	int i;
@@ -55,12 +77,28 @@ int check_point(char *str)
 	return(1);
 }
 
+
+
+void calc_z_max(t_model *model, int val)
+{
+	if (val < model->z_min)
+		model->z_min = val;
+	else if (val > model->z_max)
+		model->z_max = val;
+	model->z_result = model->z_max - model->z_min;
+}
+
+
 /*
 **Writes a line from the file in the array of ints
 */
 int	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y)
 {
-	int k = i_starts_from;
+	int k;
+
+	k = i_starts_from;
+	if (ft_arraylen(line_of_z) < model->width)
+		return(0);
 	while(k < (i_starts_from + model->width))
 	{
 		if (!(model->vertex[k] = (int *)malloc(sizeof(int) * AMOUNT_OF_PARAMETERS_PER_DOT)))
@@ -74,9 +112,7 @@ int	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y)
 				model->vertex[k][1] = y;
 				model->vertex[k][2] = ft_atoi(line_of_z[k - i_starts_from]);
 				model->vertex[k][3] = parse_color(line_of_z[k - i_starts_from], model, COLOR_DEF);
-				//if (model->vertex[k][3] >= 0)
-					//model->color_f = 1;
-				//free(line_of_z[k - i_starts_from]);
+				calc_z_max(model, model->vertex[k][2]);
 				k++;
 			}
 		else
@@ -87,19 +123,13 @@ int	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y)
 
 int		allocate_mem(char *filename, t_model *model)
 {
-	// int height;
-	// int width;
-	// int **n = 0;
-
 	int fd;
-	fd = 0;
-	char *line = 0;
+	char *line;
 
+	fd = 0;
+	line = 0;
 	if ((fd = open(filename, O_RDONLY, 0)) <= 0)
-	{
-		write(1, "file not exists", 15);
 		return(0);
-	}
 	get_next_line(fd, &line);
 	if (line && ft_strlen(line))
 		model->height++;
@@ -134,26 +164,28 @@ int parse_color(char *word, t_model *model, int default_color)
 	return(output);
 }
 
-int		parse(char *filename, t_model *model)
+void model_init(t_model *model)
 {
-	int fd = 0;
-	int cnt = 0;
+	model->color_f = 0;
+	model->z_max = 0;
+	model->z_min = 0;
+	model->z_result = 0;
+}
+
+int		read_file(int fd, char **splitted_line, t_model *model)
+{
+	char *next_line;
+	int cnt;
 	int y_cnt;
+
+	cnt = 0;
 	y_cnt = 0;
-	char *next_line = 0;
-	char **splitted_line = 0;
-	if (!allocate_mem(filename, model))
-		return(0);
-	fd = open(filename, O_RDONLY, 0);
-	if (fd < 0)
-	{
-		write(1, "Error opening file\n", 19);
-		return(0);
-	}
+	next_line = 0;
 	while(get_next_line(fd, &next_line))
 	{
 		splitted_line = ft_strsplit(next_line, DIVIDE_SYMBOL);
-		fill_matrix(model, splitted_line, cnt, y_cnt);
+		if (!fill_matrix(model, splitted_line, cnt, y_cnt))
+			return(PARSER_WRONGCONTENT_ERR);
 		free(next_line);
 		if (splitted_line)
 			ft_arrayfree(splitted_line);
@@ -162,6 +194,24 @@ int		parse(char *filename, t_model *model)
 	}
 	if(next_line)
 		free(next_line);
+	return(0);
+}
+
+int		parse(char *filename, t_model *model)
+{
+	int fd;
+	int read_status;
+	char **splitted_line;
+
+	fd = 0;
+	splitted_line = 0;
+	model_init(model);
+	if (!allocate_mem(filename, model))
+		return(PARSER_OPENFILE_ERR);
+	fd = open(filename, O_RDONLY, 0);
+	if (fd < 0)
+		return(PARSER_OPENFILE_ERR);
+	read_status = read_file(fd, splitted_line, model);
 	close(fd);
-	return(1);
+	return(read_status);
 }

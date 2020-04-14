@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:24:13 by jthuy             #+#    #+#             */
-/*   Updated: 2020/04/10 16:53:13 by student          ###   ########.fr       */
+/*   Updated: 2020/04/14 12:35:20 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 
 #include "colors.h"
 
-#define WIDTH 1280
-#define HEIGHT 720
+#define WIDTH 1920
+#define HEIGHT 1080
 #define SPEED_R 6
 #define SPEED_M 4
 #define SPEED_S1 0.5
@@ -40,12 +40,17 @@
 #define ROT_Y -30
 #define ROT_Z 0
 
+#define PARSER_MEMALLOCATE_ERR 12
+#define PARSER_WRONGMAP_ERR 13
+#define PARSER_OPENFILE_ERR 14
+#define PARSER_WRONGCONTENT_ERR 15
+
 #define DIVIDE_SYMBOL ' '
 #define AMOUNT_OF_PARAMETERS_PER_DOT 3
 
-#define UIBUTTON_W 100
-#define UIBUTTON_H 40
-#define UIBOX_W 200
+#define UIBUTTON_W 200
+#define UIBUTTON_H 50
+#define UIBOX_W 350
 
 
 typedef struct	s_sys
@@ -78,6 +83,9 @@ typedef struct	s_model
 	short		first_pos[2];
 	char		color_f;
 	char		*modelname;
+	int			z_max;
+	int			z_min;
+	int			z_result;
 }				t_model;
 
 typedef struct	s_coords
@@ -110,20 +118,39 @@ typedef struct		s_backset
 /*
 ** fdf.c
 */
-void	set_model(char *filename, t_model *model, t_coords *coords);
+int		set_model(char *filename, t_model *model, t_coords *coords);
 void	set_system(t_sys *sys, t_model *model);
 void	clean_frame(t_sys *sys, t_model *model);
 int		close_fdf(void *param);
+void	error_handler(int parse_status);
 
 /*
 ** parser.c
 */
-int		ft_wordscounter(char const *str, char c);
-int		check_point(char *str);
-int		fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y);
-int		allocate_mem(char *filename, t_model *model);
-int		parse_color(char *word, t_model *model, int default_color);
 int		parse(char *filename, t_model *model);
+int		read_file(int fd, char **splitted_line, t_model *model);
+void model_init(t_model *model);
+int parse_color(char *word, t_model *model, int default_color);
+int		allocate_mem(char *filename, t_model *model);
+int	fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y);
+void calc_z_max(t_model *model, int val);
+int check_point(char *str);
+char *parse_name(char *str);
+int		ft_wordscounter(char const *str, char c);
+
+/*
+** menu.c
+*/
+//void fill_block(t_sys *system, int *size_l, int *s_l, int color);
+void print_left_manual_text(t_sys *system, int *st, int c);
+void print_right_manual_text(t_setting *s, int *st, int c);
+//void print_left_backforms(t_setting *setting, int c);
+//void print_right_backforms(t_setting *setting, int c);
+void print_left_text(t_setting *setting, int c);
+void print_right_text(t_setting *setting, int c);
+//void print_two_small_buttons_back(t_setting *setting, int c);
+void print_two_small_buttons_text(t_setting *setting, int c);
+
 
 /*
 ** utils.c
@@ -278,10 +305,13 @@ char	lasthor_qmnocol(t_sys *sys, t_model *model, t_coords *coords);
 /*
 ** render_ui.c
 */
-void	ui_boxcontrols(t_sys *sys);
-void	ui_boxinfo(t_sys *sys);
+//void	ui_boxcontrols(t_sys *sys);
+void	ui_boxcontrols(t_setting *setting);
+//void	ui_boxinfo(t_sys *sys);
+void	ui_boxinfo(t_setting *setting);
 void	get_rgba(int *color);
-void	ui_buttons(t_sys *sys);
+void	ui_buttons(t_setting *setting);
+//void	ui_buttons(t_sys *sys);
 
 /*
 ** controls_main.c

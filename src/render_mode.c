@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_mode.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:34:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/04/10 16:53:13 by student          ###   ########.fr       */
+/*   Updated: 2020/04/14 12:34:19 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,17 @@ void	re_render(t_setting *setting)
 {
 	clean_frame(&setting->sys, &setting->model);
 	transform_model(&setting->sys, &setting->model, &setting->coords);
-	if (setting->sys.render & 16)
-		ui_boxcontrols(&setting->sys);
+	ui_buttons(setting);
 	if (setting->sys.render & 32)
-		ui_boxinfo(&setting->sys);
-	ui_buttons(&setting->sys);
+		ui_boxinfo(setting);
+	if (setting->sys.render & 16)
+		ui_boxcontrols(setting);
 	mlx_put_image_to_window(setting->sys.mlx,
 		setting->sys.win, setting->sys.img, 0, 0);
+	if (setting->sys.render & 16)
+		print_left_text(setting, COLOR_TEXT);
+	if (setting->sys.render & 32)
+		print_right_text(setting, COLOR_TEXT);
+	print_two_small_buttons_text(setting, COLOR_TEXT);
+
 }

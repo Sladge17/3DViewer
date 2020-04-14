@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/04/10 16:52:49 by student          ###   ########.fr       */
+/*   Updated: 2020/04/14 12:33:38 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ int		main(int argv, char **argc)
 		write(1, "Needed only one input file.\n", 28);
 		exit(0);
 	}
-	set_model(argc[1], &setting.model, &setting.coords);
+	if (!(set_model(argc[1], &setting.model, &setting.coords)))
+		exit(0);
 	set_system(&setting.sys, &setting.model);
 	clean_frame(&setting.sys, &setting.model);
 	transform_model(&setting.sys, &setting.model, &setting.coords);
-	ui_buttons(&setting.sys);
+	ui_buttons(&setting);
 	mlx_put_image_to_window(setting.sys.mlx, setting.sys.win,
 							setting.sys.img, 0, 0);
+	print_two_small_buttons_text(&setting, COLOR_TEXT);
 	mlx_hook(setting.sys.win, 2, 0, key_press, &setting);
 	mlx_hook(setting.sys.win, 3, 0, key_release, &setting);
 	mlx_hook(setting.sys.win, 4, 0, mouse_press, &setting);
@@ -38,9 +40,17 @@ int		main(int argv, char **argc)
 	return (0);
 }
 
-void	set_model(char *filename, t_model *model, t_coords *coords)
+int	set_model(char *filename, t_model *model, t_coords *coords)
 {
-	parse(filename, model);
+	int parse_status;
+
+	if ((parse_status = parse(filename, model)))
+	{
+		error_handler(parse_status);
+		return(0);
+	}
+	//parse(filename, model);
+	model->modelname = parse_name(filename);
 	model->area = model->width * model->height;
 	set_diagonal(model);
 	pre_transform(model);
@@ -49,6 +59,7 @@ void	set_model(char *filename, t_model *model, t_coords *coords)
 	model->rot[2] = ROT_Z;
 	set_overall(model);
 	set_scalepos(model, coords);
+	return(1);
 }
 
 void	set_system(t_sys *sys, t_model *model)
@@ -91,4 +102,16 @@ int		close_fdf(void *param)
 {
 	(void)param;
 	exit(0);
+}
+
+void error_handler(int parse_status)
+{
+	if (parse_status == PARSER_WRONGMAP_ERR)
+		write(1, "Wrong map\n", 10);
+	else if (parse_status == PARSER_WRONGCONTENT_ERR)
+		write(1, "Wrong content\n", 14);
+	else if (parse_status == PARSER_MEMALLOCATE_ERR)
+		write(1, "Memory allocation failed\n", 25);
+	else if (parse_status == PARSER_OPENFILE_ERR)
+		write(1, "Error opening file\n", 19);
 }
