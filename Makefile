@@ -1,9 +1,9 @@
 NAME = fdf
 FLAG = -Wall -Wextra -Werror
-GL = -lmlx -framework OpenGL -framework AppKit
+GL = -lm -framework OpenGL -framework AppKit
 
 HEADER_DIR = ./includes/
-HEADER = -I$(HEADER_DIR)
+HEADER = -I$(HEADER_DIR) -I ./minilibx_macos/
 # HEADER = fdf.h
 SRC_DIR = ./src/
 SRC_LIST = fdf.c\
@@ -42,7 +42,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(OBJ_LIST))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc -o $(NAME) $(HEADER) $(OBJ) ./libft/libft.a $(GL)
+	gcc -o $(NAME) $(HEADER) $(OBJ) ./libft/libft.a ./minilibx_macos/libmlx.a $(GL)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
 	mkdir -p $(OBJ_DIR)

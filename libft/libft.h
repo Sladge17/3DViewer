@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Nik <Nik@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 18:26:04 by vinograd          #+#    #+#             */
-/*   Updated: 2019/09/27 15:09:00 by Nik              ###   ########.fr       */
+/*   Updated: 2020/04/14 18:05:21 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,7 @@ void			arr_del(int *arr, int index, ...);
 void			arr_print(int *arr);
 void			arr_add(int **arr, int index, int nbr);
 void			arr_cat(int **arr, char *addon);
+
+char			*ft_ftoa_an(float n, size_t precision);
 
 #endif
