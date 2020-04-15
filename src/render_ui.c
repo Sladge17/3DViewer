@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:24:10 by student           #+#    #+#             */
-/*   Updated: 2020/04/14 12:09:14 by admin            ###   ########.fr       */
+/*   Updated: 2020/04/15 21:46:33 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	ui_boxinfo(t_setting *setting)
 		}
 		i += 1;
 	}
-	//print_left_text(setting, 0xffffff);
-	//print_right_text(setting, 0xffffff);
 }
 
 void	ui_buttons(t_setting *setting)
@@ -72,7 +70,6 @@ void	ui_buttons(t_setting *setting)
 		}
 		i += 1;
 	}
-
 }
 
 void	get_rgba(int *color)

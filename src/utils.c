@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/15 21:46:00 by admin             #+#    #+#             */
+/*   Updated: 2020/04/15 21:58:40 by admin            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-int		ft_isspace(int c)
+int				ft_isspace(int c)
 {
 	return (c == '\t' ||
 			c == '\n' ||
@@ -29,7 +41,7 @@ static int		ft_isdigit_base(char c, int base)
 ** Check is this string contain prefix of its numeral sys
 */
 
-static int	ft_has_prefix(const char *str, int base)
+static int		ft_has_prefix(const char *str, int base)
 {
 	size_t	i;
 
@@ -52,7 +64,7 @@ static int	ft_has_prefix(const char *str, int base)
 ** Check is this string a number according to the selected numeral sys
 */
 
-int			ft_isnumber(char *str, int base)
+int				ft_isnumber(char *str, int base)
 {
 	size_t		i;
 	size_t		digits;

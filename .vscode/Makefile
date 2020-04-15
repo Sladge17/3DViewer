@@ -8,8 +8,11 @@ HEADER = -I$(HEADER_DIR) -I ./minilibx_macos/
 SRC_DIR = ./src/
 SRC_LIST = fdf.c\
 			parser.c\
+			parser_support.c\
+			parser_fill.c\
 			utils.c\
 			menu.c\
+			menu2.c
 			set_model.c\
 			set_scale.c\
 			set_system.c\

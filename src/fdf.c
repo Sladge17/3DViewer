@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/04/15 14:38:59 by admin            ###   ########.fr       */
+/*   Updated: 2020/04/15 21:59:33 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,15 @@ int		main(int argv, char **argc)
 	return (0);
 }
 
-int	set_model(char *filename, t_model *model, t_coords *coords)
+int		set_model(char *filename, t_model *model, t_coords *coords)
 {
 	int parse_status;
 
 	if ((parse_status = parse(filename, model)))
 	{
 		error_handler(parse_status);
-		return(0);
+		return (0);
 	}
-	//parse(filename, model);
 	model->modelname = parse_name(filename);
 	model->area = model->width * model->height;
 	set_diagonal(model);
@@ -59,7 +58,7 @@ int	set_model(char *filename, t_model *model, t_coords *coords)
 	model->rot[2] = ROT_Z;
 	set_overall(model);
 	set_scalepos(model, coords);
-	return(1);
+	return (1);
 }
 
 void	set_system(t_sys *sys, t_model *model)
@@ -102,16 +101,4 @@ int		close_fdf(void *param)
 {
 	(void)param;
 	exit(0);
-}
-
-void error_handler(int parse_status)
-{
-	if (parse_status == PARSER_WRONGMAP_ERR)
-		write(1, "Wrong map\n", 10);
-	else if (parse_status == PARSER_WRONGCONTENT_ERR)
-		write(1, "Wrong content\n", 14);
-	else if (parse_status == PARSER_MEMALLOCATE_ERR)
-		write(1, "Memory allocation failed\n", 25);
-	else if (parse_status == PARSER_OPENFILE_ERR)
-		write(1, "Error opening file\n", 19);
 }

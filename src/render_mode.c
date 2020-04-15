@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:34:17 by jthuy             #+#    #+#             */
-/*   Updated: 2020/04/14 12:34:19 by admin            ###   ########.fr       */
+/*   Updated: 2020/04/15 21:46:52 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,4 @@ void	re_render(t_setting *setting)
 	if (setting->sys.render & 32)
 		print_right_text(setting, COLOR_TEXT);
 	print_two_small_buttons_text(setting, COLOR_TEXT);
-
 }
