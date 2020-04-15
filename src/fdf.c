@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/04/14 16:39:57 by admin            ###   ########.fr       */
+/*   Updated: 2020/04/15 14:38:59 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int		main(int argv, char **argc)
 	if (argv != 2 && argc)
 	{
 		write(1, "Needed only one input file.\n", 28);
-		//exit(0);
+		exit(0);
 	}
-	if (!(set_model("./maps/elem-col.fdf", &setting.model, &setting.coords)))
+	if (!(set_model(argc[1], &setting.model, &setting.coords)))
 		exit(0);
 	set_system(&setting.sys, &setting.model);
 	clean_frame(&setting.sys, &setting.model);

@@ -69,7 +69,11 @@ void print_right_manual_text(t_setting *s, int *st, int c)
 		rot_z = ft_strjoin("Z ", ft_itoa(360 + (int)s->model.rot[2]));
 	else
 		rot_z = ft_strjoin("Z ", ft_itoa((int)s->model.rot[2]));
-	char *u_s = ft_strjoin("uniform scale: ", ft_ftoa(s->model.scale, 3));
+	char *u_s;
+	if (s->model.scale < 0.999999)
+		u_s = ft_strjoin("uniform scale: 0", ft_ftoa_an(s->model.scale, 3));
+	else
+		u_s = ft_strjoin("uniform scale: ", ft_ftoa_an(s->model.scale, 3));
 
 
 	char *rend_mode;
@@ -92,9 +96,9 @@ void print_right_manual_text(t_setting *s, int *st, int c)
 
 	char *projection;
 	if (s->sys.render & 0b10000000)
-		projection = ft_strdup("projection: orthographic");
-	else
 		projection = ft_strdup("projection: perspective");
+	else
+		projection = ft_strdup("projection: orthographic");
 	//char *max_z = ft_strjoin("Zmax:   ", ft_itoa(setting->model.width));
 
 	mlx_ptr = s->sys.mlx;
