@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 12:36:23 by jthuy             #+#    #+#             */
-/*   Updated: 2020/04/15 21:59:33 by admin            ###   ########.fr       */
+/*   Updated: 2020/04/16 15:12:38 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		main(int argv, char **argc)
 
 	if (argv != 2 && argc)
 	{
-		write(1, "Needed only one input file.\n", 28);
+		write(1, "One input file needed.\n", 23);
 		exit(0);
 	}
 	if (!(set_model(argc[1], &setting.model, &setting.coords)))

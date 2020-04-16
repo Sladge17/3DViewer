@@ -12,7 +12,7 @@ SRC_LIST = fdf.c\
 			parser_fill.c\
 			utils.c\
 			menu.c\
-			menu2.c
+			menu2.c\
 			set_model.c\
 			set_scale.c\
 			set_system.c\
@@ -50,7 +50,6 @@ $(NAME): $(OBJ)
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
 	mkdir -p $(OBJ_DIR)
 	gcc -c $(HEADER) $< -o $@ $(FLAG)
-# 	gcc -c $(HEADER) $< -o $@
 
 clean:
 	@rm -rf $(OBJ_DIR)

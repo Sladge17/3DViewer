@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 21:56:55 by admin             #+#    #+#             */
-/*   Updated: 2020/04/15 21:59:47 by admin            ###   ########.fr       */
+/*   Updated: 2020/04/16 15:18:42 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		fill_matrix(t_model *model, char **line_of_z, int i_starts_from, int y)
 	a[0] = i_starts_from;
 	a[1] = i_starts_from;
 	a[2] = y;
-	if (ft_arraylen(line_of_z) < model->width)
+	if (ft_arraylen(line_of_z) != model->width)
 		return (0);
 	while (a[0] < (i_starts_from + model->width))
 	{

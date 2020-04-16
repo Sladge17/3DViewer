@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arr_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Nik <Nik@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/31 14:52:58 by Nik               #+#    #+#             */
-/*   Updated: 2019/08/31 17:18:14 by Nik              ###   ########.fr       */
+/*   Updated: 2020/04/16 15:09:16 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		*arr_new(char *arr)
 	char	**tmp;
 	int		i;
 	int		j;
-	
+
 	tmp = ft_strsplit(arr, ' ');
 	len = ft_arraylen(tmp);
 	new = (int *)malloc(sizeof(int) * (len + 1));

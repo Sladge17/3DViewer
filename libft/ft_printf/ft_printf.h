@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vinograd <vinograd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 13:07:55 by vinograd          #+#    #+#             */
-/*   Updated: 2019/08/07 21:21:30 by vinograd         ###   ########.fr       */
+/*   Updated: 2020/04/16 15:06:32 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ typedef struct
 	unsigned char	z_flag;
 }					t_flag;
 
-t_flag			flag_analazer(const char *s);
-char			*specifier(t_flag *flags, va_list *ap);
-char			*redactor(char *arg, t_flag flags, register char spcf);
-char			*str_redactor(char *arg, register t_flag flags);
-int				color_redactor(const char *str);
-int				putstr_for_null_char(char *s);
-int				putstr_color(char *s);
-int				ft_strlen_color(char *s);
+t_flag				flag_analazer(const char *s);
+char				*specifier(t_flag *flags, va_list *ap);
+char				*redactor(char *arg, t_flag flags, register char spcf);
+char				*str_redactor(char *arg, register t_flag flags);
+int					color_redactor(const char *str);
+int					putstr_for_null_char(char *s);
+int					putstr_color(char *s);
+int					ft_strlen_color(char *s);
 
 #endif
