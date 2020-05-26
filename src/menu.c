@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 20:56:27 by admin             #+#    #+#             */
-/*   Updated: 2020/04/15 21:49:55 by admin            ###   ########.fr       */
+/*   Updated: 2020/05/26 15:48:23 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_left_manual_text(t_sys *system, int *st, int c)
 	mlx_string_put(mlx, win, x, y += 50, c, "Scale");
 	mlx_string_put(mlx, win, x + 10, y += 30, c, "MScroll - fast");
 	mlx_string_put(mlx, win, x + 10, y += 30, c, "MMB & y_drag - precision");
-	mlx_string_put(mlx, win, x, y += 90, c, "Render mode");
+	mlx_string_put(mlx, win, x, y += 50, c, "Render mode");
 }
 
 void	print_left_manual_text_ad(t_sys *system, int *st, int c)
@@ -45,7 +45,7 @@ void	print_left_manual_text_ad(t_sys *system, int *st, int c)
 	win = system->win;
 	x = st[0];
 	y = st[1];
-	mlx_string_put(mlx, win, x + 10, y += 360, c, "1 - vertex render");
+	mlx_string_put(mlx, win, x + 10, y += 365, c, "1 - vertex render");
 	mlx_string_put(mlx, win, x + 10, y += 30, c, "2 - wireframe render");
 	mlx_string_put(mlx, win, x + 10, y += 30, c, "3 - silhouette render");
 	mlx_string_put(mlx, win, x + 10, y += 30, c, "4 - mesh render");

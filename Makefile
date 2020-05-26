@@ -12,7 +12,7 @@ SRC_LIST = fdf.c\
 			parser_fill.c\
 			utils.c\
 			menu.c\
-			menu2.c
+			menu2.c\
 			set_model.c\
 			set_scale.c\
 			set_system.c\
@@ -45,17 +45,19 @@ OBJ = $(addprefix $(OBJ_DIR), $(OBJ_LIST))
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	$(MAKE) -C ./libft re
 	gcc -o $(NAME) $(HEADER) $(OBJ) ./libft/libft.a ./minilibx_macos/libmlx.a $(GL)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
 	mkdir -p $(OBJ_DIR)
 	gcc -c $(HEADER) $< -o $@ $(FLAG)
-# 	gcc -c $(HEADER) $< -o $@
 
 clean:
 	@rm -rf $(OBJ_DIR)
+	$(MAKE) -C ./libft clean
 
 fclean: clean
 	@rm -f $(NAME)
+	$(MAKE) -C ./libft fclean
 
 re: fclean all
