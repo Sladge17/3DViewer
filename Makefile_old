@@ -1,16 +1,9 @@
 NAME = fdf
 FLAG = -Wall -Wextra -Werror
-
-GL_DIR = ./minilibx_macos/
-GL_FLAG = -lm -framework OpenGL -framework AppKit
-GL = $(GL_DIR)libmlx.a $(GL_FLAG)
-
-LIBFT_DIR = ./libft/
-LIBFT = $(LIBFT_DIR)libft.a
+GL = -lm -framework OpenGL -framework AppKit
 
 HEADER_DIR = ./includes/
-HEADER = -I $(HEADER_DIR)
-
+HEADER = -I$(HEADER_DIR) -I ./minilibx_macos/
 SRC_DIR = ./src/
 SRC_LIST = fdf.c\
 			parser.c\
@@ -51,8 +44,8 @@ OBJ = $(addprefix $(OBJ_DIR), $(OBJ_LIST))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@make re -C $(LIBFT_DIR)
-	@gcc -o $(NAME) $(HEADER) $(OBJ) $(LIBFT) $(GL)
+	@$(MAKE) -C ./libft re
+	@gcc -o $(NAME) $(HEADER) $(OBJ) ./libft/libft.a ./minilibx_macos/libmlx.a $(GL)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
 	@mkdir -p $(OBJ_DIR)
@@ -60,10 +53,10 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@make clean -C $(LIBFT_DIR)
+	@$(MAKE) -C ./libft clean
 
 fclean: clean
 	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_DIR)
+	@$(MAKE) -C ./libft fclean
 
 re: fclean all
