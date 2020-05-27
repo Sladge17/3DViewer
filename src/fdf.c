@@ -12,16 +12,16 @@
 
 #include "fdf.h"
 
-int		main(int argv, char **argc)
+int		main(int argc, char **argv)
 {
 	t_setting	setting;
 
-	if (argv != 2 && argc)
+	if (argc != 2 && argv)
 	{
 		write(1, "One input file needed.\n", 23);
 		exit(0);
 	}
-	if (!(set_model(argc[1], &setting.model, &setting.coords)))
+	if (!(set_model(argv[1], &setting.model, &setting.coords)))
 		exit(0);
 	set_system(&setting.sys, &setting.model);
 	clean_frame(&setting.sys, &setting.model);
