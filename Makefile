@@ -4,7 +4,6 @@ GL = -lm -framework OpenGL -framework AppKit
 
 HEADER_DIR = ./includes/
 HEADER = -I$(HEADER_DIR) -I ./minilibx_macos/
-# HEADER = fdf.h
 SRC_DIR = ./src/
 SRC_LIST = fdf.c\
 			parser.c\
@@ -45,19 +44,19 @@ OBJ = $(addprefix $(OBJ_DIR), $(OBJ_LIST))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(MAKE) -C ./libft re
-	gcc -o $(NAME) $(HEADER) $(OBJ) ./libft/libft.a ./minilibx_macos/libmlx.a $(GL)
+	@$(MAKE) -C ./libft re
+	@gcc -o $(NAME) $(HEADER) $(OBJ) ./libft/libft.a ./minilibx_macos/libmlx.a $(GL)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
-	mkdir -p $(OBJ_DIR)
-	gcc -c $(HEADER) $< -o $@ $(FLAG)
+	@mkdir -p $(OBJ_DIR)
+	@gcc -c $(HEADER) $< -o $@ $(FLAG)
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	$(MAKE) -C ./libft clean
+	@$(MAKE) -C ./libft clean
 
 fclean: clean
 	@rm -f $(NAME)
-	$(MAKE) -C ./libft fclean
+	@$(MAKE) -C ./libft fclean
 
 re: fclean all
