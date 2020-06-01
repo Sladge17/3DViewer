@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 20:56:27 by admin             #+#    #+#             */
-/*   Updated: 2020/05/26 15:48:23 by admin            ###   ########.fr       */
+/*   Updated: 2020/06/01 13:45:53 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	print_left_manual_text_ad(t_sys *system, int *st, int c)
 	mlx_string_put(mlx, win, x + 10, y += 30, c, "4 - mesh render");
 	mlx_string_put(mlx, win, x + 10, y += 30, c, "~ - ON / OFF vertex color");
 	mlx_string_put(mlx, win, x + 80, y += 30, c, "(if exists)");
-	mlx_string_put(mlx, win, x, y += 90, c, "Projection");
+	mlx_string_put(mlx, win, x, y += 50, c, "Projection");
 	mlx_string_put(mlx, win, x + 10, y += 30, c,
 								"P - perspective/orthographic");
 	mlx_string_put(mlx, win, x + 10, y += 70, c, "R - Reset transform");

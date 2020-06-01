@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 21:49:20 by admin             #+#    #+#             */
-/*   Updated: 2020/04/15 21:50:02 by admin            ###   ########.fr       */
+/*   Updated: 2020/06/01 13:47:42 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_right_manual_text_ad(t_setting *s, int c, t_pb *pb)
 
 	mlx = s->sys.mlx;
 	win = s->sys.win;
-	mlx_string_put(mlx, win, pb->x, pb->y += 70, c, "Pivot");
+	mlx_string_put(mlx, win, pb->x, pb->y += 50, c, "Pivot");
 	mlx_string_put(mlx, win, pb->x + 10, pb->y += 30, c, "position:");
 	mlx_string_put(mlx, win, pb->x + 20, pb->y += 30, c, pb->pivot_x);
 	mlx_string_put(mlx, win, pb->x + 20, pb->y += 30, c, pb->pivot_y);
@@ -55,7 +55,7 @@ void	print_right_manual_text_ad(t_setting *s, int c, t_pb *pb)
 	mlx_string_put(mlx, win, pb->x + 20, pb->y += 30, c, pb->rot_y);
 	mlx_string_put(mlx, win, pb->x + 20, pb->y += 30, c, pb->rot_z);
 	mlx_string_put(mlx, win, pb->x + 20, pb->y += 30, c, pb->u_s);
-	mlx_string_put(mlx, win, pb->x, pb->y += 70, c, "Scene");
+	mlx_string_put(mlx, win, pb->x, pb->y += 50, c, "Scene");
 	mlx_string_put(mlx, win, pb->x + 10, pb->y += 30, c, pb->rend_mode);
 	mlx_string_put(mlx, win, pb->x + 10, pb->y += 30, c, pb->color_en);
 	mlx_string_put(mlx, win, pb->x + 10, pb->y += 30, c, pb->projection);

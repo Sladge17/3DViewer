@@ -9,7 +9,7 @@ LIBFT_DIR = ./libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
 HEADER_DIR = ./includes/
-HEADER = -I $(HEADER_DIR)
+HEADER = -I $(HEADER_DIR) -I $(GL_DIR)
 
 SRC_DIR = ./src/
 SRC_LIST = fdf.c\
