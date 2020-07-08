@@ -144,7 +144,7 @@ void				model_init(t_model *model);
 int					parse_color(char *word, t_model *model, int default_color);
 int					allocate_mem(char *filename, t_model *model);
 int					fill_matrix(t_model *model, char **line_of_z,
-					int i_starts_from, int y);
+						int i_starts_from, int y);
 void				calc_z_max(t_model *model, int val);
 int					check_point(char *str);
 char				*parse_name(char *str);
