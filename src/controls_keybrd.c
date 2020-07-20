@@ -58,7 +58,7 @@ char	render_option(t_setting *setting, int keycode)
 		re_render(setting);
 		return (1);
 	}
-	if (keycode == 50)
+	if (keycode == 10)
 	{
 		if (!setting->model.color_f)
 			return (1);
