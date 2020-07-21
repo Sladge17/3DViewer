@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 21:49:20 by admin             #+#    #+#             */
-/*   Updated: 2020/06/01 13:47:42 by admin            ###   ########.fr       */
+/*   Updated: 2020/07/21 17:50:31 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,31 @@ void	print_right_manual_text_ad(t_setting *s, int c, t_pb *pb)
 	mlx_string_put(mlx, win, pb->x + 10, pb->y += 30, c, pb->projection);
 }
 
+void free_pb(t_pb **pbb)
+{
+	t_pb *pb = *pbb;
+	free(pb->vertexes);
+	free(pb->trianges);
+	free(pb->modelname);
+	free(pb->max_x);
+	free(pb->max_y);
+	free(pb->max_z);
+
+	free(pb->pivot_x);
+	free(pb->pivot_y);
+	free(pb->rot_x);
+	free(pb->rot_y);
+	free(pb->rot_z);
+	free(pb->u_s);
+	free(pb->rend_mode);
+	free(pb->color_en);
+	free(pb->projection);
+	ft_printf("here");
+	if (pb)
+		free(pb);
+
+}
+
 void	print_left_text(t_setting *setting, int c)
 {
 	int start[2];
@@ -84,6 +109,8 @@ void	print_right_text(t_setting *setting, int c)
 	print_right_manual_text_2(setting, pb);
 	print_right_manual_text_a(setting, c, pb);
 	print_right_manual_text_ad(setting, c, pb);
+	free_pb(&pb);
+	//free(pb);
 }
 
 void	print_two_small_buttons_text(t_setting *setting, int c)
