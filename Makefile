@@ -52,6 +52,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make re -C $(LIBFT_DIR)
+	@make re -C $(GL_DIR)
 	@gcc -o $(NAME) $(HEADER) $(OBJ) $(LIBFT) $(GL)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER_DIR)*.h
@@ -65,5 +66,6 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@make fclean -C $(LIBFT_DIR)
+	@make clean -C $(GL_DIR)
 
 re: fclean all
