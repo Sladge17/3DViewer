@@ -80,7 +80,6 @@ void free_pb(t_pb **pbb)
 	free(pb->rend_mode);
 	free(pb->color_en);
 	free(pb->projection);
-	ft_printf("here");
 	if (pb)
 		free(pb);
 
@@ -110,7 +109,6 @@ void	print_right_text(t_setting *setting, int c)
 	print_right_manual_text_a(setting, c, pb);
 	print_right_manual_text_ad(setting, c, pb);
 	free_pb(&pb);
-	//free(pb);
 }
 
 void	print_two_small_buttons_text(t_setting *setting, int c)
