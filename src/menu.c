@@ -63,40 +63,78 @@ void	print_left_manual_text_ad(t_sys *system, int *st, int c)
 
 void	print_right_manual_text(t_setting *s, int *st, t_pb *pb)
 {
+	char	*tmp;
+
 	pb->x = st[0] + 1570;
 	pb->y = st[1];
 	pb->number_of_triangles = (s->model.width - 1) * (s->model.height - 1) * 2;
-	pb->vertexes = ft_strjoin("number of vertices: ", ft_itoa(s->model.area));
-	pb->trianges = ft_strjoin("number of triangles: ",
-				ft_itoa(pb->number_of_triangles));
+	tmp = ft_itoa(s->model.area);
+	pb->vertexes = ft_strjoin("number of vertices: ", tmp);
+	free(tmp);
+	tmp = ft_itoa(pb->number_of_triangles);
+	pb->trianges = ft_strjoin("number of triangles: ", tmp);
+	free(tmp);
 	pb->modelname = ft_strjoin("name: ", s->model.modelname);
-	pb->max_x = ft_strjoin("X ", ft_itoa(s->model.width));
-	pb->max_y = ft_strjoin("Y ", ft_itoa(s->model.height));
-	pb->max_z = ft_strjoin("Z ", ft_itoa(s->model.z_result));
-	pb->pivot_x = ft_strjoin("X ",
-				ft_itoa((int)s->model.pos[0] - s->model.first_pos[0]));
-	pb->pivot_y = ft_strjoin("Y ",
-				ft_itoa(-((int)s->model.pos[1] - s->model.first_pos[1])));
+	tmp = ft_itoa(s->model.width);
+	pb->max_x = ft_strjoin("X ", tmp);
+	free(tmp);
+	tmp = ft_itoa(s->model.height);
+	pb->max_y = ft_strjoin("Y ", tmp);
+	free(tmp);
+	tmp = ft_itoa(s->model.z_result);
+	pb->max_z = ft_strjoin("Z ", tmp);
+	free(tmp);
+	tmp = ft_itoa((int)s->model.pos[0] - s->model.first_pos[0]);
+	pb->pivot_x = ft_strjoin("X ",tmp);
+	free(tmp);
+	tmp = ft_itoa(-((int)s->model.pos[1] - s->model.first_pos[1]));
+	pb->pivot_y = ft_strjoin("Y ", tmp);
+	free(tmp);
 }
 
 void	print_right_manual_text_1(t_setting *s, t_pb *pb)
 {
+	char	*tmp;
+
 	if ((s->model.rot[0]) < 0)
-		pb->rot_x = ft_strjoin("X ", ft_itoa(360 + (int)s->model.rot[0]));
+	{
+		tmp = ft_itoa(360 + (int)s->model.rot[0]);
+		pb->rot_x = ft_strjoin("X ", tmp);
+	}
 	else
-		pb->rot_x = ft_strjoin("X ", ft_itoa((int)s->model.rot[0]));
+	{
+		tmp = ft_itoa(360 + (int)s->model.rot[0]);
+		pb->rot_x = ft_strjoin("X ", tmp);
+	}
+	free(tmp);
 	if ((s->model.rot[1]) < 0)
-		pb->rot_y = ft_strjoin("Y ", ft_itoa(360 + (int)s->model.rot[1]));
+	{
+		tmp = ft_itoa(360 + (int)s->model.rot[1]);
+		pb->rot_y = ft_strjoin("Y ", tmp);
+	}
 	else
-		pb->rot_y = ft_strjoin("Y ", ft_itoa((int)s->model.rot[1]));
+	{
+		tmp = ft_itoa((int)s->model.rot[1]);
+		pb->rot_y = ft_strjoin("Y ", tmp);
+	}
+	free(tmp);
 	if ((s->model.rot[2]) < 0)
-		pb->rot_z = ft_strjoin("Z ", ft_itoa(360 + (int)s->model.rot[2]));
+	{
+		tmp = ft_itoa(360 + (int)s->model.rot[2]);
+		pb->rot_z = ft_strjoin("Z ", tmp);
+	}
 	else
-		pb->rot_z = ft_strjoin("Z ", ft_itoa((int)s->model.rot[2]));
+	{
+		tmp = ft_itoa((int)s->model.rot[2]);
+		pb->rot_z = ft_strjoin("Z ", tmp);
+	}
+	free(tmp);
+	tmp = ft_ftoa_an(s->model.scale, 3);
 	if (s->model.scale < 0.999999)
-		pb->u_s = ft_strjoin("uniform scale: 0", ft_ftoa_an(s->model.scale, 3));
+		pb->u_s = ft_strjoin("uniform scale: 0", tmp);
 	else
-		pb->u_s = ft_strjoin("uniform scale: ", ft_ftoa_an(s->model.scale, 3));
+		pb->u_s = ft_strjoin("uniform scale: ", tmp);
+	free(tmp);
 }
 
 void	print_right_manual_text_2(t_setting *s, t_pb *pb)
