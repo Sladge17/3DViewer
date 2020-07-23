@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"__functional_03": "cpp",
-		"cstdlib": "cpp",
-		"functional": "cpp",
-		"*.tcc": "cpp",
-		"bitset": "cpp"
-	}
-}
